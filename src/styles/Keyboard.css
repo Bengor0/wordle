@@ -1,0 +1,44 @@
+.keyboard {
+  margin-top: 5px;
+  width: 100%;
+}
+
+.backspace-img {
+  position: relative;
+  right: 53px;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
+    contrast(100%);
+  width: 25x;
+  height: 25px;
+  pointer-events: none
+}
+
+.keyboard-key {
+  height: 60px;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 3px;
+}
+
+.keyboard-key.letter {
+  width: 40px;
+  background-color: #808080;
+}
+
+.keyboard-key.enter {
+  background-color: #1a1a1a;
+  font-size: 13px;
+  width: 60px;
+}
+
+.keyboard-key.backspace {
+  background-color: #1a1a1a;
+  width: 70px;
+
+}
+
+.keyboard-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
