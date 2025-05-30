@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import KeyboardContext from "../App.jsx";
 import ".././styles/Keyboard.css";
-import backspace from '.././assets/backspace.svg';
+import backspace from ".././assets/backspace.svg";
 
 export default function KeyBoard({ handleKeyClick }) {
   const KEYS = [
@@ -41,14 +41,20 @@ function Row({ keyboardRow, index, handleKeyClick }) {
         } else if (keyboardKey === "Backspace") {
           return (
             <>
-              <KeyboardKey
-                keyboardKey={keyboardKey}
-                classKey={"backspace"}
-                index={index}
-                handleKeyClick={handleKeyClick}
-                keyboardText={""}
-              />
-            <img className="backspace-img" src={backspace} alt="backspace.svg"></img>
+              <div className="backspace-container">
+                <KeyboardKey
+                  keyboardKey={keyboardKey}
+                  classKey={"backspace"}
+                  index={index}
+                  handleKeyClick={handleKeyClick}
+                  keyboardText={""}
+                />
+                <img
+                  className="backspace-img"
+                  src={backspace}
+                  alt="backspace.svg"
+                ></img>
+              </div>
             </>
           );
         } else

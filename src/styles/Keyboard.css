@@ -4,13 +4,34 @@
 }
 
 .backspace-img {
-  position: relative;
-  right: 53px;
+  position: absolute;
+  top: 17px;
+  bottom: 0px;
+  right: 0px;
+  left: 22px;
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
     contrast(100%);
   width: 25x;
   height: 25px;
   pointer-events: none
+}
+
+.backspace-container {
+  position: relative;
+  height: 60px;
+  width: 70px;
+
+}
+
+.keyboard-key.backspace {
+  position: absolute;
+  right: 0px;
+  top: -3px;
+  left: 0px;
+  bottom: 0px;
+  background-color: #1a1a1a;
+  width: 70px;
+
 }
 
 .keyboard-key {
@@ -31,11 +52,7 @@
   width: 60px;
 }
 
-.keyboard-key.backspace {
-  background-color: #1a1a1a;
-  width: 70px;
 
-}
 
 .keyboard-row {
   display: flex;
