@@ -12,60 +12,62 @@ export default function KeyBoard({ handleKeyClick }) {
   return (
     <div className="keyboard">
       {KEYS.map((keyboardRow, index) => (
-        <Row
-          keyboardRow={keyboardRow}
-          index={index}
-          handleKeyClick={handleKeyClick}
-          key={index}
-        />
+        <div key={index}>
+          <KeyboardRow
+            keyboardRow={keyboardRow}
+            index={index}
+            handleKeyClick={handleKeyClick}
+            key={index}
+          />
+        </div>
       ))}
     </div>
   );
 }
 
-function Row({ keyboardRow, index, handleKeyClick }) {
+function KeyboardRow({ keyboardRow, index, handleKeyClick }) {
   const className = `keyboard-row ${index + 1}`;
   return (
     <div className={className}>
       {keyboardRow.map((keyboardKey, index) => {
         if (keyboardKey === "Enter") {
           return (
-            <KeyboardKey
-              keyboardKey={keyboardKey}
-              classKey={"enter"}
-              index={index}
-              handleKeyClick={handleKeyClick}
-              keyboardText={keyboardKey}
-            />
+            <div key={index}>
+              <KeyboardKey
+                keyboardKey={keyboardKey}
+                classKey={"enter"}
+                handleKeyClick={handleKeyClick}
+                keyboardText={keyboardKey}
+                key={index}
+              />
+            </div>
           );
         } else if (keyboardKey === "Backspace") {
           return (
-            <>
-              <div className="backspace-container">
-                <KeyboardKey
-                  keyboardKey={keyboardKey}
-                  classKey={"backspace"}
-                  index={index}
-                  handleKeyClick={handleKeyClick}
-                  keyboardText={""}
-                />
-                <img
-                  className="backspace-img"
-                  src={backspace}
-                  alt="backspace.svg"
-                ></img>
-              </div>
-            </>
+            <div className="backspace-container" key={index}>
+              <KeyboardKey
+                keyboardKey={keyboardKey}
+                classKey={"backspace"}
+                handleKeyClick={handleKeyClick}
+                keyboardText={""}
+              />
+              <img
+                className="backspace-img"
+                src={backspace}
+                alt="backspace.svg"
+              ></img>
+            </div>
           );
         } else
           return (
-            <KeyboardKey
-              keyboardKey={keyboardKey}
-              classKey={"letter"}
-              index={index}
-              handleKeyClick={handleKeyClick}
-              keyboardText={keyboardKey}
-            />
+            <div key={index}>
+              <KeyboardKey
+                keyboardKey={keyboardKey}
+                classKey={"letter"}
+                handleKeyClick={handleKeyClick}
+                keyboardText={keyboardKey}
+              />
+            </div>
           );
       })}
     </div>
