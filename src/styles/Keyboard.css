@@ -1,6 +1,8 @@
 .keyboard {
-  margin-top: 5px;
-  width: 100%;
+  max-height: 198.88px;
+  height: 42.86vw;
+  max-width: 464px;
+  width: 100vw;
 }
 
 .backspace-img {
@@ -11,41 +13,37 @@
   pointer-events: none;
 }
 
-.backspace-container {
-  position: relative;
-  height: 60px;
-  width: 70px;
-}
-
 .keyboard-key.backspace {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   background-color: #1a1a1a;
-  width: 70px;
+  width: 15.09%;
 }
 
 .keyboard-key {
-  height: 60px;
-  font-size: 20px;
+  height: 92.84%;
+  font-size: 120%;
   font-weight: 700;
-  margin: 3px;
+  margin: 0.5%;
 }
 
 .keyboard-key.letter {
-  width: 40px;
+  width: 8.62%;
   background-color: #808080;
 }
 
 .keyboard-key.enter {
   background-color: #1a1a1a;
-  font-size: 13px;
-  width: 60px;
+  font-size: 85%;
+  width: 12.93%;
 }
 
 .keyboard-row {
   display: flex;
+  height: 33.33%;
+  width: 100%;
   align-items: center;
   justify-content: center;
 }
