@@ -50,12 +50,14 @@ export default function App() {
   const [isGameOver, toggleIsGameOver] = useToggleState(false);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
+  const [message, setMessage] = useState(null);
 
   const restartGame = () => {
     guess.current = ["", BASE_COLORS];
     setGuesses(new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS]));
     rowIndex.current = 0;
     setKeyColors(BASE_KEY_COLORS);
+    setMessage(null);
     toggleIsGameOver();
     wordSet.current = new Set();
     toggleRestart();
@@ -84,9 +86,9 @@ export default function App() {
     fetchWords();
   }, [restart]);
 
-  const updateGuesses = () => {
+  const updateGuesses = (guess) => {
     const shallowGuesses = [...guesses];
-    shallowGuesses[rowIndex.current] = guess.current;
+    shallowGuesses[rowIndex.current] = guess;
     setGuesses(shallowGuesses);
   };
 
@@ -104,7 +106,11 @@ export default function App() {
     const colors = [];
     let correct = 0;
     const mapChars = new Map();
-    solution.current.forEach((char) => mapChars.has(char) ? mapChars.set(char, mapChars.get(char) + 1) : mapChars.set(char, 1));
+    solution.current.forEach((char) =>
+      mapChars.has(char)
+        ? mapChars.set(char, mapChars.get(char) + 1)
+        : mapChars.set(char, 1)
+    );
 
     for (let i = 0; i < WORD_LENGTH; i++) {
       let guessChar = guess.current[0][i];
@@ -115,7 +121,10 @@ export default function App() {
         udpateKeyColor(guessChar, "green");
         correct++;
         mapChars.set(guessChar, mapChars.get(guessChar) - 1);
-      } else if (solution.current.includes(guessChar) && mapChars.get(guessChar) > 0) {
+      } else if (
+        solution.current.includes(guessChar) &&
+        mapChars.get(guessChar) > 0
+      ) {
         colors.push("orange");
         udpateKeyColor(guessChar, "#cc8400");
         mapChars.set(guessChar, mapChars.get(guessChar) - 1);
@@ -125,10 +134,22 @@ export default function App() {
       }
     }
 
-    correct === WORD_LENGTH && toggleIsGameOver();
+    if (correct === WORD_LENGTH) {
+      rowIndex.current === 0 &&
+        setMessage(<Message message={"Čo ti jebee?"} />);
+      rowIndex.current === 1 &&
+        setMessage(<Message message={"Popičovka!"} />);
+        rowIndex.current === 2 &&
+        setMessage(<Message message={"tOmu ver."} />);
+        rowIndex.current === 3 &&
+        setMessage(<Message message={"Celkom napiču."} />);
+        rowIndex.current === 4 &&
+        setMessage(<Message message={"Skoro si dojebal"} />);
+      toggleIsGameOver();
+    }
 
     guess.current = [guess.current[0], colors];
-    updateGuesses();
+    updateGuesses(guess.current);
   };
 
   const handleKeyClick = (event) => {
@@ -145,6 +166,7 @@ export default function App() {
           guess.current = ["", BASE_COLORS];
           if (rowIndex.current >= NUM_OF_GUESSES) {
             toggleIsGameOver();
+            setMessage(<Message message={`Dojebals -> ${solution.current.join("")}`} />);
             return;
           }
         } else return;
@@ -177,6 +199,7 @@ export default function App() {
   return (
     <>
       <div className="top-container">
+        {message}
         <div className="wordle-board">
           {guesses.map((guess, i) => {
             return <Row guess={guess} key={i} />;
@@ -224,5 +247,5 @@ function Row({ guess }) {
 }
 
 function Message({ message }) {
-  return <p className="message">{message}</p>;
+  return <div className="message">{message}</div>;
 }
