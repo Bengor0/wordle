@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect, createContext } from "react";
+import { useRef, useState, useEffect } from "react";
 import useToggleState from "./hooks/useToggleState";
 import KeyBoard from "./components/KeyBoard";
+import KeyboardContext from "./contexts/KeyboardContext";
 import "./App.css";
 
 const API_URL = "https://cheaderthecoder.github.io/5-Letter-words/words.json";
@@ -8,35 +9,35 @@ const WORD_LENGTH = 5;
 const NUM_OF_GUESSES = 6;
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 const BASE_KEY_COLORS = new Map([
-    ['Q', "#808080"],
-    ['W', "#808080"],
-    ['E', "#808080"],
-    ['R', "#808080"],
-    ['T', "#808080"],
-    ['Y', "#808080"],
-    ['U', "#808080"],
-    ['I', "#808080"],
-    ['O', "#808080"],
-    ['P', "#808080"],
-    ['A', "#808080"],
-    ['S', "#808080"],
-    ['D', "#808080"],
-    ['F', "#808080"],
-    ['G', "#808080"],
-    ['H', "#808080"],
-    ['J', "#808080"],
-    ['K', "#808080"],
-    ['L', "#808080"],
-    ['Z', "#808080"],
-    ['X', "#808080"],
-    ['C', "#808080"],
-    ['V', "#808080"],
-    ['B', "#808080"],
-    ['N', "#808080"],
-    ['M', "#808080"],
-    ['ENTER', "#1a1a1a"],
-    ['BACKSPACE', "#1a1a1a"]
-  ]);
+  ["Q", "#808080"],
+  ["W", "#808080"],
+  ["E", "#808080"],
+  ["R", "#808080"],
+  ["T", "#808080"],
+  ["Y", "#808080"],
+  ["U", "#808080"],
+  ["I", "#808080"],
+  ["O", "#808080"],
+  ["P", "#808080"],
+  ["A", "#808080"],
+  ["S", "#808080"],
+  ["D", "#808080"],
+  ["F", "#808080"],
+  ["G", "#808080"],
+  ["H", "#808080"],
+  ["J", "#808080"],
+  ["K", "#808080"],
+  ["L", "#808080"],
+  ["Z", "#808080"],
+  ["X", "#808080"],
+  ["C", "#808080"],
+  ["V", "#808080"],
+  ["B", "#808080"],
+  ["N", "#808080"],
+  ["M", "#808080"],
+  ["ENTER", "#1a1a1a"],
+  ["BACKSPACE", "#1a1a1a"],
+]);
 
 export default function App() {
   const solution = useRef("");
@@ -49,8 +50,6 @@ export default function App() {
   const [isGameOver, toggleIsGameOver] = useToggleState(false);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
-  const [message, setMessage] = useState(<p className="message">----</p>);
-  const KeyboardContext = createContext();
 
   const restartGame = () => {
     guess.current = ["", BASE_COLORS];
@@ -59,7 +58,6 @@ export default function App() {
     setKeyColors(BASE_KEY_COLORS);
     toggleIsGameOver();
     wordSet.current = new Set();
-    setMessage(<p className="message"></p>);
     toggleRestart();
   };
 
@@ -98,7 +96,7 @@ export default function App() {
         const shallowKeyColors = new Map(prevKeyColors);
         shallowKeyColors.set(guessChar, color);
         return shallowKeyColors;
-      })
+      });
     }, 2200);
   };
 
@@ -145,10 +143,7 @@ export default function App() {
             toggleIsGameOver();
             return;
           }
-        } else {
-          setMessage(<Message message={"Not in the word bank!"} />);
-          return;
-        }
+        } else return;
       } else if (rowIndex.current < NUM_OF_GUESSES) {
         if (key === "BACKSPACE" && guess.current[0].length > 0) {
           guess.current[0] = guess.current[0].slice(0, -1);
@@ -188,7 +183,9 @@ export default function App() {
             Play again
           </button>
         ) : (
-          <KeyBoard handleKeyClick={handleKeyClick} keyColors={keyColors}/>
+          <KeyboardContext.Provider value={{ handleKeyClick, keyColors }}>
+            <KeyBoard />
+          </KeyboardContext.Provider>
         )}
       </div>
     </>
