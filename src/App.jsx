@@ -142,8 +142,10 @@ export default function App() {
         rowIndex.current === 2 &&
         setMessage(<Message message={"tOmu ver."} />);
         rowIndex.current === 3 &&
-        setMessage(<Message message={"Celkom napiču."} />);
+        setMessage(<Message message={"Slabší priemer"} />);
         rowIndex.current === 4 &&
+        setMessage(<Message message={"Nejde ti to moc."} />);
+        rowIndex.current === 5 &&
         setMessage(<Message message={"Skoro si dojebal"} />);
       toggleIsGameOver();
     }
