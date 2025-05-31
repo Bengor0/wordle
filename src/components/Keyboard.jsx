@@ -1,13 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import KeyboardContext from "../App.jsx";
 import ".././styles/Keyboard.css";
 import backspace from ".././assets/backspace.svg";
 
-export default function KeyBoard({ handleKeyClick }) {
+export default function KeyBoard({ handleKeyClick, keyColors }) {
   const KEYS = [
-    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-    ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-    ["Enter", "z", "x", "c", "v", "b", "n", "m", "Backspace"],
+    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+    ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "BACKSPACE"],
   ];
   return (
     <div className="keyboard">
@@ -18,6 +18,7 @@ export default function KeyBoard({ handleKeyClick }) {
             index={index}
             handleKeyClick={handleKeyClick}
             key={index}
+            keyColors={keyColors}
           />
         </div>
       ))}
@@ -25,31 +26,31 @@ export default function KeyBoard({ handleKeyClick }) {
   );
 }
 
-function KeyboardRow({ keyboardRow, index, handleKeyClick }) {
+function KeyboardRow({ keyboardRow, index, handleKeyClick, keyColors }) {
   const className = `keyboard-row ${index + 1}`;
   return (
     <div className={className}>
       {keyboardRow.map((keyboardKey, index) => {
-        if (keyboardKey === "Enter") {
+        if (keyboardKey === "ENTER") {
           return (
             <div key={index}>
               <KeyboardKey
                 keyboardKey={keyboardKey}
                 classKey={"enter"}
                 handleKeyClick={handleKeyClick}
-                keyboardText={keyboardKey}
                 key={index}
+                keyColors={keyColors}
               />
             </div>
           );
-        } else if (keyboardKey === "Backspace") {
+        } else if (keyboardKey === "BACKSPACE") {
           return (
             <div className="backspace-container" key={index}>
               <KeyboardKey
                 keyboardKey={keyboardKey}
                 classKey={"backspace"}
                 handleKeyClick={handleKeyClick}
-                keyboardText={""}
+                keyColors={keyColors}
               />
               <img
                 className="backspace-img"
@@ -65,7 +66,7 @@ function KeyboardRow({ keyboardRow, index, handleKeyClick }) {
                 keyboardKey={keyboardKey}
                 classKey={"letter"}
                 handleKeyClick={handleKeyClick}
-                keyboardText={keyboardKey}
+                keyColors={keyColors}
               />
             </div>
           );
@@ -74,17 +75,18 @@ function KeyboardRow({ keyboardRow, index, handleKeyClick }) {
   );
 }
 
-function KeyboardKey({ keyboardKey, classKey, handleKeyClick, keyboardText }) {
+function KeyboardKey({ keyboardKey, classKey, handleKeyClick, keyColors }) {
   const className = `keyboard-key ${classKey}`;
+  const keyboardKeyText = keyboardKey === "BACKSPACE" ? "" : keyboardKey;
 
   return (
     <button
       className={className}
       onClick={handleKeyClick}
-      key={keyboardKey}
-      id={keyboardKey.toUpperCase()}
+      id={keyboardKey}
+      style={{backgroundColor : keyColors.get(keyboardKey)}}
     >
-      {keyboardText.toUpperCase()}
+      {keyboardKeyText}
     </button>
   );
 }
