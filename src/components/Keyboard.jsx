@@ -13,15 +13,13 @@ export default function KeyBoard({}) {
   return (
     <div className="keyboard">
       {KEYS.map((keyboardRow, index) => (
-        <div key={index}>
-          <KeyboardRow
-            keyboardRow={keyboardRow}
-            index={index}
-            handleKeyClick={handleKeyClick}
-            key={index}
-            keyColors={keyColors}
-          />
-        </div>
+        <KeyboardRow
+          keyboardRow={keyboardRow}
+          index={index}
+          handleKeyClick={handleKeyClick}
+          key={index}
+          keyColors={keyColors}
+        />
       ))}
     </div>
   );
@@ -32,39 +30,19 @@ function KeyboardRow({ keyboardRow, index }) {
   const className = `keyboard-row ${index + 1}`;
   return (
     <div className={className}>
-      {keyboardRow.map((keyboardKey, index) => {
-        if (keyboardKey === "ENTER") {
-          return (
-            <div key={index}>
-              <KeyboardKey keyboardKey={keyboardKey} classKey={"enter"} />
-            </div>
-          );
-        } else if (keyboardKey === "BACKSPACE") {
-          return (
-            <div className="backspace-container" key={index}>
-              <KeyboardKey keyboardKey={keyboardKey} classKey={"backspace"} />
-              <img
-                className="backspace-img"
-                src={backspace}
-                alt="backspace.svg"
-              ></img>
-            </div>
-          );
-        } else
-          return (
-            <div key={index}>
-              <KeyboardKey keyboardKey={keyboardKey} classKey={"letter"} />
-            </div>
-          );
-      })}
+      {keyboardRow.map((keyboardKey, index) => (
+        <KeyboardKey keyboardKey={keyboardKey} key={index} />
+      ))}
     </div>
   );
 }
 
-function KeyboardKey({ keyboardKey, classKey }) {
+function KeyboardKey({ keyboardKey }) {
   const { handleKeyClick, keyColors } = useContext(KeyboardContext);
+  const classKey =
+    keyboardKey.length > 1 ? keyboardKey.toLowerCase() : "letter";
   const className = `keyboard-key ${classKey}`;
-  const keyboardKeyText = keyboardKey === "BACKSPACE" ? "" : keyboardKey;
+  const keyboardKeyText = keyboardKey === "BACKSPACE" ? null : keyboardKey;
 
   return (
     <button
@@ -73,6 +51,13 @@ function KeyboardKey({ keyboardKey, classKey }) {
       id={keyboardKey}
       style={{ backgroundColor: keyColors.get(keyboardKey) }}
     >
+      {keyboardKey === "BACKSPACE" && (
+        <img
+          className="backspace-img"
+          src={backspace}
+          alt="backspace.svg"
+        ></img>
+      )}
       {keyboardKeyText}
     </button>
   );

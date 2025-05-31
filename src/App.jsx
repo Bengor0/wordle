@@ -74,8 +74,8 @@ export default function App() {
         wordArray.forEach((word) => wordSet.current.add(word.toUpperCase()));
         const randomWord =
           wordArray[Math.floor(Math.random() * (wordArray.length - 1))];
-        solution.current = randomWord.toUpperCase();
-        console.log(solution.current);
+        solution.current = randomWord.toUpperCase().split("");
+        console.log(solution.current.join(""));
       } catch (error) {
         console.error(error);
       }
@@ -102,7 +102,9 @@ export default function App() {
 
   const checkGuess = () => {
     const colors = [];
-    let correctCount = 0;
+    let correct = 0;
+    const mapChars = new Map();
+    solution.current.forEach((char) => mapChars.has(char) ? mapChars.set(char, mapChars.get(char) + 1) : mapChars.set(char, 1));
 
     for (let i = 0; i < WORD_LENGTH; i++) {
       let guessChar = guess.current[0][i];
@@ -111,17 +113,19 @@ export default function App() {
       if (guessChar === solutionChar) {
         colors.push("green");
         udpateKeyColor(guessChar, "green");
-        correctCount++;
-      } else if (solution.current.includes(guessChar)) {
+        correct++;
+        mapChars.set(guessChar, mapChars.get(guessChar) - 1);
+      } else if (solution.current.includes(guessChar) && mapChars.get(guessChar) > 0) {
         colors.push("orange");
         udpateKeyColor(guessChar, "#cc8400");
+        mapChars.set(guessChar, mapChars.get(guessChar) - 1);
       } else {
         colors.push("grey");
         udpateKeyColor(guessChar, "#403c3c");
       }
     }
 
-    correctCount === WORD_LENGTH && toggleIsGameOver();
+    correct === WORD_LENGTH && toggleIsGameOver();
 
     guess.current = [guess.current[0], colors];
     updateGuesses();
@@ -172,10 +176,12 @@ export default function App() {
 
   return (
     <>
-      <div className="board">
-        {guesses.map((guess, i) => {
-          return <Row guess={guess} key={i} />;
-        })}
+      <div className="top-container">
+        <div className="wordle-board">
+          {guesses.map((guess, i) => {
+            return <Row guess={guess} key={i} />;
+          })}
+        </div>
       </div>
       <div className="bottom-container">
         {isGameOver ? (

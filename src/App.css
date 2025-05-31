@@ -8,6 +8,8 @@
   text-align: center;
 }
 
+
+
 .bottom-container {
   width: 100%;
 
@@ -19,6 +21,13 @@
 .restart-button {
   position: relative;
   padding: 1em;
+}
+
+.top-container {
+  max-width: 290px;
+  max-height: 348px;
+  width: 90vw;
+  height: 90vw;
 }
 
 .tile {
@@ -53,10 +62,6 @@
 
 .row {
   display: flex;
-  
-}
-
-.letter {
 }
 
 .letter.black,
