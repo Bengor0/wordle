@@ -99,7 +99,7 @@ export default function App() {
         shallowKeyColors.set(guessChar, color);
         return shallowKeyColors;
       });
-    }, 2200);
+    }, 1700);
   };
 
   const checkGuess = () => {
@@ -161,7 +161,7 @@ export default function App() {
       if (key === "ENTER" && guess.current[0].length === WORD_LENGTH) {
         if (wordSet.current.has(guess.current[0])) {
           checkGuess();
-          await delay(2200);
+          await delay(1700);
           rowIndex.current = rowIndex.current + 1;
           guess.current = ["", BASE_COLORS];
           if (rowIndex.current >= NUM_OF_GUESSES) {
