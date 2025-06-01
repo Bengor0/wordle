@@ -82,8 +82,11 @@
 .letter.orange,
 .letter.grey {
   position: absolute;
-  width: 95%;
-  height: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
@@ -110,8 +113,5 @@
 }
 
 span {
-  position: relative;
-  bottom: 2.5px;
-  width: 100%;
-  height: 100%;
+  
 }
