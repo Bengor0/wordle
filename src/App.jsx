@@ -4,7 +4,8 @@ import KeyBoard from "./components/KeyBoard";
 import KeyboardContext from "./contexts/KeyboardContext";
 import "./App.css";
 
-const API_URL = "https://cheaderthecoder.github.io/5-Letter-words/words.json";
+const API_URL =
+  "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
 const WORD_LENGTH = 5;
 const NUM_OF_GUESSES = 6;
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
@@ -137,15 +138,13 @@ export default function App() {
     if (correct === WORD_LENGTH) {
       rowIndex.current === 0 &&
         setMessage(<Message message={"Čo ti jebee?"} />);
-      rowIndex.current === 1 &&
-        setMessage(<Message message={"Popičovka!"} />);
-        rowIndex.current === 2 &&
-        setMessage(<Message message={"tOmu ver."} />);
-        rowIndex.current === 3 &&
+      rowIndex.current === 1 && setMessage(<Message message={"Popičovka!"} />);
+      rowIndex.current === 2 && setMessage(<Message message={"tOmu ver."} />);
+      rowIndex.current === 3 &&
         setMessage(<Message message={"Slabší priemer"} />);
-        rowIndex.current === 4 &&
+      rowIndex.current === 4 &&
         setMessage(<Message message={"Nejde ti to moc."} />);
-        rowIndex.current === 5 &&
+      rowIndex.current === 5 &&
         setMessage(<Message message={"Skoro si dojebal"} />);
       toggleIsGameOver();
     }
@@ -168,7 +167,9 @@ export default function App() {
           guess.current = ["", BASE_COLORS];
           if (rowIndex.current >= NUM_OF_GUESSES) {
             toggleIsGameOver();
-            setMessage(<Message message={`Dojebals -> ${solution.current.join("")}`} />);
+            setMessage(
+              <Message message={`Dojebals -> ${solution.current.join("")}`} />
+            );
             return;
           }
         } else return;
