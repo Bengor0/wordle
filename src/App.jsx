@@ -52,6 +52,7 @@ export default function App() {
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
   const [message, setMessage] = useState(null);
+  const timeout = useRef(false);
 
   const restartGame = () => {
     guess.current = ["", BASE_COLORS];
@@ -158,13 +159,18 @@ export default function App() {
   };
 
   const handleKey = async (key) => {
-    if (!isGameOver) {
+    if (!isGameOver && !timeout.current) {
       if (key === "ENTER" && guess.current[0].length === WORD_LENGTH) {
+        timeout.current = true;
+        console.log(timeout);
         if (wordSet.current.has(guess.current[0])) {
           checkGuess();
           await delay(1700);
+          console.log("hello");
           rowIndex.current = rowIndex.current + 1;
           guess.current = ["", BASE_COLORS];
+          timeout.current = false;
+          console.log(timeout);
           if (rowIndex.current >= NUM_OF_GUESSES) {
             toggleIsGameOver();
             setMessage(
@@ -172,7 +178,11 @@ export default function App() {
             );
             return;
           }
-        } else return;
+          return;
+        } else {
+          timeout.current = false;
+          return;
+        }
       } else if (rowIndex.current < NUM_OF_GUESSES) {
         if (key === "BACKSPACE" && guess.current[0].length > 0) {
           guess.current[0] = guess.current[0].slice(0, -1);

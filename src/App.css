@@ -9,9 +9,18 @@
   text-align: center;
 }
 
+.top-container {
+  position: relative;
+  height: 64vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .bottom-container {
-  width: 100%;
-  height: 198.88px;
+  height: 36vh;
+  width: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,10 +31,7 @@
   padding: 1em;
 }
 
-.top-container {
-  position: relative;
-  max-height: 348px;
-}
+
 .message {
   position: absolute;
   left: 110px;
