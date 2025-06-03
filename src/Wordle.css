@@ -3,26 +3,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   text-align: center;
-}
-
-.top-container {
-  position: relative;
-  height: 64vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.bottom-container {
-  height: 36vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  
 }
 
 .restart-button {
@@ -52,17 +36,18 @@
   grid-template-columns: 17.24% 17.24% 17.24% 17.24% 17.24%;
   grid-template-rows: 14.37% 14.37% 14.37% 14.37% 14.37% 14.37%;
   gap: 3%;
+  margin-bottom: 20px;
 }
 
 @media screen and (orientation: portrait) {
   .wordle-board {
-    width: 70vw;
+    width: 70%;
   }
 }
 
 @media screen and (orientation: landscape) {
   .wordle-board {
-    height: 57.81vh;
+    height: 57.81%;
   }
 }
 
@@ -72,15 +57,11 @@
   display: flex;
   justify-content: end;
   align-items: center;
-  perspective: 1000px;
   width: 100%;
   height: 100%;
   font-size: 2em;
   font-weight: 700;
   user-select: none;
-}
-
-@container() {
 }
 
 .tile-inner {

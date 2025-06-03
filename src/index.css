@@ -4,6 +4,7 @@
   font-weight: 400;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
+
 }
 
 body {
@@ -29,7 +30,4 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
   color: rgba(255, 255, 255, 0.87);
-
 }
-
-
