@@ -2,13 +2,13 @@
   aspect-ratio: 58/25;
 }
 
-@media screen and (orientation: portrait){
+@media screen and (orientation: portrait) {
   .keyboard {
     width: 100vh;
   }
 }
 
-@media screen and (orientation: landscape){
+@media screen and (orientation: landscape) {
   .keyboard {
     height: 33.22vh;
   }
@@ -36,6 +36,9 @@
   font-size: 120%;
   font-weight: 700;
   margin: 0.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .keyboard-key.letter {

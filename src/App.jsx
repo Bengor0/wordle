@@ -256,7 +256,7 @@ function Row({ guess }) {
     );
   }
 
-  return <div className="row">{tiles}</div>;
+  return <>{tiles}</>
 }
 
 function Message({ message }) {
