@@ -4,8 +4,7 @@
   align-items: center;
   flex-direction: column;
   width: 100vw;
-  min-height: 100vh;
-  margin: 0 auto;
+  height: 100vh;
   text-align: center;
 }
 
@@ -20,7 +19,7 @@
 
 .bottom-container {
   height: 36vh;
-  width: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,7 +29,6 @@
   position: relative;
   padding: 1em;
 }
-
 
 .message {
   position: absolute;
@@ -48,6 +46,28 @@
   cursor: pointer;
 }
 
+.wordle-board {
+  aspect-ratio: 145/174;
+}
+
+@media screen and (orientation: portrait){
+  .wordle-board {
+    width: 70vw;
+  }
+}
+
+@media screen and (orientation: landscape){
+  .wordle-board {
+    height: 57.81vh;
+  }
+}
+
+.row {
+  display: flex;
+  height: 16.67%;
+  width: 100%;
+}
+
 .tile {
   background-color: transparent;
   border: none;
@@ -55,8 +75,8 @@
   justify-content: end;
   align-items: center;
   perspective: 1000px;
-  width: 50px;
-  height: 50px;
+  width: 17.24%;
+  height: 86.21%;
   margin: 4px;
   font-size: 2em;
   font-weight: 700;
@@ -77,10 +97,6 @@
 
 .tile.black .tile-inner {
   transform: rotateX(180deg);
-}
-
-.row {
-  display: flex;
 }
 
 .letter.black,

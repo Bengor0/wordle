@@ -1,8 +1,17 @@
 .keyboard {
-  max-height: 33.22vh;
-  height: 43.10vw;
-  max-width: 77.08vh;
-  width: 100vw;
+  aspect-ratio: 58/25;
+}
+
+@media screen and (orientation: portrait){
+  .keyboard {
+    width: 100vh;
+  }
+}
+
+@media screen and (orientation: landscape){
+  .keyboard {
+    height: 33.22vh;
+  }
 }
 
 .backspace-img {
