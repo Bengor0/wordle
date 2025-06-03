@@ -54,13 +54,13 @@
   gap: 3%;
 }
 
-@media screen and (orientation: portrait){
+@media screen and (orientation: portrait) {
   .wordle-board {
     width: 70vw;
   }
 }
 
-@media screen and (orientation: landscape){
+@media screen and (orientation: landscape) {
   .wordle-board {
     height: 57.81vh;
   }
@@ -80,8 +80,7 @@
   user-select: none;
 }
 
-@container () {
-
+@container() {
 }
 
 .tile-inner {
