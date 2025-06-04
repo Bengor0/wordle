@@ -39,15 +39,15 @@
   margin-bottom: 20px;
 }
 
-@media screen and (orientation: portrait) {
+@media screen and (max-aspect-ratio: 373 / 602) {
   .wordle-board {
     width: 70%;
   }
 }
 
-@media screen and (orientation: landscape) {
+@media screen and (min-aspect-ratio: 373 / 602) {
   .wordle-board {
-    height: 57.81%;
+    height: 57%;
   }
 }
 

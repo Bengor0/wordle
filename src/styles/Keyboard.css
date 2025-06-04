@@ -2,13 +2,13 @@
   aspect-ratio: 58/25;
 }
 
-@media screen and (orientation: portrait) {
+@media screen and (max-aspect-ratio: 373 / 602) {
   .keyboard {
     width: 90%;
   }
 }
 
-@media screen and (orientation: landscape) {
+@media screen and (min-aspect-ratio: 373 / 602) {
   .keyboard {
     height: 25%;
   }
