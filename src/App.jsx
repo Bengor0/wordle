@@ -7,10 +7,10 @@ const App = () => {
 
   return (
     <>
-      <header>
+      <header className={darkMode}>
         <DarkModeButton darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       </header>
-      <main>
+      <main className={darkMode}>
         <Wordle />
       </main>
     </>

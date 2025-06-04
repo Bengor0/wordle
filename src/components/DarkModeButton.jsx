@@ -1,6 +1,7 @@
 import ".././styles/DarkModeButton.css";
 
-const DarkModeButton = (darkMode, toggleDarkMode) => {
+const DarkModeButton = ({darkMode, toggleDarkMode}) => {
+
   return (
     <div className="dark-mode-container">
       <input
@@ -10,7 +11,7 @@ const DarkModeButton = (darkMode, toggleDarkMode) => {
         onClick={toggleDarkMode}
       />
       <label
-        htmlFor="dark-mode-input "
+        htmlFor="dark-mode-input"
         className={`dark-mode-label ${darkMode}`}
       ></label>
     </div>
