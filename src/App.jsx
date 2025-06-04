@@ -11,7 +11,7 @@ const App = () => {
         <DarkModeButton darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       </header>
       <main className={darkMode}>
-        <Wordle />
+        <Wordle darkMode={darkMode} />
       </main>
     </>
   );

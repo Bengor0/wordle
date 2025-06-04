@@ -4,7 +4,6 @@
   font-weight: 400;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
 }
 
 body {
@@ -23,8 +22,8 @@ header {
 
 header.light {
   transition: 0.5s ease-in-out;
-
-background-color: antiquewhite;
+  color: antiquewhite;
+  background-color: antiquewhite;
 }
 
 header.dark {
@@ -44,9 +43,8 @@ main {
 
 main.light {
   transition: 0.5s ease-in-out;
-
-background-color: antiquewhite;
-
+  color: antiquewhite;
+  background-color: antiquewhite;
 }
 
 main.dark {

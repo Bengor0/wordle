@@ -114,3 +114,14 @@
   background-color: #242424;
   transform: rotateX(180deg);
 }
+
+.letter.black.dark {
+  color: antiquewhite;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  background-color: #242424;
+}
+.letter.black.light {
+  color: #242424;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  background-color: antiquewhite;
+}

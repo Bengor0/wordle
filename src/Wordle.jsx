@@ -40,7 +40,7 @@ const BASE_KEY_COLORS = new Map([
   ["BACKSPACE", "#1a1a1a"],
 ]);
 
-export default function Wordle() {
+export default function Wordle({darkMode}) {
   const solution = useRef("");
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
@@ -211,7 +211,7 @@ export default function Wordle() {
         {message}
         <div className="wordle-board">
           {guesses.map((guess, i) => {
-            return <Row guess={guess} key={i} />;
+            return <Row guess={guess} darkMode={darkMode} key={i} />;
           })}
         </div>
         {isGameOver ? (
@@ -227,18 +227,18 @@ export default function Wordle() {
   );
 }
 
-function Row({ guess }) {
+function Row({ guess, darkMode }) {
   const tiles = [];
 
   for (let i = 0; i < WORD_LENGTH; i++) {
     let char = guess[0][i];
     let tileClassName = `tile ${guess[1][i]}`;
-    let spanClassName = `letter ${guess[1][i]}`;
+    let spanClassName = `letter ${guess[1][i]} ${darkMode}`;
 
     tiles.push(
       <div className={tileClassName} key={i} style={{ "--index": i }}>
         <div className="tile-inner" style={{ "--index": i }}>
-          <div className="letter black" style={{ "--index": i }}>
+          <div className={`letter black ${darkMode}`} style={{ "--index": i }}>
             <span>{char}</span>
           </div>
           <div className={spanClassName} style={{ "--index": i }}>
