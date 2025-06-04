@@ -1,15 +1,17 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import KeyboardContext from "../contexts/KeyboardContext";
 import ".././styles/Keyboard.css";
 import backspace from ".././assets/backspace.svg";
 
-export default function KeyBoard({}) {
-  const { handleKeyClick, keyColors } = useContext(KeyboardContext);
-  const KEYS = [
+const KEYS = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-    ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "BACKSPACE"],
+    ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "BACKSPACE"]
   ];
+
+export default function KeyBoard({}) {
+  const { handleKeyClick, keyColors } = useContext(KeyboardContext);
+  const [keyColor, setKeyColor] = useState(new Map());
   return (
     <div className="keyboard">
       {KEYS.map((keyboardRow, index) => (

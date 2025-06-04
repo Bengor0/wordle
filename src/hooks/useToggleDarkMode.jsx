@@ -1,15 +1,15 @@
 import { useCallback, useRef, useState } from "react";
 
 const useToggleDarkMode = (initialState = true) => {
-  const state = useRef(initialState);
-  const [darkMode, setDarkMode] = useState(state.current ? "dark" : "light");
+  const darkModeState = useRef(initialState);
+  const [darkMode, setDarkMode] = useState(darkModeState.current ? "dark" : "light");
 
   const toggleDarkMode = useCallback(() => {
-    state.current = !state.current;
-    setDarkMode(state.current ? "dark" : "light");
+    darkModeState.current = !darkModeState.current;
+    setDarkMode(darkModeState.current ? "dark" : "light");
   }, []);
 
-  return [darkMode, toggleDarkMode];
+  return [darkMode, darkModeState.current, toggleDarkMode];
 };
 
 export default useToggleDarkMode;

@@ -40,7 +40,7 @@ const BASE_KEY_COLORS = new Map([
   ["BACKSPACE", "#1a1a1a"],
 ]);
 
-export default function Wordle({darkMode}) {
+export default function Wordle({darkMode, darkModeState}) {
   const solution = useRef("");
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
