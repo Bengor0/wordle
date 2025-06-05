@@ -9,6 +9,7 @@ import {
 import KeyboardContext from "../contexts/KeyboardContext";
 import ".././styles/Keyboard.css";
 import backspace from ".././assets/backspace.svg";
+import useRelativeFontSize from "../hooks/useRelativeFontSize";
 
 const KEYS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -82,28 +83,16 @@ function KeyboardRow({ darkMode, keyboardRow, index, keyColors }) {
 
 function KeyboardKey({ darkMode, keyboardKey, keyColors }) {
   const { handleKeyClick } = useContext(KeyboardContext);
+  const [fontSize, elementRef] = useRelativeFontSize(keyboardKey === "ENTER" ? 0.15 : 0.4);
   const classKey =
     keyboardKey.length > 1 ? keyboardKey.toLowerCase() : "key-letter";
   const className = `keyboard-key ${classKey} ${keyColors.get(
     keyboardKey
   )} ${darkMode}`;
   const keyboardKeyText = keyboardKey === "BACKSPACE" ? null : keyboardKey;
-  const [fontSize, setFontSize] = useState(12);
-  const keyboardKeyRef = useRef(null);
-  const fontScalingFactor = keyboardKeyText === 'ENTER' ? 0.188058 : 0.364188;
-
-  const resizeFontSize = () => {
-    keyboardKeyRef.current && setFontSize(keyboardKeyRef.current.clientWidth * fontScalingFactor);
-  }
-
-  useEffect(() => {
-    window.addEventListener('resize', resizeFontSize);
-
-    return () => window.removeEventListener('resize', resizeFontSize);
-  }, []);
 
   return (
-    <button ref={keyboardKeyRef} className={className} onClick={handleKeyClick} id={keyboardKey} style={{fontSize: `${fontSize}px`}} >
+    <button ref={elementRef} className={className} onClick={handleKeyClick} id={keyboardKey} style={{fontSize: `${fontSize}px`}} >
       {keyboardKey === "BACKSPACE" && (
         <img
           className="backspace-img"

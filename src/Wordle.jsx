@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import useToggleState from "./hooks/useToggleState";
 import KeyBoard from "./components/KeyBoard";
 import KeyboardContext from "./contexts/KeyboardContext";
+import useRelativeFontSize from "./hooks/useRelativeFontSize";
 import "./Wordle.css";
 
 const API_URL =
@@ -220,20 +221,7 @@ export default function Wordle({ darkMode, darkModeState }) {
 
 function Row({ guess, darkMode }) {
   const tiles = [];
-  const [fontSize, setFontSize] = useState(30);
-  const tileRef = useRef(null);
-  const fontScalingFactor = 0.711912;
-
-  const resizeFontSize = () => {
-    tileRef.current &&
-      setFontSize(tileRef.current.clientWidth * fontScalingFactor);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", resizeFontSize);
-
-    return () => window.removeEventListener("resize", resizeFontSize);
-  }, []);
+  const [fontSize, elementRef] = useRelativeFontSize(0.9);
 
   for (let i = 0; i < WORD_LENGTH; i++) {
     let char = guess[0][i];
@@ -245,7 +233,7 @@ function Row({ guess, darkMode }) {
         className={tileClassName}
         key={i}
         style={{ "--index": i, fontSize: `${fontSize}px` }}
-        ref={tileRef}
+        ref={elementRef}
       >
         <div className="tile-inner" style={{ "--index": i }}>
           <div className={`letter black ${darkMode}`} style={{ "--index": i }}>
