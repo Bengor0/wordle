@@ -11,14 +11,13 @@ const useRelativeFontSize = (initialRelativeSize = 0.5) => {
 
   const resizeFont = useCallback(() => {
     setFontsize(elementRef.current.clientWidth * relativeSize);
-    console.log(`${elementRef.current.clientWidth} * ${relativeSize} = ${elementRef.current.clientWidth * relativeSize}`);
-  }, []); 
+  }, []);
 
   useEffect(() => {
-    window.addEventListener('resize', resizeFont);
+    window.addEventListener("resize", resizeFont);
 
-    return () => window.removeEventListener('resize', resizeFont);
-  }, []); 
+    return () => window.removeEventListener("resize", resizeFont);
+  }, []);
 
   return [fontSize, elementRef];
 };

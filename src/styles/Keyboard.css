@@ -2,13 +2,13 @@
   aspect-ratio: 65/25;
 }
 
-@media screen and (max-aspect-ratio: 420 / 559.33) {
+@media screen and (max-aspect-ratio: 400 / 559.33) {
   .keyboard {
     max-width: 100%;
   }
 }
 
-@media screen and (min-aspect-ratio: 420 / 559.33) {
+@media screen and (min-aspect-ratio: 400 / 559.33) {
   .keyboard {
     height: 30%;
   }
@@ -80,8 +80,7 @@
 }
 
 .keyboard-key.key-letter.orange.dark {
-  color: #101c34;
-  background-color: #ffd700;
+  background-color: orange;
 }
 
 .keyboard-key.key-letter.grey.light {

@@ -1,6 +1,6 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: pink;
+  background-color: #101c34;
   overflow-x: hidden;
 }
 
@@ -13,6 +13,14 @@ body {
   padding-right: env(safe-area-inset-right, 0px);
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+body.dark {
+  background-color: #101c34;
+}
+
+body.ligth {
+  background-color: #fcf4cc;
 }
 
 header {

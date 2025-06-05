@@ -5,6 +5,9 @@ import useToggleDarkMode from "./hooks/useToggleDarkMode";
 const App = () => {
   const [darkMode, darkModeState, toggleDarkMode] = useToggleDarkMode(true);
 
+  document.querySelector("body").classList = `${darkMode}`;
+
+
   return (
     <>
       <header className={darkMode}>
