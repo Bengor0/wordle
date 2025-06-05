@@ -4,7 +4,7 @@
 
 @media screen and (max-aspect-ratio: 420 / 559.33) {
   .keyboard {
-    max-width: 95%;
+    max-width: 100%;
   }
 }
 
