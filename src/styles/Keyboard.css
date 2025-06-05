@@ -22,11 +22,13 @@
 }
 
 .keyboard-key.backspace.light .backspace-img {
-  filter: invert(20%) sepia(6%) saturate(13%) hue-rotate(344deg) brightness(102%) contrast(93%);
+  filter: invert(20%) sepia(6%) saturate(13%) hue-rotate(344deg)
+    brightness(102%) contrast(93%);
 }
 
 .keyboard-key.backspace.dark .backspace-img {
-  filter: invert(90%) sepia(9%) saturate(364%) hue-rotate(181deg) brightness(103%) contrast(92%);
+  filter: invert(90%) sepia(9%) saturate(364%) hue-rotate(181deg)
+    brightness(103%) contrast(92%);
 }
 
 .keyboard-key {
@@ -61,7 +63,7 @@
 }
 
 .keyboard-key.key-letter.dark {
-  background-color: #28344c;
+  background-color: #4d5f71;
 }
 
 .keyboard-key.key-letter.green.light {
@@ -87,7 +89,7 @@
 }
 
 .keyboard-key.key-letter.grey.dark {
-  background-color: #4d5f71;
+  background-color: #28344c;
 }
 
 .keyboard-key.backspace {
@@ -103,7 +105,8 @@
 }
 
 .keyboard-key.backspace.dark {
-  background-color: #28344c;
+    background-color: #4d5f71;
+
 }
 
 .keyboard-key.enter {
@@ -118,7 +121,8 @@
 }
 
 .keyboard-key.enter.dark {
-  background-color: #28344c;
+    background-color: #4d5f71;
+
 }
 
 .keyboard-row {
