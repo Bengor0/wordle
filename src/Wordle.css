@@ -58,7 +58,6 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  font-size: 2em;
   font-weight: 700;
   user-select: none;
 }
@@ -79,11 +78,7 @@
   transform: rotateX(180deg);
 }
 
-.letter.black,
-.letter.green,
-.letter.orange,
-.letter.grey {
-  color: antiquewhite;
+.letter {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -92,47 +87,67 @@
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out,
+    border-color 0.5s ease-in-out;
 }
 
-.letter.green {
-  border: 2px solid green;
-  background-color: green;
+.letter.light {
+  color: #fcf4cc;
+}
+.letter.dark {
+  color: #e0eaf5;
 }
 
-.letter.orange {
-  border: 2px solid #cc8400;
-  background-color: #cc8400;
+.letter.green.light {
+  border: 2px solid ;
+  border-color: #5c825c;
+  background-color: #5c825c;
 }
 
-.letter.grey {
-transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+.letter.green.dark {
+  border: 2px solid ;
+  border-color: #4CAF50;
+  background-color: #4CAF50;
+}
+
+.letter.orange.light {
+  border: 2px solid ;
+  border-color: #ffcf59;
+  background-color: #ffcf59;
+}
+
+.letter.orange.dark {
   border: 2px solid;
+  border-color: #FFD700;
+  background-color: #FFD700;
 }
 
-.letter.grey.dark{
-  border-color: #403c3c;
-  background-color: #403c3c;
+.letter.grey.dark {
+  border: 2px solid;
+  border-color: #4d5f71;
+  background-color: #4d5f71;
 }
 
 .letter.grey.light {
-  border-color: #706D6D;
-  background-color: #706D6D;
+  border: 2px solid;
+  border-color: #e0c294;
+  background-color: #e0c294;
 }
 
 .letter.black {
   border: 2px solid;
-  background-color: #242424;
-  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out,
+    border-color 0.5s ease-in-out;
   transform: rotateX(180deg);
 }
 
-.letter.black.dark {
-  color: antiquewhite;
-  border-color: #403c3c;
-  background-color: #242424;
-}
 .letter.black.light {
-  color: #242424;
-  border-color: #706D6D;
-  background-color: antiquewhite;
+  color: #5c4c34;
+  border-color: #e0c294;
+  background-color: #fcf4cc;
+}
+
+.letter.black.dark {
+  border-color: #28344c;
+  background-color: #101c34;
 }

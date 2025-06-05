@@ -19,7 +19,6 @@ const KEYS = [
 function KeyBoard(props, ref) {
   const { handleKeyClick } = useContext(KeyboardContext);
   const [keyColors, setKeyColor] = useState(new Map());
-  console.log(props.darkMode);
 
   useEffect(() => {
     for (let i = 0; i < KEYS.length; i++) {
@@ -99,6 +98,8 @@ function KeyboardKey({ darkMode, keyboardKey, keyColors }) {
 
   useEffect(() => {
     window.addEventListener('resize', resizeFontSize);
+
+    return () => window.removeEventListener('resize', resizeFontSize);
   }, []);
 
   return (

@@ -40,7 +40,7 @@ const BASE_KEY_COLORS = new Map([
   ["BACKSPACE", "#1a1a1a"],
 ]);
 
-export default function Wordle({darkMode, darkModeState}) {
+export default function Wordle({ darkMode, darkModeState }) {
   const solution = useRef("");
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
@@ -199,27 +199,41 @@ export default function Wordle({darkMode, darkModeState}) {
 
   return (
     <>
-        {message}
-        <div className="wordle-board">
-          {guesses.map((guess, i) => {
-            return <Row guess={guess} darkMode={darkMode} key={i} />;
-          })}
-        </div>
-        {isGameOver ? (
-          <button className="restart-button" onClick={restartGame}>
-            Play again
-          </button>
-        ) : (
-          <KeyboardContext.Provider value={{ handleKeyClick }}>
-            <KeyBoard darkMode={darkMode} ref={keyboardRef} />
-          </KeyboardContext.Provider>
-        )}
+      {message}
+      <div className="wordle-board">
+        {guesses.map((guess, i) => {
+          return <Row guess={guess} darkMode={darkMode} key={i} />;
+        })}
+      </div>
+      {isGameOver ? (
+        <button className="restart-button" onClick={restartGame}>
+          Play again
+        </button>
+      ) : (
+        <KeyboardContext.Provider value={{ handleKeyClick }}>
+          <KeyBoard darkMode={darkMode} ref={keyboardRef} />
+        </KeyboardContext.Provider>
+      )}
     </>
   );
 }
 
 function Row({ guess, darkMode }) {
   const tiles = [];
+  const [fontSize, setFontSize] = useState(30);
+  const tileRef = useRef(null);
+  const fontScalingFactor = 0.711912;
+
+  const resizeFontSize = () => {
+    tileRef.current &&
+      setFontSize(tileRef.current.clientWidth * fontScalingFactor);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", resizeFontSize);
+
+    return () => window.removeEventListener("resize", resizeFontSize);
+  }, []);
 
   for (let i = 0; i < WORD_LENGTH; i++) {
     let char = guess[0][i];
@@ -227,7 +241,12 @@ function Row({ guess, darkMode }) {
     let spanClassName = `letter ${guess[1][i]} ${darkMode}`;
 
     tiles.push(
-      <div className={tileClassName} key={i} style={{ "--index": i }}>
+      <div
+        className={tileClassName}
+        key={i}
+        style={{ "--index": i, fontSize: `${fontSize}px` }}
+        ref={tileRef}
+      >
         <div className="tile-inner" style={{ "--index": i }}>
           <div className={`letter black ${darkMode}`} style={{ "--index": i }}>
             <span>{char}</span>
@@ -240,7 +259,7 @@ function Row({ guess, darkMode }) {
     );
   }
 
-  return <>{tiles}</>
+  return <>{tiles}</>;
 }
 
 function Message({ message }) {

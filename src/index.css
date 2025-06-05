@@ -18,19 +18,18 @@ body {
 header {
   position: relative;
   display: block;
-  background-color: #242424;
   width: 100%;
   height: 8%;
   transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
 }
 
 header.light {
-  color: antiquewhite;
-  background-color: antiquewhite;
+  color: #333333;
+  background-color: #fcf4cc;
 }
 
 header.dark {
-  background-color: #242424;
+  background-color: #101c34;
 }
 
 main {
@@ -44,12 +43,12 @@ main {
 }
 
 main.light {
-  color: antiquewhite;
-  background-color: antiquewhite;
+  color: #333333;
+  background-color: #fcf4cc;
 }
 
 main.dark {
-  background-color: #242424;
+  background-color: #101c34;
 }
 
 h1 {
