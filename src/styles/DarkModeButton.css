@@ -13,41 +13,56 @@
     position: absolute;
     right: 5%; 
     display: block;
-    background-color: #1a1a1a;
-    border: 2px solid antiquewhite;
+    background-color: #101c34;
+    border: 2px solid #fcf4cc;
     aspect-ratio: 5/2;
     border-radius: 5vh;
     cursor: pointer;
     transition: 0.5s ease-in-out;
 }
 
+.day {
+  position: absolute;
+  color: #101c34;
+  font-size: 12px;
+  top: 2px;
+  right: 4px;
+  font-weight: 700;
+}
+
+.night {
+  position: absolute;
+  color: #fcf4cc;
+  font-size: 12px;
+  top: 2px;
+  left: 2px;
+  font-weight: 700;
+}
+
 .dark-mode-label:after {
     font-family:'Courier New', Courier, monospace;
-    content: "W";
+    content: "";
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #1a1a1a;
-    background-color: antiquewhite;
+    background-color: #fcf4cc;
     width: 36%;
     height: 90%;
     position: absolute;
     top: 5.56%;
     right: 2%;
     border-radius: 50%;
-    transition: transform 0.5s ease-in-out, right 0.5s ease-in-out, background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out, right 0.5s ease-in-out, background-color 0.5s ease-in-out, color 0.5s ease-in-out, content 0.5s ease-in-out;
 }
 
 .dark-mode-input:checked + .dark-mode-label:after {
-    transform: rotate(-360deg);
     right: 63%;
-    background-color: #1a1a1a;
-    color: antiquewhite;
+    background-color: #101c34;
 }
 
 .dark-mode-input:checked + .dark-mode-label {
-    background-color: antiquewhite;
-    border: 2px solid #1a1a1a;
+    background-color: #fcf4cc;
+    border: 2px solid #101c34;
 }
 
 @media screen and (max-aspect-ratio: 373 / 602) {

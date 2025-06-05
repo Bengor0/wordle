@@ -159,7 +159,7 @@ export default function Wordle({ darkMode, darkModeState }) {
           rowIndex.current = rowIndex.current + 1;
           guess.current = ["", BASE_COLORS];
           timeout.current = false;
-          if (rowIndex.current >= NUM_OF_GUESSES) {
+          if (!isGameOver && rowIndex.current >= NUM_OF_GUESSES) {
             toggleIsGameOver();
             setMessage(
               <Message message={`Dojebals -> ${solution.current.join("")}`} />
@@ -262,6 +262,6 @@ function Row({ guess, darkMode }) {
   return <>{tiles}</>;
 }
 
-function Message({ message }) {
-  return <div className="message">{message}</div>;
+function Message({ message, darkMode }) {
+  return <div className={`message ${darkMode}`}>{message}</div>;
 }

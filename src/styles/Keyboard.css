@@ -56,9 +56,6 @@
   margin-right: 0.5%;
 }
 
-@container keyboardKey {
-}
-
 .keyboard-key.key-letter.light {
   background-color: #f8dcac;
 }

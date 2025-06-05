@@ -88,9 +88,9 @@ function KeyboardKey({ darkMode, keyboardKey, keyColors }) {
     keyboardKey
   )} ${darkMode}`;
   const keyboardKeyText = keyboardKey === "BACKSPACE" ? null : keyboardKey;
-  const [fontSize, setFontSize] = useState(10);
+  const [fontSize, setFontSize] = useState(12);
   const keyboardKeyRef = useRef(null);
-  const fontScalingFactor = keyboardKeyText === 'ENTER' ? 0.156715 : 0.303490;
+  const fontScalingFactor = keyboardKeyText === 'ENTER' ? 0.188058 : 0.364188;
 
   const resizeFontSize = () => {
     keyboardKeyRef.current && setFontSize(keyboardKeyRef.current.clientWidth * fontScalingFactor);
