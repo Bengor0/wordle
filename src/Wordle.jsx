@@ -53,6 +53,7 @@ export default function Wordle({darkMode, darkModeState}) {
   const wordSet = useRef(new Set());
   const [message, setMessage] = useState(null);
   const timeout = useRef(false);
+  const keyboardRef = useRef(null);
 
   const restartGame = () => {
     guess.current = ["", BASE_COLORS];
@@ -94,16 +95,6 @@ export default function Wordle({darkMode, darkModeState}) {
     setGuesses(shallowGuesses);
   };
 
-  const udpateKeyColor = (guessChar, color) => {
-    setTimeout(() => {
-      setKeyColors((prevKeyColors) => {
-        const shallowKeyColors = new Map(prevKeyColors);
-        shallowKeyColors.set(guessChar, color);
-        return shallowKeyColors;
-      });
-    }, 1700);
-  };
-
   const checkGuess = () => {
     const colors = [];
     let correct = 0;
@@ -120,7 +111,7 @@ export default function Wordle({darkMode, darkModeState}) {
 
       if (guessChar === solutionChar) {
         colors.push("green");
-        udpateKeyColor(guessChar, "green");
+        keyboardRef.current?.udpateKeyColor(guessChar, "green");
         correct++;
         mapChars.set(guessChar, mapChars.get(guessChar) - 1);
       } else if (
@@ -128,11 +119,11 @@ export default function Wordle({darkMode, darkModeState}) {
         mapChars.get(guessChar) > 0
       ) {
         colors.push("orange");
-        udpateKeyColor(guessChar, "#cc8400");
+        keyboardRef.current?.udpateKeyColor(guessChar, "orange");
         mapChars.set(guessChar, mapChars.get(guessChar) - 1);
       } else {
         colors.push("grey");
-        udpateKeyColor(guessChar, "#403c3c");
+        keyboardRef.current?.udpateKeyColor(guessChar, "grey");
       }
     }
 
@@ -219,8 +210,8 @@ export default function Wordle({darkMode, darkModeState}) {
             Play again
           </button>
         ) : (
-          <KeyboardContext.Provider value={{ handleKeyClick, keyColors }}>
-            <KeyBoard />
+          <KeyboardContext.Provider value={{ handleKeyClick }}>
+            <KeyBoard darkMode={darkMode} ref={keyboardRef} />
           </KeyboardContext.Provider>
         )}
     </>

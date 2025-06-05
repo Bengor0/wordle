@@ -1,16 +1,16 @@
 .keyboard {
-  aspect-ratio: 58/25;
+  aspect-ratio: 65/25;
 }
 
-@media screen and (max-aspect-ratio: 373 / 602) {
+@media screen and (max-aspect-ratio: 420 / 559.33) {
   .keyboard {
-    width: 90%;
+    max-width: 95%;
   }
 }
 
-@media screen and (min-aspect-ratio: 373 / 602) {
+@media screen and (min-aspect-ratio: 420 / 559.33) {
   .keyboard {
-    height: 25%;
+    height: 30%;
   }
 }
 
@@ -22,40 +22,73 @@
   pointer-events: none;
 }
 
-.keyboard-key.backspace {
+.keyboard-key {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  border-radius: 15%;
+  border: 0;
+  height: 95%;
+  color: antiquewhite;
+}
+
+.keyboard-key.key-letter {
+  height: 95%;
+  width: 8.21%;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+  transition: background-color 0.5s ease-in-out;
+}
+
+@container keyboardKey {
+  
+}
+
+.keyboard-key.key-letter.dark {
+  background-color: #808080;
+}
+
+.keyboard-key.key-letter.light {
+  background-color: #776f62;
+}
+
+.keyboard-key.key-letter.green {
+  background-color: green;
+}
+
+.keyboard-key.key-letter.orange {
+  background-color: #cc8400;
+}
+
+.keyboard-key.key-letter.grey.dark {
+  background-color: #403c3c;
+}
+
+.keyboard-key.key-letter.grey.ligth {
+  background-color: #706d6d;
+}
+
+.keyboard-key.backspace {
+  height: 100%;
+  width: 14.87%;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
   position: relative;
   background-color: #1a1a1a;
-  width: 15.09%;
-}
-
-.keyboard-key {
-  height: 92.84%;
-  font-size: 120%;
-  font-weight: 700;
-  margin: 0.5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.keyboard-key.letter {
-  width: 8.62%;
-  background-color: #808080;
 }
 
 .keyboard-key.enter {
   background-color: #1a1a1a;
-  font-size: 60%;
-  width: 12.93%;
+  height: 100%;
+  width: 15.9%;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
 }
 
 .keyboard-row {
   display: flex;
   height: 33.33%;
   width: 100%;
-  align-items: center;
   justify-content: center;
+  container: keyboardKey / normal;
 }
