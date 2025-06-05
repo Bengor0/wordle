@@ -221,7 +221,7 @@ export default function Wordle({ darkMode, darkModeState }) {
 
 function Row({ guess, darkMode }) {
   const tiles = [];
-  const [fontSize, elementRef] = useRelativeFontSize(0.9);
+  const [fontSize, elementRef] = useRelativeFontSize(0.7);
 
   for (let i = 0; i < WORD_LENGTH; i++) {
     let char = guess[0][i];

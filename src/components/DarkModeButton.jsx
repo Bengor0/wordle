@@ -3,7 +3,7 @@ import useRelativeFontSize from "../hooks/useRelativeFontSize";
 import { useEffect } from "react";
 
 const DarkModeButton = ({ darkMode, toggleDarkMode }) => {
-  const [fontSize, elementRef] = useRelativeFontSize(0.05);
+  const [fontSize, elementRef] = useRelativeFontSize(0.15);
 
   return (
     <div className="dark-mode-container">
