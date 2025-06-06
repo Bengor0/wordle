@@ -30,7 +30,7 @@ export default function Wordle({ darkMode }) {
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
   const [message, setMessage] = useState(null);
-  const timeout = useRef(false);
+  const enterTimeout = useRef(false);
   const keyboardRef = useRef(null);
   const [wordleFontSize, wordleElementRef] = useRelativeFontSize(0.7, "width");
   const [messageFontSize, messageElementRef] = useRelativeFontSize(
@@ -48,7 +48,7 @@ export default function Wordle({ darkMode }) {
     toggleRestart();
   };
 
-  const delay = (ms) => {
+  const guessRevealAnimation = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
@@ -134,15 +134,15 @@ export default function Wordle({ darkMode }) {
   };
 
   const handleKey = async (key) => {
-    if (!isGameOver && !timeout.current) {
+    if (!isGameOver && !enterTimeout.current) {
       if (key === "ENTER" && guess.current[0].length === WORD_LENGTH) {
-        timeout.current = true;
+        enterTimeout.current = true;
         if (wordSet.current.has(guess.current[0])) {
           checkGuess();
-          await delay(1700);
+          await guessRevealAnimation(1700);
           rowIndex.current = rowIndex.current + 1;
           guess.current = ["", BASE_COLORS];
-          timeout.current = false;
+          enterTimeout.current = false;
           if (!isGameOver && rowIndex.current >= NUM_OF_GUESSES) {
             toggleIsGameOver();
             setMessage(<Message message={`${solution.current.join("")}`} />);
@@ -150,7 +150,7 @@ export default function Wordle({ darkMode }) {
           }
           return;
         } else {
-          timeout.current = false;
+          enterTimeout.current = false;
           return;
         }
       } else if (rowIndex.current < NUM_OF_GUESSES) {
