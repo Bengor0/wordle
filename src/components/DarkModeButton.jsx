@@ -19,8 +19,15 @@ const DarkModeButton = ({ darkMode, toggleDarkMode }) => {
         className={`dark-mode-label ${darkMode}`}
         style={{ fontSize: `${fontSize}px` }}
       >
-        <div className="night" style={{top: `${fontSize * 0.5357}px`}} >night</div>
-        <div className="day" style={{top: `${fontSize * 0.5357}px`}} >day</div>
+        <div
+          className="night"
+          style={{ marginLeft: `${fontSize * 0.59524}px` }}
+        >
+          night
+        </div>
+        <div className="day" style={{ marginRight: `${fontSize * 0.59524}px` }}>
+          day
+        </div>
       </label>
     </div>
   );

@@ -12,7 +12,9 @@
 .dark-mode-label {
   position: absolute;
   right: 5%;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: #101c34;
   border: 2px solid #fcf4cc;
   aspect-ratio: 5/2;
@@ -23,17 +25,11 @@
 }
 
 .day {
-  position: relative;
-  display: inline-block;
   color: #101c34;
   font-weight: 700;
 }
 
 .night {
-  position: relative;
-  top: 20%;
-  right: 5%;
-  display: inline-block;
   color: #fcf4cc;
   font-weight: 700;
 }
