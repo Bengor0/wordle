@@ -1,11 +1,4 @@
-import {
-  useContext,
-  useState,
-  forwardRef,
-  useImperativeHandle,
-  useEffect,
-  useRef,
-} from "react";
+import { useContext, useState, forwardRef, useImperativeHandle } from "react";
 import KeyboardContext from "../contexts/KeyboardContext";
 import ".././styles/Keyboard.css";
 import backspace from ".././assets/backspace.svg";
@@ -37,7 +30,10 @@ function KeyBoard(props, ref) {
   }));
 
   return (
-    <div className={`keyboard ${props.darkMode}`} style={{ fontSize: `${fontSize}px` }}>
+    <div
+      className={`keyboard ${props.darkMode}`}
+      style={{ fontSize: `${fontSize}px` }}
+    >
       {KEYS.map((keyboardRow, index) => (
         <KeyboardRow
           keyboardRow={keyboardRow}
@@ -75,9 +71,7 @@ function KeyboardKey({ keyboardKey, keyColors, elementRef }) {
 
   const classKey =
     keyboardKey.length > 1 ? keyboardKey.toLowerCase() : "key-letter";
-  const className = `keyboard-key ${classKey} ${keyColors.get(
-    keyboardKey
-  )}`;
+  const className = `keyboard-key ${classKey} ${keyColors.get(keyboardKey)}`;
   const keyboardKeyText = keyboardKey === "BACKSPACE" ? null : keyboardKey;
 
   return (

@@ -10,8 +10,16 @@ const API_URL =
 const WORD_LENGTH = 5;
 const NUM_OF_GUESSES = 6;
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
+const MESSAGES = [
+  ["Pure genius!", "Bull's eye!", "Perfect!"],
+  ["Excellent!", "Amazing!", "Incredible!"],
+  ["Wow!", "Great skill!", "Nailed it!"],
+  ["Well done!", "Solid effor!", "Good job!"],
+  ["We're there!", "Nice!", "With spare guess left!"],
+  ["Close call!", "Barely there!", "This was tricky!", "No room!"],
+];
 
-export default function Wordle({ darkMode, darkModeState }) {
+export default function Wordle({ darkMode }) {
   const solution = useRef("");
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
@@ -25,8 +33,10 @@ export default function Wordle({ darkMode, darkModeState }) {
   const timeout = useRef(false);
   const keyboardRef = useRef(null);
   const [wordleFontSize, wordleElementRef] = useRelativeFontSize(0.7, "width");
-  const [messageFontSize, messageElementRef] = useRelativeFontSize(0.07, "width");
-
+  const [messageFontSize, messageElementRef] = useRelativeFontSize(
+    0.07,
+    "width"
+  );
 
   const restartGame = () => {
     guess.current = ["", BASE_COLORS];
@@ -100,12 +110,18 @@ export default function Wordle({ darkMode, darkModeState }) {
     }
 
     if (correct === WORD_LENGTH) {
-      rowIndex.current === 0 && setMessage("Čo ti jebee?");
-      rowIndex.current === 1 && setMessage("Popičovka!");
-      rowIndex.current === 2 && setMessage("tOmu ver.");
-      rowIndex.current === 3 && setMessage("Slabší priemer");
-      rowIndex.current === 4 && setMessage("Nejde ti to moc.");
-      rowIndex.current === 5 && setMessage("Skoro si dojebal");
+      rowIndex.current === 0 &&
+        setMessage(MESSAGES[0][Math.floor(Math.random() * 3)]);
+      rowIndex.current === 1 &&
+        setMessage(MESSAGES[1][Math.floor(Math.random() * 3)]);
+      rowIndex.current === 2 &&
+        setMessage(MESSAGES[2][Math.floor(Math.random() * 3)]);
+      rowIndex.current === 3 &&
+        setMessage(MESSAGES[3][Math.floor(Math.random() * 3)]);
+      rowIndex.current === 4 &&
+        setMessage(MESSAGES[4][Math.floor(Math.random() * 3)]);
+      rowIndex.current === 5 &&
+        setMessage(MESSAGES[5][Math.floor(Math.random() * 3)]);
       toggleIsGameOver();
     }
 
@@ -129,9 +145,7 @@ export default function Wordle({ darkMode, darkModeState }) {
           timeout.current = false;
           if (!isGameOver && rowIndex.current >= NUM_OF_GUESSES) {
             toggleIsGameOver();
-            setMessage(
-              <Message message={`Dojebals -> ${solution.current.join("")}`} />
-            );
+            setMessage(<Message message={`${solution.current.join("")}`} />);
             return;
           }
           return;
@@ -167,8 +181,18 @@ export default function Wordle({ darkMode, darkModeState }) {
 
   return (
     <>
-      {isGameOver && <Message message={message} darkMode={darkMode} messageFontSize={messageFontSize} />}
-      <div ref={messageElementRef} className="wordle-board" style={{ fontSize: `${wordleFontSize}px` }}>
+      {isGameOver && (
+        <Message
+          message={message}
+          darkMode={darkMode}
+          messageFontSize={messageFontSize}
+        />
+      )}
+      <div
+        ref={messageElementRef}
+        className="wordle-board"
+        style={{ fontSize: `${wordleFontSize}px` }}
+      >
         {guesses.map((guess, i) => {
           return (
             <Row
@@ -181,7 +205,14 @@ export default function Wordle({ darkMode, darkModeState }) {
         })}
       </div>
       {isGameOver ? (
-        <button className={`restart-button ${darkMode}`} onClick={restartGame} style={{fontSize: `${messageFontSize}px`, borderRadius: `${0.3529 * messageFontSize}px`}} >
+        <button
+          className={`restart-button ${darkMode}`}
+          onClick={restartGame}
+          style={{
+            fontSize: `${messageFontSize}px`,
+            borderRadius: `${0.3529 * messageFontSize}px`,
+          }}
+        >
           Play again
         </button>
       ) : (
@@ -224,6 +255,15 @@ function Row({ guess, darkMode, wordleElementRef }) {
 }
 
 function Message({ message, darkMode, messageFontSize }) {
-
-  return <div className={`message ${darkMode}`} style={{fontSize: `${messageFontSize}px`, padding: `${0.2941 * messageFontSize}px`}} >{message}</div>;
+  return (
+    <div
+      className={`message ${darkMode}`}
+      style={{
+        fontSize: `${messageFontSize}px`,
+        padding: `${0.2941 * messageFontSize}px`,
+      }}
+    >
+      {message}
+    </div>
+  );
 }

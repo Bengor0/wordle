@@ -3,7 +3,7 @@ import DarkModeButton from "./components/DarkModeButton";
 import useToggleDarkMode from "./hooks/useToggleDarkMode";
 
 const App = () => {
-  const [darkMode, darkModeState, toggleDarkMode] = useToggleDarkMode(true);
+  const [darkMode, toggleDarkMode] = useToggleDarkMode(true);
 
   document.querySelector("body").classList = `${darkMode}`;
 
@@ -14,7 +14,7 @@ const App = () => {
         <DarkModeButton darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       </header>
       <main className={darkMode}>
-        <Wordle darkMode={darkMode} darkModeState={darkModeState} />
+        <Wordle darkMode={darkMode} />
       </main>
     </>
   );

@@ -9,7 +9,7 @@ const useToggleDarkMode = (initialState = true) => {
     setDarkMode(darkModeState.current ? "dark" : "light");
   }, []);
 
-  return [darkMode, darkModeState.current, toggleDarkMode];
+  return [darkMode, toggleDarkMode];
 };
 
 export default useToggleDarkMode;
