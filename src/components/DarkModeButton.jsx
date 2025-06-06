@@ -3,7 +3,7 @@ import useRelativeFontSize from "../hooks/useRelativeFontSize";
 import { useEffect } from "react";
 
 const DarkModeButton = ({ darkMode, toggleDarkMode }) => {
-  const [fontSize, elementRef] = useRelativeFontSize(0.15);
+  const [fontSize, elementRef] = useRelativeFontSize(0.15, "width");
 
   return (
     <div className="dark-mode-container">
@@ -19,8 +19,8 @@ const DarkModeButton = ({ darkMode, toggleDarkMode }) => {
         className={`dark-mode-label ${darkMode}`}
         style={{ fontSize: `${fontSize}px` }}
       >
-        <div className="night">night</div>
-        <div className="day">day</div>
+        <div className="night" style={{top: `${fontSize * 0.5357}px`}} >night</div>
+        <div className="day" style={{top: `${fontSize * 0.5357}px`}} >day</div>
       </label>
     </div>
   );

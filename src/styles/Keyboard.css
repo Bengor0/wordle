@@ -14,21 +14,11 @@
   }
 }
 
-.backspace-img {
-  width: 42.86%;
-  height: 50%;
-  pointer-events: none;
-  transition: filter 0.5s ease-in-out;
-}
-
-.keyboard-key.backspace.light .backspace-img {
-  filter: invert(20%) sepia(6%) saturate(13%) hue-rotate(344deg)
-    brightness(102%) contrast(93%);
-}
-
-.keyboard-key.backspace.dark .backspace-img {
-  filter: invert(90%) sepia(9%) saturate(364%) hue-rotate(181deg)
-    brightness(103%) contrast(92%);
+.keyboard-row {
+  display: flex;
+  height: 33.33%;
+  width: 100%;
+  justify-content: center;
 }
 
 .keyboard-key {
@@ -41,93 +31,76 @@
   font-weight: 550;
   cursor: pointer;
   transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  font-size: inherit;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
 }
 
-.keyboard-key.light {
+.keyboard.light .keyboard-key {
   color: #3b3b3b;
+  background-color: #f8dcac;
 }
 
-.keyboard-key.dark {
+.keyboard.dark .keyboard-key {
   color: #e0eaf5;
+  background-color: #4d5f71;
 }
 
 .keyboard-key.key-letter {
   height: 95%;
   width: 8.21%;
-  margin-left: 0.5%;
-  margin-right: 0.5%;
+  
 }
 
-.keyboard-key.key-letter.light {
-  background-color: #f8dcac;
-}
-
-.keyboard-key.key-letter.dark {
-  background-color: #4d5f71;
-}
-
-.keyboard-key.key-letter.green.light {
+.keyboard.light .key-letter.green {
   color: #fcf4cc;
   background-color: #5c825c;
 }
 
-.keyboard-key.key-letter.green.dark {
+.keyboard.dark .key-letter.green {
   background-color: #4caf50;
 }
 
-.keyboard-key.key-letter.orange.light {
+.keyboard.light .key-letter.orange {
   background-color: #ffcf59;
 }
 
-.keyboard-key.key-letter.orange.dark {
+.keyboard.dark .key-letter.orange {
   background-color: orange;
 }
 
-.keyboard-key.key-letter.grey.light {
+.keyboard.light .key-letter.grey {
   background-color: #e0c294;
 }
 
-.keyboard-key.key-letter.grey.dark {
+.keyboard.dark .key-letter.grey {
   background-color: #28344c;
 }
 
 .keyboard-key.backspace {
   height: 100%;
   width: 14.87%;
-  margin-left: 0.5%;
-  margin-right: 0.5%;
   position: relative;
 }
 
-.keyboard-key.backspace.light {
-  background-color: #f8dcac;
+.backspace-img {
+  width: 42.86%;
+  height: 50%;
+  pointer-events: none;
+  transition: filter 0.5s ease-in-out;
 }
 
-.keyboard-key.backspace.dark {
-    background-color: #4d5f71;
+.keyboard.light .backspace-img {
+  filter: invert(20%) sepia(6%) saturate(13%) hue-rotate(344deg)
+    brightness(102%) contrast(93%);
+}
 
+.keyboard.dark .backspace-img {
+  filter: invert(90%) sepia(9%) saturate(364%) hue-rotate(181deg)
+    brightness(103%) contrast(92%);
 }
 
 .keyboard-key.enter {
   height: 100%;
   width: 15.9%;
-  margin-left: 0.5%;
-  margin-right: 0.5%;
-}
-
-.keyboard-key.enter.light {
-  background-color: #f8dcac;
-}
-
-.keyboard-key.enter.dark {
-    background-color: #4d5f71;
-
-}
-
-.keyboard-row {
-  display: flex;
-  height: 33.33%;
-  width: 100%;
-  justify-content: center;
-  container: keyboardKey / normal;
 }

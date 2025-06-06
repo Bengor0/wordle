@@ -1,25 +1,55 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const useRelativeFontSize = (initialRelativeSize = 0.5) => {
-  const [relativeSize, setRelativeSize] = useState(initialRelativeSize);
-  const [fontSize, setFontsize] = useState(0);
-  const elementRef = useRef(null);
+const useRelativeFontSize = (
+  initialRelativeSize = 0.5,
+  initialDimension = "width"
+) => {
+  if (
+    initialDimension !== "width" &&
+    initialDimension !== "height" &&
+    initialDimension !== "area"
+  ) {
+    throw new Error(
+      'Incorrect argument for useRelativeFontSize. Acceptable options (1 of 3): "width", "height" or "area".'
+    );
+  }
 
-  useEffect(() => {
-    setFontsize(elementRef.current.clientWidth * initialRelativeSize);
-  }, []);
+  try {
+    const [fontSize, setFontsize] = useState(0);
+    const elementRef = useRef(null);
 
-  const resizeFont = useCallback(() => {
-    setFontsize(elementRef.current.clientWidth * relativeSize);
-  }, []);
+    const calculateFontsize = (dimension) => {
+      if (dimension === "width") {
+        return elementRef.current.clientWidth * initialRelativeSize;
+      } else if (dimension === "height") {
+        return elementRef.current.clientHeight * initialRelativeSize;
+      } else {
+        return (
+          elementRef.current.clientHeight *
+          elementRef.current.clientWidth *
+          initialRelativeSize
+        );
+      }
+    };
 
-  useEffect(() => {
-    window.addEventListener("resize", resizeFont);
+    useEffect(() => {
+      setFontsize(calculateFontsize(initialDimension));
+    }, []);
 
-    return () => window.removeEventListener("resize", resizeFont);
-  }, []);
+    const resizeFont = useCallback(() => {
+      setFontsize(calculateFontsize(initialDimension));
+    }, []);
 
-  return [fontSize, elementRef];
+    useEffect(() => {
+      window.addEventListener("resize", resizeFont);
+
+      return () => window.removeEventListener("resize", resizeFont);
+    }, []);
+
+    return [fontSize, elementRef];
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export default useRelativeFontSize;

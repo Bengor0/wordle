@@ -13,22 +13,6 @@
   padding: 1em;
 }
 
-.message {
-  position: absolute;
-  left: 110px;
-  bottom: 335px;
-  background-color: #1a1a1a;
-  z-index: 1;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.2em 0.2em;
-  font-size: 0.8em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-}
-
 .wordle-board {
   aspect-ratio: 145/174;
   display: grid;
@@ -99,19 +83,19 @@
 }
 
 .letter.green.light {
-  border: 2px solid ;
+  border: 2px solid;
   border-color: #5c825c;
   background-color: #5c825c;
 }
 
 .letter.green.dark {
-  border: 2px solid ;
-  border-color: #4CAF50;
-  background-color: #4CAF50;
+  border: 2px solid;
+  border-color: #4caf50;
+  background-color: #4caf50;
 }
 
 .letter.orange.light {
-  border: 2px solid ;
+  border: 2px solid;
   border-color: #ffcf59;
   background-color: #ffcf59;
 }
@@ -150,4 +134,45 @@
 .letter.black.dark {
   border-color: #28344c;
   background-color: #101c34;
+}
+
+.message {
+  position: relative;
+  top: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  font-weight: 400;
+  font-family: inherit;
+  user-select: none;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+.message.dark {
+  color: #101c34;
+  background-color: #e0eaf5;
+}
+
+.message.light {
+  color: #fcf4cc;
+  background-color: #5c4c34;
+}
+
+.restart-button {
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+.restart-button.dark {
+  background-color: #e0eaf5;
+  color: #101c34;
+}
+
+.restart-button.light {
+  color: #fcf4cc;
+  background-color: #5c4c34;
 }

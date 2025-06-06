@@ -10,36 +10,6 @@ const API_URL =
 const WORD_LENGTH = 5;
 const NUM_OF_GUESSES = 6;
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
-const BASE_KEY_COLORS = new Map([
-  ["Q", "#808080"],
-  ["W", "#808080"],
-  ["E", "#808080"],
-  ["R", "#808080"],
-  ["T", "#808080"],
-  ["Y", "#808080"],
-  ["U", "#808080"],
-  ["I", "#808080"],
-  ["O", "#808080"],
-  ["P", "#808080"],
-  ["A", "#808080"],
-  ["S", "#808080"],
-  ["D", "#808080"],
-  ["F", "#808080"],
-  ["G", "#808080"],
-  ["H", "#808080"],
-  ["J", "#808080"],
-  ["K", "#808080"],
-  ["L", "#808080"],
-  ["Z", "#808080"],
-  ["X", "#808080"],
-  ["C", "#808080"],
-  ["V", "#808080"],
-  ["B", "#808080"],
-  ["N", "#808080"],
-  ["M", "#808080"],
-  ["ENTER", "#1a1a1a"],
-  ["BACKSPACE", "#1a1a1a"],
-]);
 
 export default function Wordle({ darkMode, darkModeState }) {
   const solution = useRef("");
@@ -47,7 +17,6 @@ export default function Wordle({ darkMode, darkModeState }) {
   const [guesses, setGuesses] = useState(
     new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS])
   );
-  const [keyColors, setKeyColors] = useState(BASE_KEY_COLORS);
   const rowIndex = useRef(0);
   const [isGameOver, toggleIsGameOver] = useToggleState(false);
   const [restart, toggleRestart] = useToggleState(false);
@@ -55,12 +24,14 @@ export default function Wordle({ darkMode, darkModeState }) {
   const [message, setMessage] = useState(null);
   const timeout = useRef(false);
   const keyboardRef = useRef(null);
+  const [wordleFontSize, wordleElementRef] = useRelativeFontSize(0.7, "width");
+  const [messageFontSize, messageElementRef] = useRelativeFontSize(0.07, "width");
+
 
   const restartGame = () => {
     guess.current = ["", BASE_COLORS];
     setGuesses(new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS]));
     rowIndex.current = 0;
-    setKeyColors(BASE_KEY_COLORS);
     setMessage(null);
     toggleIsGameOver();
     wordSet.current = new Set();
@@ -129,16 +100,12 @@ export default function Wordle({ darkMode, darkModeState }) {
     }
 
     if (correct === WORD_LENGTH) {
-      rowIndex.current === 0 &&
-        setMessage(<Message message={"Čo ti jebee?"} />);
-      rowIndex.current === 1 && setMessage(<Message message={"Popičovka!"} />);
-      rowIndex.current === 2 && setMessage(<Message message={"tOmu ver."} />);
-      rowIndex.current === 3 &&
-        setMessage(<Message message={"Slabší priemer"} />);
-      rowIndex.current === 4 &&
-        setMessage(<Message message={"Nejde ti to moc."} />);
-      rowIndex.current === 5 &&
-        setMessage(<Message message={"Skoro si dojebal"} />);
+      rowIndex.current === 0 && setMessage("Čo ti jebee?");
+      rowIndex.current === 1 && setMessage("Popičovka!");
+      rowIndex.current === 2 && setMessage("tOmu ver.");
+      rowIndex.current === 3 && setMessage("Slabší priemer");
+      rowIndex.current === 4 && setMessage("Nejde ti to moc.");
+      rowIndex.current === 5 && setMessage("Skoro si dojebal");
       toggleIsGameOver();
     }
 
@@ -200,14 +167,21 @@ export default function Wordle({ darkMode, darkModeState }) {
 
   return (
     <>
-      {message}
-      <div className="wordle-board">
+      {isGameOver && <Message message={message} darkMode={darkMode} messageFontSize={messageFontSize} />}
+      <div ref={messageElementRef} className="wordle-board" style={{ fontSize: `${wordleFontSize}px` }}>
         {guesses.map((guess, i) => {
-          return <Row guess={guess} darkMode={darkMode} key={i} />;
+          return (
+            <Row
+              guess={guess}
+              darkMode={darkMode}
+              key={i}
+              wordleElementRef={wordleElementRef}
+            />
+          );
         })}
       </div>
       {isGameOver ? (
-        <button className="restart-button" onClick={restartGame}>
+        <button className={`restart-button ${darkMode}`} onClick={restartGame} style={{fontSize: `${messageFontSize}px`, borderRadius: `${0.3529 * messageFontSize}px`}} >
           Play again
         </button>
       ) : (
@@ -219,9 +193,8 @@ export default function Wordle({ darkMode, darkModeState }) {
   );
 }
 
-function Row({ guess, darkMode }) {
+function Row({ guess, darkMode, wordleElementRef }) {
   const tiles = [];
-  const [fontSize, elementRef] = useRelativeFontSize(0.7);
 
   for (let i = 0; i < WORD_LENGTH; i++) {
     let char = guess[0][i];
@@ -232,8 +205,8 @@ function Row({ guess, darkMode }) {
       <div
         className={tileClassName}
         key={i}
-        style={{ "--index": i, fontSize: `${fontSize}px` }}
-        ref={elementRef}
+        style={{ "--index": i }}
+        ref={wordleElementRef}
       >
         <div className="tile-inner" style={{ "--index": i }}>
           <div className={`letter black ${darkMode}`} style={{ "--index": i }}>
@@ -250,6 +223,7 @@ function Row({ guess, darkMode }) {
   return <>{tiles}</>;
 }
 
-function Message({ message, darkMode }) {
-  return <div className={`message ${darkMode}`}>{message}</div>;
+function Message({ message, darkMode, messageFontSize }) {
+
+  return <div className={`message ${darkMode}`} style={{fontSize: `${messageFontSize}px`, padding: `${0.2941 * messageFontSize}px`}} >{message}</div>;
 }
