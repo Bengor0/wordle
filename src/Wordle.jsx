@@ -11,11 +11,11 @@ const WORD_LENGTH = 5;
 const NUM_OF_GUESSES = 6;
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 const MESSAGES = [
-  ["Pure genius!", "Bull's eye!", "Perfect!"],
+  ["Pure genius!", "Bull's eye!", "Impressive!"],
   ["Excellent!", "Amazing!", "Incredible!"],
   ["Wow!", "Great skill!", "Nailed it!"],
-  ["Well done!", "Solid effor!", "Good job!"],
-  ["We're there!", "Nice!", "With spare guess left!"],
+  ["Well done!", "Solid effort!", "Good job!"],
+  ["We're there!", "Nice!", "With a spare guess left!"],
   ["Close call!", "Barely there!", "This was tricky!", "No room!"],
 ];
 
