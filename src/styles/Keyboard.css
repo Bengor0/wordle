@@ -78,7 +78,6 @@
 }
 
 .keyboard-key.backspace {
-  height: 100%;
   width: 14.87%;
   position: relative;
 }
@@ -101,6 +100,5 @@
 }
 
 .keyboard-key.enter {
-  height: 100%;
   width: 15.9%;
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useLayoutEffect } from "react";
 
 const useRelativeFontSize = (
   initialRelativeSize = 0.5,
@@ -20,8 +20,10 @@ const useRelativeFontSize = (
 
     const calculateFontsize = (dimension) => {
       if (dimension === "width") {
+        console.log(elementRef.current.className + " width: " + elementRef.current.clientWidth);
         return elementRef.current.clientWidth * initialRelativeSize;
       } else if (dimension === "height") {
+        console.log(elementRef.current.className + " height: " + elementRef.current.clientHeight);
         return elementRef.current.clientHeight * initialRelativeSize;
       } else {
         return (
@@ -36,9 +38,9 @@ const useRelativeFontSize = (
       setFontsize(calculateFontsize(initialDimension));
     }, []);
 
-    const resizeFont = useCallback(() => {
+    const resizeFont = () => {
       setFontsize(calculateFontsize(initialDimension));
-    }, []);
+    };
 
     useEffect(() => {
       window.addEventListener("resize", resizeFont);
