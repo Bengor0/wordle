@@ -1,0 +1,103 @@
+header {
+  position: relative;
+  flex-direction: row;
+  display: flex;
+  width: 100%;
+  height: 10%;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+header.light {
+  color: #333333;
+  background-color: #fcf4cc;
+}
+
+header.dark {
+  background-color: #101c34;
+}
+
+
+@media screen and (max-aspect-ratio: 373 / 602) {
+  .menu-wrapper {
+    display: flex;
+    width: 0%;
+  }
+  .headline-wrapper {
+    height: 100%;
+    width: 30%;
+  }
+  nav {
+    display: flex;
+    justify-content: right;
+    height: 100%;
+    width: 70%;
+  }
+}
+
+@media screen and (min-aspect-ratio: 373 / 602) {
+  .menu {
+    display: flex;
+    width: 40%;
+  }
+  .headline {
+    height: 100%;
+    width: 20%;
+  }
+  nav {
+    display: flex;
+    justify-content: right;
+    height: 100%;
+    width: 40%;
+  }
+  .game-info-btn {
+  height: 100%;
+  width: 20%;
+  border: 1px solid white;
+}
+
+.game-stat-btn {
+  height: 100%;
+  width: 20%;
+  border: 1px solid white;
+}
+
+.login-btn {
+  height: 100%;
+  width: 20%;
+  border: 1px solid white;
+}
+
+.dark-mode-btn {
+  height: 100%;
+  width: 20%;
+  border: 1px solid white;
+}
+}
+
+
+
+.game-info-btn > button,
+.game-stat-btn > button,
+.login-btn > button {
+  height: 40%;
+  width: 70%;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 90%;
+  width: 100%;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+main.light {
+  color: #333333;
+  background-color: #fcf4cc;
+}
+
+main.dark {
+  background-color: #101c34;
+}

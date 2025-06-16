@@ -10,17 +10,9 @@ const API_URL =
 const WORD_LENGTH = 5;
 const NUM_OF_GUESSES = 6;
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
-const MESSAGES = [
-  ["Pure genius!", "Bull's eye!", "Impressive!"],
-  ["Excellent!", "Amazing!", "Incredible!"],
-  ["Wow!", "Great skill!", "Nailed it!"],
-  ["Well done!", "Solid effort!", "Good job!"],
-  ["We're there!", "Nice!", "With a spare guess left!"],
-  ["Close call!", "Barely there!", "This was tricky!", "No room!"],
-];
 
 export default function Wordle({ darkMode }) {
-  const solution = useRef("");
+  const solution = useRef(["B", "E", "L", "T", "S"]);
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
     new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS])
@@ -78,7 +70,9 @@ export default function Wordle({ darkMode }) {
   };
 
   const checkGuess = () => {
-    const colors = [];
+    const colors = new Array(5).fill(undefined);
+    const keyboardColors = new Map();
+    const furtherEval = [];
     let correct = 0;
     const mapChars = new Map();
     solution.current.forEach((char) =>
@@ -87,41 +81,36 @@ export default function Wordle({ darkMode }) {
         : mapChars.set(char, 1)
     );
 
-    for (let i = 0; i < WORD_LENGTH; i++) {
-      let guessChar = guess.current[0][i];
-      let solutionChar = solution.current[i];
-
-      if (guessChar === solutionChar) {
-        colors.push("green");
-        keyboardRef.current?.udpateKeyColor(guessChar, "green");
+    guess.current[0].split("").forEach((guessChar, i) => {
+      if (guessChar === solution.current[i]) {
+        colors[i] = "green";
+        keyboardColors.set(guessChar, "green");
         correct++;
         mapChars.set(guessChar, mapChars.get(guessChar) - 1);
-      } else if (
-        solution.current.includes(guessChar) &&
-        mapChars.get(guessChar) > 0
-      ) {
-        colors.push("orange");
-        keyboardRef.current?.udpateKeyColor(guessChar, "orange");
+      } else furtherEval.push(i);
+    });
+
+    furtherEval.forEach((index) => {
+      const guessChar = guess.current[0][index];
+      if (mapChars.get(guessChar) && solution.current.includes(guessChar)) {
+        colors[index] = "orange";
         mapChars.set(guessChar, mapChars.get(guessChar) - 1);
-      } else {
-        colors.push("grey");
-        keyboardRef.current?.udpateKeyColor(guessChar, "grey");
-      }
-    }
+        !keyboardColors.has(guessChar) && keyboardColors.set(guessChar, "orange");
+      } else colors[index] = "grey";
+    });
+
+    keyboardColors.forEach((value, key) => {
+      keyboardRef.current?.udpateKeyColor(key, value);
+    });
 
     if (correct === WORD_LENGTH) {
-      rowIndex.current === 0 &&
-        setMessage(MESSAGES[0][Math.floor(Math.random() * 3)]);
-      rowIndex.current === 1 &&
-        setMessage(MESSAGES[1][Math.floor(Math.random() * 3)]);
-      rowIndex.current === 2 &&
-        setMessage(MESSAGES[2][Math.floor(Math.random() * 3)]);
-      rowIndex.current === 3 &&
-        setMessage(MESSAGES[3][Math.floor(Math.random() * 3)]);
-      rowIndex.current === 4 &&
-        setMessage(MESSAGES[4][Math.floor(Math.random() * 3)]);
+      rowIndex.current === 0 && setMessage("Sigma Guess!");
+      rowIndex.current === 1 && setMessage("Giga Chad!");
+      rowIndex.current === 2 && setMessage("You got that Worlde rizz!");
+      rowIndex.current === 3 && setMessage("Crocodilo bombardiro approves!");
+      rowIndex.current === 4 && setMessage("You understood the assignment!");
       rowIndex.current === 5 &&
-        setMessage(MESSAGES[5][Math.floor(Math.random() * 3)]);
+        setMessage(`Last brain cell activated!?%`);
       toggleIsGameOver();
     }
 
@@ -145,7 +134,7 @@ export default function Wordle({ darkMode }) {
           enterTimeout.current = false;
           if (!isGameOver && rowIndex.current >= NUM_OF_GUESSES) {
             toggleIsGameOver();
-            setMessage(<Message message={`${solution.current.join("")}`} />);
+            setMessage(<Message message={`Did you even try? (${solution.current.join("")})`} />);
             return;
           }
           return;

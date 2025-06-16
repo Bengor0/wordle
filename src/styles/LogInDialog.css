@@ -1,0 +1,63 @@
+.login-dialog {
+    padding: 0;
+    aspect-ratio: 4/5;
+    height: 70vh;
+    animation: appear 0.2s linear 0s 1;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.login-form {
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+
+.form-headline {
+    display: flex;
+    height: 15%;
+}
+.form-inputs {
+    height: 55%;
+}
+.delimiter {
+    background-color: black;
+    height: 1%;
+    width: 60%;
+}
+.form-signup-option {
+    height: 29%;
+}
+
+.filler {
+    height: 100%;
+    width: 20%;
+}
+
+.form-headline > h2 {
+    height: 100%;
+    width: 60%;
+    margin: 0;
+}
+
+.escape {
+    width: 20%;
+}
+.escape button {
+    height: 25%;
+    width: 5%;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
+
+@keyframes appear {
+    0% {
+        height: 0vh;
+    } 50% {
+        height: 35vh;
+    } 100% {
+        height: 70vh;
+    }
+}

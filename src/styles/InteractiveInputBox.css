@@ -1,0 +1,15 @@
+.input-box-wrapper {
+    position: relative;
+    width: 70%;
+    height: 15%;
+}
+
+.input-box-wrapper input {
+
+}
+
+.input-box-wrapper label {
+    position: absolute;
+    left: 0%;
+    top: 5%;
+}

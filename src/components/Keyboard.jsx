@@ -17,7 +17,7 @@ function KeyBoard(props, ref) {
 
   const udpateKeyColor = (guessChar, color) => {
     setTimeout(() => {
-      setKeyColor((prev) => {
+      keyColors.get(guessChar) !== "green" && setKeyColor((prev) => {
         const shallowKeyColors = new Map(prev);
         shallowKeyColors.set(guessChar, color);
         return shallowKeyColors;

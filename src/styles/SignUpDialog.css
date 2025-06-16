@@ -1,0 +1,10 @@
+.signup-dialog {
+    padding: 0;
+    aspect-ratio: 4/5;
+    height: 70vh;
+}
+
+.signup-form {
+    height: 100%;
+    width: 100%;
+}

@@ -5,7 +5,7 @@ const DarkModeButton = ({ darkMode, toggleDarkMode }) => {
   const [fontSize, elementRef] = useRelativeFontSize(0.15, "width");
 
   return (
-    <div className="dark-mode-container">
+    <>
       <input
         type="checkbox"
         id="dark-mode-input"
@@ -18,17 +18,14 @@ const DarkModeButton = ({ darkMode, toggleDarkMode }) => {
         className={`dark-mode-label ${darkMode}`}
         style={{ fontSize: `${fontSize}px` }}
       >
-        <div
-          className="night"
-          style={{ marginLeft: `${fontSize * 0.6}px` }}
-        >
+        <div className="night" style={{ marginLeft: `${fontSize * 0.6}px` }}>
           night
         </div>
         <div className="day" style={{ marginRight: `${fontSize * 1}px` }}>
           day
         </div>
       </label>
-    </div>
+    </>
   );
 };
 
