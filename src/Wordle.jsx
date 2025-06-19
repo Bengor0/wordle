@@ -96,10 +96,14 @@ export default function Wordle({ darkMode }) {
         tileColors[index] = "orange";
         guessCharsMap.set(guessChar, guessCharsMap.get(guessChar) - 1);
         !keyboardColors.has(guessChar) && keyboardColors.set(guessChar, "orange");
-      } else tileColors[index] = "grey";
+      } else {
+        tileColors[index] = "grey";
+        !keyboardColors.has(guessChar) && keyboardColors.set(guessChar, "grey");
+      }
     });
 
     keyboardColors.forEach((value, key) => {
+      console.log(value + " " + key);
       keyboardRef.current?.udpateKeyColor(key, value);
     });
 
