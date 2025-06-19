@@ -22,7 +22,7 @@ export default function Wordle({ darkMode }) {
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
   const [message, setMessage] = useState(null);
-  const enterTimeout = useRef(false);
+  const isEnterEnabled = useRef(true);
   const keyboardRef = useRef(null);
   const [wordleFontSize, wordleElementRef] = useRelativeFontSize(0.7, "width");
   const [messageFontSize, messageElementRef] = useRelativeFontSize(
@@ -123,15 +123,15 @@ export default function Wordle({ darkMode }) {
   };
 
   const handleKey = async (key) => {
-    if (!isGameOver && !enterTimeout.current) {
+    if (!isGameOver && isEnterEnabled.current) {
       if (key === "ENTER" && guess.current[0].length === WORD_LENGTH) {
-        enterTimeout.current = true;
+        isEnterEnabled.current = false;
         if (wordSet.current.has(guess.current[0])) {
           checkGuess();
           await guessRevealAnimation(1700);
-          rowIndex.current = rowIndex.current + 1;
+          rowIndex.current++;
           guess.current = ["", BASE_COLORS];
-          enterTimeout.current = false;
+          isEnterEnabled.current = true;
           if (!isGameOver && rowIndex.current >= NUM_OF_GUESSES) {
             toggleIsGameOver();
             setMessage(<Message message={`Did you even try? (${solution.current.join("")})`} />);
@@ -139,7 +139,7 @@ export default function Wordle({ darkMode }) {
           }
           return;
         } else {
-          enterTimeout.current = false;
+          isEnterEnabled.current = true;
           return;
         }
       } else if (rowIndex.current < NUM_OF_GUESSES) {
