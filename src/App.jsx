@@ -1,9 +1,9 @@
 import Wordle from "./Wordle";
 
 import useToggleDarkMode from "./hooks/useToggleDarkMode";
+import DarkModeButton from "./components/DarkModeButton";
 import Homepage from "./components/Homepage";
 import { useState } from "react";
-import Headline from "./components/Headline";
 import LogInDialog from "./components/LogInDialog";
 import SignUpDialog from "./components/SignUpDialog";
 import "./App.css";
@@ -19,6 +19,9 @@ const App = () => {
 
   return (
     <>
+      <header>
+        <DarkModeButton darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      </header>
       <main className={`flex-center ${darkMode}`}>
         {playWordle ? (
           <Wordle darkMode={darkMode} />
@@ -26,8 +29,15 @@ const App = () => {
           <Homepage setPlayWordle={setPlayWordle} />
         )}
       </main>
-      <LogInDialog openLogInDialog={openLogInDialog} toggleOpenLogInDialog={toggleOpenLogInDialog} toggleOpenSignUpDialog={toggleOpenSignUpDialog}/>
-      <SignUpDialog openSignUpDialog={openSignUpDialog} toggleOpenSignUpDialog={toggleOpenSignUpDialog}/>
+      <LogInDialog
+        openLogInDialog={openLogInDialog}
+        toggleOpenLogInDialog={toggleOpenLogInDialog}
+        toggleOpenSignUpDialog={toggleOpenSignUpDialog}
+      />
+      <SignUpDialog
+        openSignUpDialog={openSignUpDialog}
+        toggleOpenSignUpDialog={toggleOpenSignUpDialog}
+      />
     </>
   );
 };
