@@ -1,3 +1,11 @@
+.dark-mode-button {
+  margin-left: 10px;
+  height: 6vh;
+  aspect-ratio: 1/1;
+  position: relative;
+  display: flex;
+}
+
 .dark-mode-input {
   height: 0;
   width: 0;

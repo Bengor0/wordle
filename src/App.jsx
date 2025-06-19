@@ -1,5 +1,5 @@
 import Wordle from "./Wordle";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import useToggleDarkMode from "./hooks/useToggleDarkMode";
 import DarkModeButton from "./components/DarkModeButton";
 import Homepage from "./components/Homepage";
@@ -8,6 +8,7 @@ import LogInDialog from "./components/LogInDialog";
 import SignUpDialog from "./components/SignUpDialog";
 import "./App.css";
 import useToggleState from "./hooks/useToggleState";
+import Navigation from "./components/Navigation";
 
 const App = () => {
   const [darkMode, toggleDarkMode] = useToggleDarkMode(true);
@@ -19,9 +20,7 @@ const App = () => {
 
   return (
     <>
-      <header className={darkMode}>
-        <DarkModeButton darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      </header>
+      <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleOpenLogInDialog={toggleOpenLogInDialog}/>
       <main className={`flex-center ${darkMode}`}>
         {playWordle ? (
           <Wordle darkMode={darkMode} />

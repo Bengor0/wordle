@@ -23,6 +23,11 @@ body.ligth {
   background-color: #fcf4cc;
 }
 
+#root {
+  height: 100%;
+  width: 100%;
+}
+
 .flex-center {
   display: flex;
   justify-content: center;
