@@ -12,7 +12,7 @@ const NUM_OF_GUESSES = 6;
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 
 export default function Wordle({ darkMode }) {
-  const solution = useRef(["B", "E", "L", "T", "S"]);
+  const solution = useRef([]);
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
     new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS])
@@ -70,33 +70,33 @@ export default function Wordle({ darkMode }) {
   };
 
   const checkGuess = () => {
-    const colors = new Array(5).fill(undefined);
+    const tileColors = new Array(5).fill(undefined);
     const keyboardColors = new Map();
     const furtherEval = [];
     let correct = 0;
-    const mapChars = new Map();
+    const guessCharsMap = new Map();
     solution.current.forEach((char) =>
-      mapChars.has(char)
-        ? mapChars.set(char, mapChars.get(char) + 1)
-        : mapChars.set(char, 1)
+      guessCharsMap.has(char)
+        ? guessCharsMap.set(char, guessCharsMap.get(char) + 1)
+        : guessCharsMap.set(char, 1)
     );
 
     guess.current[0].split("").forEach((guessChar, i) => {
       if (guessChar === solution.current[i]) {
-        colors[i] = "green";
+        tileColors[i] = "green";
         keyboardColors.set(guessChar, "green");
         correct++;
-        mapChars.set(guessChar, mapChars.get(guessChar) - 1);
+        guessCharsMap.set(guessChar, guessCharsMap.get(guessChar) - 1);
       } else furtherEval.push(i);
     });
 
     furtherEval.forEach((index) => {
       const guessChar = guess.current[0][index];
-      if (mapChars.get(guessChar) && solution.current.includes(guessChar)) {
-        colors[index] = "orange";
-        mapChars.set(guessChar, mapChars.get(guessChar) - 1);
+      if (guessCharsMap.get(guessChar) && solution.current.includes(guessChar)) {
+        tileColors[index] = "orange";
+        guessCharsMap.set(guessChar, guessCharsMap.get(guessChar) - 1);
         !keyboardColors.has(guessChar) && keyboardColors.set(guessChar, "orange");
-      } else colors[index] = "grey";
+      } else tileColors[index] = "grey";
     });
 
     keyboardColors.forEach((value, key) => {
@@ -114,7 +114,7 @@ export default function Wordle({ darkMode }) {
       toggleIsGameOver();
     }
 
-    guess.current = [guess.current[0], colors];
+    guess.current = [guess.current[0], tileColors];
     updateGuesses(guess.current);
   };
 

@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <>
-      <header>
+      <header className={darkMode}>
         <DarkModeButton darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       </header>
       <main className={`flex-center ${darkMode}`}>
