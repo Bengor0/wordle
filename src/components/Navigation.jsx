@@ -8,7 +8,9 @@ import { IoStatsChart } from "react-icons/io5";
 import { IoHelpCircleOutline } from "react-icons/io5";
 import ".././styles/Navigation.css";
 
-function Navigation({ darkMode, toggleDarkMode, toggleOpenLogIn }) {
+function Navigation({ darkMode, toggleDarkMode, toggleLogIn, userData, setUserData, setGameMode }) {
+
+
   return (
     <Navbar className={`custom-navbar ${darkMode}`}>
       <Container>
@@ -19,9 +21,9 @@ function Navigation({ darkMode, toggleDarkMode, toggleOpenLogIn }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavDropdown title="Mode" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Classic</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Royale</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Practice</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => setGameMode("Classic")}>Classic</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => setGameMode("Royale")}>Royale</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => setGameMode("Practice")}>Practice</NavDropdown.Item>
             </NavDropdown>
             <Container className="stats flex-center">
               <IoStatsChart size="50%" className={`stats-icon ${darkMode}`} />
@@ -32,15 +34,23 @@ function Navigation({ darkMode, toggleDarkMode, toggleOpenLogIn }) {
                 className={`info-icon ${darkMode}`}
               />
             </Container>
-            <Container className="button flex-center">
+            {userData ? <Container className="button flex-center">
               <Button
                 variant="primary"
-                onClick={toggleOpenLogIn}
+                onClick={() => setUserData(null)}
+                style={{ fontSize: "12px", width: "60px"}}
+              >
+                Log out
+              </Button>
+            </Container> : <Container className="button flex-center">
+              <Button
+                variant="primary"
+                onClick={toggleLogIn}
                 style={{ fontSize: "12px", width: "60px"}}
               >
                 Log in
               </Button>
-            </Container>
+            </Container>}
             <DarkModeButton
               darkMode={darkMode}
               toggleDarkMode={toggleDarkMode}

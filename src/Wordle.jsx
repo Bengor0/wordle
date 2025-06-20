@@ -4,6 +4,7 @@ import KeyBoard from "./components/KeyBoard";
 import KeyboardContext from "./contexts/KeyboardContext";
 import useRelativeFontSize from "./hooks/useRelativeFontSize";
 import "./Wordle.css";
+import { toast, Toaster } from "sonner";
 
 const API_URL =
   "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
@@ -11,7 +12,7 @@ const WORD_LENGTH = 5;
 const NUM_OF_GUESSES = 6;
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 
-export default function Wordle({ darkMode }) {
+export default function Wordle({ darkMode, userData, setUserData, gameMode }) {
   const solution = useRef([]);
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
@@ -92,10 +93,14 @@ export default function Wordle({ darkMode }) {
 
     furtherEval.forEach((index) => {
       const guessChar = guess.current[0][index];
-      if (guessCharsMap.get(guessChar) && solution.current.includes(guessChar)) {
+      if (
+        guessCharsMap.get(guessChar) &&
+        solution.current.includes(guessChar)
+      ) {
         tileColors[index] = "orange";
         guessCharsMap.set(guessChar, guessCharsMap.get(guessChar) - 1);
-        !keyboardColors.has(guessChar) && keyboardColors.set(guessChar, "orange");
+        !keyboardColors.has(guessChar) &&
+          keyboardColors.set(guessChar, "orange");
       } else {
         tileColors[index] = "grey";
         !keyboardColors.has(guessChar) && keyboardColors.set(guessChar, "grey");
@@ -112,8 +117,7 @@ export default function Wordle({ darkMode }) {
       rowIndex.current === 2 && setMessage("You got that Worlde rizz!");
       rowIndex.current === 3 && setMessage("Crocodilo bombardiro approves!");
       rowIndex.current === 4 && setMessage("You understood the assignment!");
-      rowIndex.current === 5 &&
-        setMessage(`Last brain cell activated!?%`);
+      rowIndex.current === 5 && setMessage(`Last brain cell activated!?%`);
       toggleIsGameOver();
     }
 
@@ -128,8 +132,8 @@ export default function Wordle({ darkMode }) {
   const handleKey = async (key) => {
     if (!isGameOver && isEnterEnabled.current) {
       if (key === "ENTER" && guess.current[0].length === WORD_LENGTH) {
-        isEnterEnabled.current = false;
         if (wordSet.current.has(guess.current[0])) {
+          isEnterEnabled.current = false;
           checkGuess();
           await guessRevealAnimation(1700);
           rowIndex.current++;
@@ -137,13 +141,14 @@ export default function Wordle({ darkMode }) {
           isEnterEnabled.current = true;
           if (!isGameOver && rowIndex.current >= NUM_OF_GUESSES) {
             toggleIsGameOver();
-            setMessage(<Message message={`Did you even try? (${solution.current.join("")})`} />);
-            return;
+            setMessage(
+              <Message
+                message={`Did you even try? (${solution.current.join("")})`}
+              />
+            );
           }
-          return;
         } else {
-          isEnterEnabled.current = true;
-          return;
+          toast.warning("Not in the word bank.");
         }
       } else if (rowIndex.current < NUM_OF_GUESSES) {
         if (key === "BACKSPACE" && guess.current[0].length > 0) {
@@ -156,9 +161,10 @@ export default function Wordle({ darkMode }) {
         ) {
           guess.current[0] = guess.current[0] + key;
           updateGuesses(guess.current);
-        } else return;
+        }
       }
-    } else return;
+    }
+    return;
   };
 
   useEffect(() => {
@@ -173,6 +179,14 @@ export default function Wordle({ darkMode }) {
 
   return (
     <>
+      <Toaster richColors position="top-center" />
+      {userData && (
+        <h1 className={`nickname-paragraph ${darkMode}`}>
+          {userData.get("nickname")}
+        </h1>
+      )}
+      {userData && <p className={`paragraph ${darkMode}`}>is playing</p>}
+      <h3 className={`game-mode ${darkMode}`}>{gameMode}</h3>
       {isGameOver && (
         <Message
           message={message}

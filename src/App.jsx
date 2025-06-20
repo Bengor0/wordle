@@ -1,7 +1,6 @@
 import Wordle from "./Wordle";
 import "bootstrap/dist/css/bootstrap.min.css";
 import useToggleDarkMode from "./hooks/useToggleDarkMode";
-import DarkModeButton from "./components/DarkModeButton";
 import Homepage from "./components/Homepage";
 import { useState } from "react";
 import LogInDialog from "./components/LogInDialog";
@@ -13,29 +12,45 @@ import Navigation from "./components/Navigation";
 const App = () => {
   const [darkMode, toggleDarkMode] = useToggleDarkMode(true);
   const [playWordle, setPlayWordle] = useState(false);
-  const [openLogIn, toggleOpenLogIn] = useToggleState(false);
-  const [openSignUp, toggleOpenSignUp] = useToggleState(false);
+  const [logInOpen, toggleLogIn] = useToggleState(false);
+  const [signUpOpen, toggleSignUp] = useToggleState(false);
+  const [userData, setUserData] = useState(null);
+  const [gameMode, setGameMode] = useState("Practice");
 
   document.querySelector("body").classList = `${darkMode}`;
 
   return (
     <>
-      <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleOpenLogIn={toggleOpenLogIn}/>
+      <Navigation
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
+        toggleLogIn={toggleLogIn}
+        userData={userData}
+        setUserData={setUserData}
+        setGameMode={setGameMode}
+      />
       <main className={`flex-center ${darkMode}`}>
         {playWordle ? (
-          <Wordle darkMode={darkMode} />
+          <Wordle
+            darkMode={darkMode}
+            userData={userData}
+            setUserData={setUserData}
+            gameMode={gameMode}
+          />
         ) : (
           <Homepage setPlayWordle={setPlayWordle} />
         )}
       </main>
       <LogInDialog
-        openLogIn={openLogIn}
-        toggleOpenLogIn={toggleOpenLogIn}
-        toggleOpenSignUp={toggleOpenSignUp}
+        logInOpen={logInOpen}
+        toggleLogIn={toggleLogIn}
+        toggleSignUp={toggleSignUp}
+        setUserData={setUserData}
       />
       <SignUpDialog
-        openSignUp={openSignUp}
-        toggleOpenSignUp={toggleOpenSignUp}
+        signUpOpen={signUpOpen}
+        toggleSignUp={toggleSignUp}
+        setUserData={setUserData}
       />
     </>
   );

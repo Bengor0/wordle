@@ -166,3 +166,16 @@
   color: #fcf4cc;
   background-color: #5c4c34;
 }
+
+p, h1, h3 {
+  transition: color 0.5s ease-in-out;
+  font-weight: 500;
+}
+
+p.dark, h1.dark, h3.dark {
+  color: #e0eaf5;
+}
+
+p.light, h1.light, h3.light {
+  color: #5c4c34;
+}

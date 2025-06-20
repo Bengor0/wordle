@@ -1,28 +1,62 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "./Firebase";
+import { toast, Toaster } from "sonner";
+import { getDoc, doc } from "firebase/firestore";
 
-function LogInDialog({ openLogIn, toggleOpenLogIn, toggleOpenSignUp }) {
+function LogInDialog({ logInOpen, toggleLogIn, toggleSignUp, setUserData }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      const user = auth.currentUser;
+      const userData = await getDoc(doc(db, "Users", user.uid));
+      setUserData(userData);
+      console.log("User logged in.");
+      toast.success("Logged in.");
+      toggleLogIn();
+    } catch (error) {
+      console.log(error.message);
+      toast.warning(error.message);
+    }
+  }
 
   return (
     <>
-      <Modal show={openLogIn} onHide={toggleOpenLogIn}>
+    <Toaster richColors position="top-center"/>
+      <Modal show={logInOpen} onHide={toggleLogIn}>
         <Modal.Header closeButton>
           <Container className="flex-center">
             <Modal.Title>Log in</Modal.Title>
           </Container>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="nickname-input">
-              <Form.Label>Nickname</Form.Label>
-              <Form.Control required type="text" autoFocus />
+          <Form onSubmit={(e) => handleSubmit(e)}>
+            <Form.Group className="mb-3" controlId="email-input">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                autoFocus
+                required
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="password-input">
               <Form.Label>Password</Form.Label>
-              <Form.Control required ype="password" />
+              <Form.Control
+                required
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </Form.Group>
             <Button variant="primary" type="submit">
               Log in
@@ -37,8 +71,8 @@ function LogInDialog({ openLogIn, toggleOpenLogIn, toggleOpenSignUp }) {
             <Button
               variant="primary"
               onClick={() => {
-                toggleOpenLogIn();
-                toggleOpenSignUp();
+                toggleLogIn();
+                toggleSignUp();
               }}
             >
               Sign up
