@@ -103,7 +103,6 @@ export default function Wordle({ darkMode }) {
     });
 
     keyboardColors.forEach((value, key) => {
-      console.log(value + " " + key);
       keyboardRef.current?.udpateKeyColor(key, value);
     });
 

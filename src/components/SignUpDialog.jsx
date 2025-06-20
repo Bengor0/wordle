@@ -1,98 +1,81 @@
-import { use, useEffect, useRef, useState } from "react";
-import InteractiveInputBox from "./InteractiveInputBox";
-import ".././styles/SignUpDialog.css";
+import { useRef, useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import Container from "react-bootstrap/Container";
 
-const SignUpDialog = ({ openSignUpDialog, toggleOpenSignUpDialog }) => {
-  const [inputNickname, setInputNickname] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputFirstPassword, setInputFirstPassword] = useState("");
-  const [inputRepeatPassword, setInputRepeatPassword] = useState("");
-  const signUpDialogRef = useRef(null);
-  const passwordInput = useRef(null);
-  const repeatPasswordInput = useRef(null);
-  const [passwordWarning, setPasswordWarning] = useState(false);
+function SignUpDialog({ openSignUp, toggleOpenSignUp }) {
+  const nicknameRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const repeatPasswordRef = useRef(null);
 
-  useEffect(() => {
-    if (!signUpDialogRef) return;
+  const handleSignUp = () => {
 
-    if (openSignUpDialog) {
-      signUpDialogRef.current.showModal();
-      console.log(passwordInput);
-      console.log(repeatPasswordInput);
-    } else {
-      signUpDialogRef.current.close();
-    }
-  }, [openSignUpDialog]);
+  }
 
+  const isNicknameAvailable = () => {
 
-  useEffect(() => {
-    if (!signUpDialogRef) return;
+  }
 
-    if (openSignUpDialog) {
-      signUpDialogRef.current.showModal();
-    } else {
-      signUpDialogRef.current.close();
-    }
-  }, [openSignUpDialog]);
+  const isEmailAvailable = () => {
 
-  useEffect(() => {
-    const checkRepeatPassword = () => {
-      if (passwordInput.current.value !== repeatPasswordInput.current.value) {
-        setPasswordWarning(true);
-      } else setPasswordWarning(false);
-    };
-    repeatPasswordInput?.current?.addEventListener("blur", checkRepeatPassword);
+  }
 
-    return () =>
-      repeatPasswordInput?.current?.removeEventListener(
-        "blur",
-        checkRepeatPassword
-      );
-  }, []);
+  const passwordsMatch = () => {
+    return passwordRef.current.value === repeatPasswordRef.current.value;
+  }
 
   return (
-    <dialog
-      ref={signUpDialogRef}
-      className="signup-dialog"
-      
-    >
-      <form className="signup-form" id="signup-form">
-        <div className="form-headline wrapper">
-          <div className="filler"></div>
-          <h2 className="form-headline">Sign up</h2>
-          <div className="escape flex-center">
-            <button className="escape-btn flex-center" onClick={toggleOpenSignUpDialog}>X</button>
-          </div>
-        </div>
-        <div className="form-inputs wrapper">
-          <InteractiveInputBox
-            id={"signup-nickname"}
-            type={"text"}
-            placeholder={"Nickname"}
-          />
-          <InteractiveInputBox
-            id={"signup-email"}
-            type={"email"}
-            placeholder={"Email"}
-          />
-          <InteractiveInputBox
-            id={"password"}
-            type={"password"}
-            placeholder={"Password"}
-            ref={passwordInput}
-          />
-          <InteractiveInputBox
-            id={"repeat-password"}
-            type={"password"}
-            placeholder={"Password"}
-            ref={repeatPasswordInput}
-          />
-          {passwordWarning && <span>Passwords don't match</span>}
-          <button type="button">Sign up</button>
-        </div>
-      </form>
-    </dialog>
+    <>
+      <Modal show={openSignUp} onHide={toggleOpenSignUp} backdrop="static">
+        <Modal.Header closeButton>
+          <Container className="flex-center">
+            <Modal.Title>Sign up</Modal.Title>
+          </Container>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="nickname-input">
+              <Form.Label>Nickname</Form.Label>
+              <Form.Control required type="text" autoFocus ref={nicknameRef} placeholder="example123"/>
+            </Form.Group>
+            <Form.Group required className="mb-3" controlId="email-input">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control required type="email" ref={emailRef} placeholder="name@example.com"/>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="password-input">
+              <Form.Label>Password</Form.Label>
+              <Form.Control required type="password" ref={passwordRef} placeholder="PasswordExample123?!"/>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="repeat-password-input">
+              <Form.Label>Repeat password</Form.Label>
+              <Form.Control required type="password" ref={repeatPasswordRef} placeholder="PasswordExample123?!"/>
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Sign up
+            </Button>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer className="flex-center">
+          <Container className="flex-center">
+            <h5>OR</h5>
+          </Container>
+          <Container className="flex-center">
+            <Button
+              variant="primary"
+              onClick={() => {
+                console.log("Hello");
+                toggleOpenSignUp();
+              }}
+            >
+              Continue with Google
+            </Button>
+          </Container>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
-};
+}
 
 export default SignUpDialog;

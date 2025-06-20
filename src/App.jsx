@@ -13,14 +13,14 @@ import Navigation from "./components/Navigation";
 const App = () => {
   const [darkMode, toggleDarkMode] = useToggleDarkMode(true);
   const [playWordle, setPlayWordle] = useState(false);
-  const [openLogInDialog, toggleOpenLogInDialog] = useToggleState(false);
-  const [openSignUpDialog, toggleOpenSignUpDialog] = useToggleState(false);
+  const [openLogIn, toggleOpenLogIn] = useToggleState(false);
+  const [openSignUp, toggleOpenSignUp] = useToggleState(false);
 
   document.querySelector("body").classList = `${darkMode}`;
 
   return (
     <>
-      <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleOpenLogInDialog={toggleOpenLogInDialog}/>
+      <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleOpenLogIn={toggleOpenLogIn}/>
       <main className={`flex-center ${darkMode}`}>
         {playWordle ? (
           <Wordle darkMode={darkMode} />
@@ -29,13 +29,13 @@ const App = () => {
         )}
       </main>
       <LogInDialog
-        openLogInDialog={openLogInDialog}
-        toggleOpenLogInDialog={toggleOpenLogInDialog}
-        toggleOpenSignUpDialog={toggleOpenSignUpDialog}
+        openLogIn={openLogIn}
+        toggleOpenLogIn={toggleOpenLogIn}
+        toggleOpenSignUp={toggleOpenSignUp}
       />
       <SignUpDialog
-        openSignUpDialog={openSignUpDialog}
-        toggleOpenSignUpDialog={toggleOpenSignUpDialog}
+        openSignUp={openSignUp}
+        toggleOpenSignUp={toggleOpenSignUp}
       />
     </>
   );

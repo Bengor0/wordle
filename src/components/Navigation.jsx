@@ -8,7 +8,7 @@ import { IoStatsChart } from "react-icons/io5";
 import { IoHelpCircleOutline } from "react-icons/io5";
 import ".././styles/Navigation.css";
 
-function Navigation({ darkMode, toggleDarkMode, toggleOpenLogInDialog }) {
+function Navigation({ darkMode, toggleDarkMode, toggleOpenLogIn }) {
   return (
     <Navbar className={`custom-navbar ${darkMode}`}>
       <Container>
@@ -24,15 +24,23 @@ function Navigation({ darkMode, toggleDarkMode, toggleOpenLogInDialog }) {
               <NavDropdown.Item href="#action/3.3">Practice</NavDropdown.Item>
             </NavDropdown>
             <Container className="stats flex-center">
-              <IoStatsChart  size="50%" className={`stats-icon ${darkMode}`}/>
+              <IoStatsChart size="50%" className={`stats-icon ${darkMode}`} />
             </Container>
-            <Container className="stats flex-center">
-              <IoHelpCircleOutline size="60%" className={`info-icon ${darkMode}`}/>
+            <Container className="info flex-center">
+              <IoHelpCircleOutline
+                size="60%"
+                className={`info-icon ${darkMode}`}
+              />
             </Container>
-
-            <Button variant="primary" onClick={toggleOpenLogInDialog}>
-              Log in
-            </Button>
+            <Container className="button flex-center">
+              <Button
+                variant="primary"
+                onClick={toggleOpenLogIn}
+                style={{ fontSize: "12px", width: "60px"}}
+              >
+                Log in
+              </Button>
+            </Container>
             <DarkModeButton
               darkMode={darkMode}
               toggleDarkMode={toggleDarkMode}

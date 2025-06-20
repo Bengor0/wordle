@@ -1,6 +1,6 @@
 .dark-mode-button {
   margin-left: 10px;
-  height: 6vh;
+  margin-right: 10px;
   aspect-ratio: 1/1;
   position: relative;
   display: flex;
@@ -18,7 +18,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: #101c34;
-  border: 2px solid #fcf4cc;
+  border: 2px solid #e0eaf5;
   aspect-ratio: 5/2;
   border-radius: 5vh;
   cursor: pointer;
@@ -27,13 +27,25 @@
 }
 
 .day {
-  color: #101c34;
   font-weight: 700;
 }
-
 .night {
-  color: #fcf4cc;
   font-weight: 700;
+}
+.dark-mode-input:checked + .dark-mode-label > .night {
+  color: #fcf4cc;
+}
+
+.dark-mode-input + .dark-mode-label > .night {
+  color: #e0eaf5;
+}
+
+.dark-mode-input:checked + .dark-mode-label > .day {
+  color: #5c4c34;
+}
+
+.dark-mode-input + .dark-mode-label > .day {
+  color: #101c34;
 }
 
 .dark-mode-label:after {
@@ -42,7 +54,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fcf4cc;
+  background-color: #e0eaf5;
   width: 36%;
   height: 90%;
   position: absolute;
@@ -56,12 +68,14 @@
 
 .dark-mode-input:checked + .dark-mode-label:after {
   right: 63%;
-  background-color: #101c34;
+  background-color: #5c4c34;
 }
+
+
 
 .dark-mode-input:checked + .dark-mode-label {
   background-color: #fcf4cc;
-  border: 2px solid #101c34;
+  border: 2px solid #5c4c34;
 }
 
 @media screen and (max-aspect-ratio: 373 / 602) {

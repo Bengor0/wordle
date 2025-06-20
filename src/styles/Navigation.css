@@ -28,30 +28,42 @@
   color: #5c4c34;
 }
 
-.stats.container {
-    width: 20%;
-    max-width: 50px;
-    padding: 0;
+.stats.container,
+.info.container {
+  width: 20%;
+  max-width: 50px;
+  padding: 0;
+}
+
+.button.container {
+  padding: 0;
+  width: 60px;
+  margin-left: 10px;
+  margin-right: 10px;
+
 }
 
 .stats-icon {
-    position: relative;
-    bottom: 9%;
+  position: relative;
+  bottom: 9%;
 }
 
 .info-icon {
-    position: relative;
-    bottom: 5%;
+  position: relative;
+  bottom: 5%;
 }
 
-.stats-icon, .info-icon {
-    transition: color 0.5s ease-in-out;
+.stats-icon,
+.info-icon {
+  transition: color 0.5s ease-in-out;
 }
 
-.stats-icon.dark, .info-icon.dark {
-    color: #e0eaf5;
+.stats-icon.dark,
+.info-icon.dark {
+  color: #e0eaf5;
 }
 
-.stats-icon.light, .info-icon.light {
-    color: #5c4c34;
+.stats-icon.light,
+.info-icon.light {
+  color: #5c4c34;
 }

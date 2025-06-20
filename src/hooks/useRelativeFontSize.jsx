@@ -20,10 +20,8 @@ const useRelativeFontSize = (
 
     const calculateFontsize = (dimension) => {
       if (dimension === "width") {
-        console.log(elementRef.current.className + " width: " + elementRef.current.clientWidth);
         return elementRef.current.clientWidth * initialRelativeSize;
       } else if (dimension === "height") {
-        console.log(elementRef.current.className + " height: " + elementRef.current.clientHeight);
         return elementRef.current.clientHeight * initialRelativeSize;
       } else {
         return (
