@@ -1,68 +1,43 @@
 import { useRef, useState, useEffect } from "react";
-import useToggleState from "./hooks/useToggleState";
 import KeyBoard from "./components/KeyBoard";
 import KeyboardContext from "./contexts/KeyboardContext";
 import useRelativeFontSize from "./hooks/useRelativeFontSize";
 import "./Wordle.css";
 import { toast, Toaster } from "sonner";
+import { Button } from "react-bootstrap";
 
-const API_URL =
-  "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
 const WORD_LENGTH = 5;
 const NUM_OF_GUESSES = 6;
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 
-export default function Wordle({ darkMode, userData, setUserData, gameMode }) {
-  const solution = useRef([]);
+export default function Wordle({
+  darkMode,
+  userData,
+  setUserData,
+  gameMode,
+  solution,
+  wordSet,
+  isGameOver,
+  toggleIsGameOver,
+  toggleRestart,
+}) {
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
-    new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS])
+    new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS]),
   );
   const rowIndex = useRef(0);
-  const [isGameOver, toggleIsGameOver] = useToggleState(false);
-  const [restart, toggleRestart] = useToggleState(false);
-  const wordSet = useRef(new Set());
   const [message, setMessage] = useState(null);
   const isEnterEnabled = useRef(true);
   const keyboardRef = useRef(null);
   const [wordleFontSize, wordleElementRef] = useRelativeFontSize(0.7, "width");
   const [messageFontSize, messageElementRef] = useRelativeFontSize(
     0.07,
-    "width"
+    "width",
   );
-
-  const restartGame = () => {
-    guess.current = ["", BASE_COLORS];
-    setGuesses(new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS]));
-    rowIndex.current = 0;
-    setMessage(null);
-    toggleIsGameOver();
-    wordSet.current = new Set();
-    toggleRestart();
-  };
 
   const guessRevealAnimation = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
-
-  useEffect(() => {
-    const fetchWords = async () => {
-      try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        const wordArray = [...data.words];
-        wordArray.forEach((word) => wordSet.current.add(word.toUpperCase()));
-        const randomWord =
-          wordArray[Math.floor(Math.random() * (wordArray.length - 1))];
-        solution.current = randomWord.toUpperCase().split("");
-        console.log(solution.current.join(""));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchWords();
-  }, [restart]);
 
   const updateGuesses = (guess) => {
     const shallowGuesses = [...guesses];
@@ -76,14 +51,14 @@ export default function Wordle({ darkMode, userData, setUserData, gameMode }) {
     const furtherEval = [];
     let correct = 0;
     const guessCharsMap = new Map();
-    solution.current.forEach((char) =>
+    solution.forEach((char) =>
       guessCharsMap.has(char)
         ? guessCharsMap.set(char, guessCharsMap.get(char) + 1)
-        : guessCharsMap.set(char, 1)
+        : guessCharsMap.set(char, 1),
     );
 
     guess.current[0].split("").forEach((guessChar, i) => {
-      if (guessChar === solution.current[i]) {
+      if (guessChar === solution[i]) {
         tileColors[i] = "green";
         keyboardColors.set(guessChar, "green");
         correct++;
@@ -93,10 +68,7 @@ export default function Wordle({ darkMode, userData, setUserData, gameMode }) {
 
     furtherEval.forEach((index) => {
       const guessChar = guess.current[0][index];
-      if (
-        guessCharsMap.get(guessChar) &&
-        solution.current.includes(guessChar)
-      ) {
+      if (guessCharsMap.get(guessChar) && solution.includes(guessChar)) {
         tileColors[index] = "orange";
         guessCharsMap.set(guessChar, guessCharsMap.get(guessChar) - 1);
         !keyboardColors.has(guessChar) &&
@@ -142,9 +114,7 @@ export default function Wordle({ darkMode, userData, setUserData, gameMode }) {
           if (!isGameOver && rowIndex.current >= NUM_OF_GUESSES) {
             toggleIsGameOver();
             setMessage(
-              <Message
-                message={`Did you even try? (${solution.current.join("")})`}
-              />
+              <Message message={`Did you even try? (${solution.join("")})`} />,
             );
           }
         } else {
@@ -164,7 +134,6 @@ export default function Wordle({ darkMode, userData, setUserData, gameMode }) {
         }
       }
     }
-    return;
   };
 
   useEffect(() => {
@@ -211,16 +180,15 @@ export default function Wordle({ darkMode, userData, setUserData, gameMode }) {
         })}
       </div>
       {isGameOver ? (
-        <button
-          className={`restart-button ${darkMode}`}
-          onClick={restartGame}
-          style={{
-            fontSize: `${messageFontSize}px`,
-            borderRadius: `${0.3529 * messageFontSize}px`,
+        <Button
+          variant="primary"
+          onClick={() => {
+            toggleRestart();
+            toggleIsGameOver();
           }}
         >
           Play again
-        </button>
+        </Button>
       ) : (
         <KeyboardContext.Provider value={{ handleKeyClick }}>
           <KeyBoard darkMode={darkMode} ref={keyboardRef} />
@@ -253,7 +221,7 @@ function Row({ guess, darkMode, wordleElementRef }) {
             <span>{char}</span>
           </div>
         </div>
-      </div>
+      </div>,
     );
   }
 

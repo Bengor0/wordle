@@ -3,12 +3,13 @@ import Wordle from "../Wordle";
 import SignInForm from "./SignUpDialog";
 import useToggleState from "../hooks/useToggleState";
 
-import '.././styles/Homepage.css'
+import ".././styles/Homepage.css";
+import { Button } from "react-bootstrap";
 
-const Homepage = ({setPlayWordle}) => {
+const Homepage = ({ setPlayWordle }) => {
+  return (
+    <Button variant="primary" onClick={() => setPlayWordle(true)}>Play worlde</Button>
+  );
+};
 
-  return  (
-  <button id="play-wordle-btn" onClick={() => setPlayWordle(true)}>Play Wordle</button>)
-}
- 
 export default Homepage;

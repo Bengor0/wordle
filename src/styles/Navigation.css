@@ -67,3 +67,15 @@
 .info-icon.light {
   color: #5c4c34;
 }
+
+.nav-item.dropdown > a {
+  transition: color 0.5s ease-in-out;
+}
+
+.nav-item.dropdown.dark > a {
+  color: #e0eaf5;
+}
+
+.nav-item.dropdown.light > a {
+  color: #5c4c34;
+}

@@ -20,7 +20,7 @@ function Navigation({ darkMode, toggleDarkMode, toggleLogIn, userData, setUserDa
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavDropdown title="Mode" id="basic-nav-dropdown">
+            <NavDropdown title="Mode" id="basic-nav-dropdown" className={darkMode} >
               <NavDropdown.Item onClick={() => setGameMode("Classic")}>Classic</NavDropdown.Item>
               <NavDropdown.Item onClick={() => setGameMode("Royale")}>Royale</NavDropdown.Item>
               <NavDropdown.Item onClick={() => setGameMode("Practice")}>Practice</NavDropdown.Item>

@@ -8,6 +8,7 @@ import SignUpDialog from "./components/SignUpDialog";
 import "./App.css";
 import useToggleState from "./hooks/useToggleState";
 import Navigation from "./components/Navigation";
+import Game from "./components/Game";
 
 const App = () => {
   const [darkMode, toggleDarkMode] = useToggleDarkMode(true);
@@ -31,7 +32,7 @@ const App = () => {
       />
       <main className={`flex-center ${darkMode}`}>
         {playWordle ? (
-          <Wordle
+          <Game
             darkMode={darkMode}
             userData={userData}
             setUserData={setUserData}
