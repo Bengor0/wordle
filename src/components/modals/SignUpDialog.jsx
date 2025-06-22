@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "./Firebase";
+import { auth, db } from "../Firebase.jsx";
 import { setDoc, doc } from "firebase/firestore";
 import { Toaster, toast } from "sonner";
 
@@ -42,7 +42,7 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
             achievements: [],
           });
         }
-        toast.success("Signed up.")
+        toast.success("Signed up.");
         console.log("User registered successfully.");
         toggleSignUp();
       } catch (error) {
@@ -54,7 +54,7 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
 
   return (
     <>
-      <Toaster richColors position="top-center"/>
+      <Toaster richColors position="top-center" />
       <Modal show={signUpOpen} onHide={toggleSignUp} backdrop="static">
         <Modal.Header closeButton>
           <Container className="flex-center">

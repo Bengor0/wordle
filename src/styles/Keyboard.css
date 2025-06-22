@@ -5,12 +5,14 @@
 @media screen and (max-aspect-ratio: 400 / 559.33) {
   .keyboard {
     max-width: 100%;
+    font-size: 4vw;
   }
 }
 
 @media screen and (min-aspect-ratio: 400 / 559.33) {
   .keyboard {
     height: 30%;
+    font-size: 3vh;
   }
 }
 

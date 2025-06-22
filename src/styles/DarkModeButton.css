@@ -19,6 +19,7 @@
   justify-content: space-between;
   background-color: #101c34;
   border: 2px solid #e0eaf5;
+  height: 25px;
   aspect-ratio: 5/2;
   border-radius: 5vh;
   cursor: pointer;
@@ -28,9 +29,15 @@
 
 .day {
   font-weight: 700;
+  font-size: 12px;
+  position: relative;
+  right: 5px;
 }
 .night {
   font-weight: 700;
+  font-size: 12px;
+  position: relative;
+  left: 4px;
 }
 .dark-mode-input:checked + .dark-mode-label > .night {
   color: #fcf4cc;
@@ -76,16 +83,4 @@
 .dark-mode-input:checked + .dark-mode-label {
   background-color: #fcf4cc;
   border: 2px solid #5c4c34;
-}
-
-@media screen and (max-aspect-ratio: 373 / 602) {
-  .dark-mode-label {
-    height: 40%;
-  }
-}
-
-@media screen and (min-aspect-ratio: 373 / 602) {
-  .dark-mode-label {
-    height: 50%;
-  }
 }

@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "./Firebase";
+import { auth, db } from "../Firebase.jsx";
 import { toast, Toaster } from "sonner";
 import { getDoc, doc } from "firebase/firestore";
 
@@ -26,11 +26,11 @@ function LogInDialog({ logInOpen, toggleLogIn, toggleSignUp, setUserData }) {
       console.log(error.message);
       toast.warning(error.message);
     }
-  }
+  };
 
   return (
     <>
-    <Toaster richColors position="top-center"/>
+      <Toaster richColors position="top-center" />
       <Modal show={logInOpen} onHide={toggleLogIn}>
         <Modal.Header closeButton>
           <Container className="flex-center">

@@ -8,23 +8,32 @@
   display: grid;
   grid-template-columns: 17.24% 17.24% 17.24% 17.24% 17.24%;
   grid-template-rows: 14.37% 14.37% 14.37% 14.37% 14.37% 14.37%;
-  gap: 3%;
+  gap: 2%;
   margin-bottom: 20px;
 }
 
 @media screen and (max-aspect-ratio: 373 / 602) {
   .wordle-board {
+    font-size: 8vw;
     width: 80%;
+  }
+  .message {
+    font-size: 5vw;
   }
 }
 
 @media screen and (min-aspect-ratio: 373 / 602) {
   .wordle-board {
+    font-size: 4vh;
     height: 57%;
+  }
+  .message {
+    font-size: 2.8vh;
   }
 }
 
 .tile {
+  font-size: inherit;
   background-color: transparent;
   border: none;
   display: flex;
@@ -37,6 +46,7 @@
 }
 
 .tile-inner {
+  font-size: inherit;
   position: relative;
   display: flex;
   height: 100%;
@@ -53,6 +63,7 @@
 }
 
 .letter {
+  font-size: inherit;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -73,38 +84,32 @@
 }
 
 .letter.green.light {
-  border: 2px solid;
-  border-color: #5c825c;
+  border: 2px solid #5c825c;
   background-color: #5c825c;
 }
 
 .letter.green.dark {
-  border: 2px solid;
-  border-color: #4caf50;
+  border: 2px solid #4caf50;
   background-color: #4caf50;
 }
 
 .letter.orange.light {
-  border: 2px solid;
-  border-color: #ffcf59;
+  border: 2px solid #ffcf59;
   background-color: #ffcf59;
 }
 
 .letter.orange.dark {
-  border: 2px solid;
-  border-color: orange;
+  border: 2px solid orange;
   background-color: orange;
 }
 
 .letter.grey.dark {
-  border: 2px solid;
-  border-color: #28344c;
+  border: 2px solid #28344c;
   background-color: #28344c;
 }
 
 .letter.grey.light {
-  border: 2px solid;
-  border-color: #e0c294;
+  border: 2px solid #e0c294;
   background-color: #e0c294;
 }
 

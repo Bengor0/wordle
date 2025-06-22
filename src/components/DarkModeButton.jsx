@@ -17,14 +17,9 @@ const DarkModeButton = ({ darkMode, toggleDarkMode }) => {
           ref={elementRef}
           htmlFor="dark-mode-input"
           className={`dark-mode-label ${darkMode}`}
-          style={{ fontSize: `${fontSize}px` }}
         >
-          <div className="night" style={{ marginLeft: `${fontSize * 0.6}px` }}>
-            night
-          </div>
-          <div className="day" style={{ marginRight: `${fontSize * 1}px` }}>
-            day
-          </div>
+          <div className="night">night</div>
+          <div className="day">day</div>
         </label>
       </div>
     </>

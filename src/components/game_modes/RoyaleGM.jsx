@@ -6,8 +6,9 @@ const API_URL =
   "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
 
 const RoyaleGM = ({ darkMode, userData, setUserData, gameMode }) => {
+  const solutionsRef = useRef([]);
   const [solution, setSolution] = useState([]);
-  const solutionRef = useRef([]);
+  const solutionIndexRef = useRef(0);
   const [isGameOver, toggleIsGameOver] = useToggleState(false);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
@@ -19,19 +20,17 @@ const RoyaleGM = ({ darkMode, userData, setUserData, gameMode }) => {
         const data = await response.json();
         const wordArray = [...data.words];
         wordArray.forEach((word) => wordSet.current.add(word.toUpperCase()));
-        while (solutionRef.current.length < 5) {
+        while (solutionsRef.current.length < 5) {
           const randomWord =
             wordArray[Math.floor(Math.random() * (wordArray.length - 1))];
-          setSolution((prevState) => [
-            ...prevState,
-            randomWord.toUpperCase().split(""),
-          ]);
-          solutionRef.current = [
-            ...solutionRef.current,
+          solutionsRef.current = [
+            ...solutionsRef.current,
             randomWord.toUpperCase().split(""),
           ];
         }
-        solutionRef.current.forEach((solution) =>
+        setSolution(solutionsRef.current[0]);
+        console.log("heloooo1: " + solutionsRef.current[0]);
+        solutionsRef.current.forEach((solution) =>
           console.log(solution.join("")),
         );
       } catch (error) {
@@ -40,30 +39,33 @@ const RoyaleGM = ({ darkMode, userData, setUserData, gameMode }) => {
     };
 
     fetchWords();
+  }, []);
+
+  useEffect(() => {
+    console.log("index: " + solutionIndexRef.current);
+    if (solutionsRef.current[solutionIndexRef.current]) {
+      solutionIndexRef.current++;
+      setSolution(solutionsRef.current[solutionIndexRef.current]);
+    }
   }, [restart]);
 
   return (
     <>
-      <h1 style={{ color: "white" }}>To be implemented</h1>
-      {solution.map((solution, index) => (
-        <div style={{ color: "white" }} key={index}>
-          {solution}
-        </div>
-      ))}
+      <div style={{ color: "white" }}>{solution}</div>
+      <Wordle
+        darkMode={darkMode}
+        userData={userData}
+        setUserData={setUserData}
+        gameMode={gameMode}
+        solution={solution}
+        wordSet={wordSet}
+        isGameOver={isGameOver}
+        toggleIsGameOver={toggleIsGameOver}
+        toggleRestart={toggleRestart}
+        key={restart}
+      />
     </>
   );
-  // <Wordle
-  //   darkMode={darkMode}
-  //   userData={userData}
-  //   setUserData={setUserData}
-  //   gameMode={gameMode}
-  //   solution={solution}
-  //   wordSet={wordSet}
-  //   isGameOver={isGameOver}
-  //   toggleIsGameOver={toggleIsGameOver}
-  //   toggleRestart={toggleRestart}
-  //   key={restart}
-  // />
 };
 
 export default RoyaleGM;
