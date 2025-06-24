@@ -10,16 +10,30 @@
     font-size: 2vh;
 }
 
-.game-mode-selector.dark > .play-btn{
+.game-mode-selector.dark .accordion-button,
+.game-mode-selector.dark .accordion-item,
+.game-mode-selector.dark .accordion-body,
+.game-mode-selector.dark .play-btn{
     color: #101c34;
+    background-color: #ffffff;
 }
 
-.game-mode-selector.dark > span {
+.game-mode-selector .accordion-button,
+.game-mode-selector .accordion-item,
+.game-mode-selector .accordion-body,
+.game-mode-selector .play-btn {
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
 
+.game-mode-selector.light .accordion-button,
+.game-mode-selector.light .accordion-item,
+.game-mode-selector.light .accordion-body,
+.game-mode-selector.light .play-btn{
+    color: #fcf4cc;;
+    background-color: #5c4c34;
 }
 
 .play-btn{
-    background-color: #ffffff;
     border-top-left-radius: 0.375rem;
     border-bottom-left-radius: 0.375rem;
 }
@@ -27,19 +41,14 @@
     cursor: pointer;
 }
 
-.accordion {
-
-}
-
 .accordion-item{
     height: 6.229548vh;
     border: none;
-    color: #101c34;
+
 }
 
 .accordion-header {
     display: flex;
-    color: #101c34;
     width: 100%;
     height: 100%;
 }
