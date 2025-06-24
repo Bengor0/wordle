@@ -2,10 +2,12 @@ import ClassicGM from "./game_modes/ClassicGM";
 import RoyaleGM from "./game_modes/RoyaleGM";
 import PracticeGM from "./game_modes/PracticeGM";
 
-const Game = ({ darkMode, userData, setUserData, gameMode }) => {
+import React from "react";
+
+function Game({ darkMode, userData, setUserData, gameMode }) {
   return (
     <>
-      {gameMode === "Classic" && (
+      {gameMode === "classic" && (
         <ClassicGM
           darkMode={darkMode}
           userData={userData}
@@ -13,7 +15,7 @@ const Game = ({ darkMode, userData, setUserData, gameMode }) => {
           gameMode={gameMode}
         />
       )}
-      {gameMode === "Royale" && (
+      {gameMode === "royale" && (
         <RoyaleGM
           darkMode={darkMode}
           userData={userData}
@@ -21,7 +23,7 @@ const Game = ({ darkMode, userData, setUserData, gameMode }) => {
           gameMode={gameMode}
         />
       )}
-      {gameMode === "Practice" && (
+      {gameMode === "practice" && (
         <PracticeGM
           darkMode={darkMode}
           userData={userData}
@@ -31,6 +33,6 @@ const Game = ({ darkMode, userData, setUserData, gameMode }) => {
       )}
     </>
   );
-};
+}
 
 export default Game;

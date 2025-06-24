@@ -1,11 +1,13 @@
 import Wordle from "../../Wordle";
 import { useEffect, useRef, useState } from "react";
-import useToggleState from "../../hooks/useToggleState.jsx";
+import useToggleState from "../../hooks/useToggleState.js";
 
 const API_URL =
   "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
 
-const RoyaleGM = ({ darkMode, userData, setUserData, gameMode }) => {
+import React from "react";
+
+function RoyaleGM({ darkMode, userData, setUserData, gameMode }) {
   const solutionsRef = useRef([]);
   const [solution, setSolution] = useState([]);
   const solutionIndexRef = useRef(0);
@@ -66,6 +68,6 @@ const RoyaleGM = ({ darkMode, userData, setUserData, gameMode }) => {
       />
     </>
   );
-};
+}
 
 export default RoyaleGM;

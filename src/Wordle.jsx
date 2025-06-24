@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import KeyBoard from "./components/KeyBoard";
-import KeyboardContext from "./contexts/KeyboardContext";
+import KeyboardContext from "./contexts/KeyboardContext.js";
 import "./Wordle.css";
 import { toast, Toaster } from "sonner";
 import { Button } from "react-bootstrap";

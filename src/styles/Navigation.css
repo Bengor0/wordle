@@ -20,10 +20,12 @@
 .nav-brand {
   transition: color 0.5s ease-in-out;
   font-weight: 600;
+  cursor: pointer;
 }
 .nav-brand.dark {
   color: #e0eaf5;
 }
+
 .nav-brand.light {
   color: #5c4c34;
 }

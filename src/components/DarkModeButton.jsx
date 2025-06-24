@@ -1,9 +1,8 @@
 import ".././styles/DarkModeButton.css";
-import useRelativeFontSize from "../hooks/useRelativeFontSize";
 
-const DarkModeButton = ({ darkMode, toggleDarkMode }) => {
-  const [fontSize, elementRef] = useRelativeFontSize(0.15, "width");
+import React from "react";
 
+function DarkModeButton({ darkMode, toggleDarkMode }) {
   return (
     <>
       <div className="dark-mode-button flex-center">
@@ -14,7 +13,6 @@ const DarkModeButton = ({ darkMode, toggleDarkMode }) => {
           onClick={toggleDarkMode}
         />
         <label
-          ref={elementRef}
           htmlFor="dark-mode-input"
           className={`dark-mode-label ${darkMode}`}
         >
@@ -24,6 +22,6 @@ const DarkModeButton = ({ darkMode, toggleDarkMode }) => {
       </div>
     </>
   );
-};
+}
 
 export default DarkModeButton;

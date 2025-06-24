@@ -1,5 +1,5 @@
 import { useContext, useState, forwardRef, useImperativeHandle } from "react";
-import KeyboardContext from "../contexts/KeyboardContext";
+import KeyboardContext from "../contexts/KeyboardContext.js";
 import ".././styles/Keyboard.css";
 import backspace from ".././assets/backspace.svg";
 

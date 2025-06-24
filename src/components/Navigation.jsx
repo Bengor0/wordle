@@ -15,11 +15,16 @@ function Navigation({
   userData,
   setUserData,
   setGameMode,
+  playWordle,
+  togglePlayWordle,
 }) {
   return (
     <Navbar className={`custom-navbar ${darkMode}`}>
       <Container>
-        <Navbar.Brand className={`nav-brand ${darkMode}`} href="#home">
+        <Navbar.Brand
+          className={`nav-brand ${darkMode}`}
+          onClick={() => playWordle && togglePlayWordle()}
+        >
           Wordle
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

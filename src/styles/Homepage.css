@@ -1,5 +1,5 @@
-#play-wordle-btn {
-    aspect-ratio: 5/3;
-    height: 8%;
-    
+.homepage{
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 }

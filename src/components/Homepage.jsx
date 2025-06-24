@@ -1,17 +1,18 @@
-import { useState } from "react";
-import Wordle from "../Wordle";
-import SignInForm from "./modals/SignUpDialog.jsx";
-import useToggleState from "../hooks/useToggleState";
-
 import ".././styles/Homepage.css";
-import { Button } from "react-bootstrap";
+import React from "react";
+import GameModeSelector from "./GameModeSelector.jsx";
 
-const Homepage = ({ setPlayWordle }) => {
+function Homepage({ togglePlayWordle, gameMode, setGameMode, darkMode }) {
   return (
-    <Button variant="primary" onClick={() => setPlayWordle(true)}>
-      Play worlde
-    </Button>
+    <div className="homepage flex-center">
+      <GameModeSelector
+        togglePlayWordle={togglePlayWordle}
+        gameMode={gameMode}
+        setGameMode={setGameMode}
+        className={darkMode}
+      />
+    </div>
   );
-};
+}
 
 export default Homepage;
