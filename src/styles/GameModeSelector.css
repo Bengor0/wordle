@@ -70,6 +70,13 @@
     box-shadow: none !important;
 }
 
+.game-mode-selector.light .accordion-button::after {
+    filter: brightness(0) saturate(100%) invert(93%) sepia(2%) saturate(2735%) hue-rotate(1deg) brightness(104%) contrast(98%);
+}
+.game-mode-selector.dark .accordion-button::after {
+    filter: brightness(0) saturate(100%) invert(13%) sepia(11%) saturate(2659%) hue-rotate(182deg) brightness(88%) contrast(103%);
+}
+
 .accordion-collapse {
     position: relative;
     width: 16.33987vh;
@@ -98,9 +105,14 @@ li {
     cursor: pointer;
     user-select: none;
 }
-li:hover {
-    background-color: #e0eaf5;
+.selector-list.last:hover {
     border-bottom-right-radius: 0.375rem;
+}
+.game-mode-selector.dark .selector-list:hover {
+    background-color: #e0eaf5;
+}
+.game-mode-selector.light .selector-list:hover {
+    background-color: #e0c294;
 }
 
 .current-mode {

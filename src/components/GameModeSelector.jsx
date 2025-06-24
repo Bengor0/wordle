@@ -51,6 +51,7 @@ function GameModeSelector({
               {gameModes.map((mode, index) =>
                 mode === gameMode ? null : (
                   <li
+                    className={`selector-list ${index + 1 === gameModes.length && "last"}`}
                     key={index}
                     onClick={() => {
                       setCollapse(false);
