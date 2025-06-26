@@ -14,15 +14,14 @@ function Navigation({
   toggleLogIn,
   userData,
   setUserData,
-  setGameMode,
   playWordle,
   togglePlayWordle,
 }) {
   return (
-    <Navbar className={`custom-navbar ${darkMode}`}>
+    <Navbar className={darkMode}>
       <Container>
         <Navbar.Brand
-          className={`nav-brand ${darkMode}`}
+          className={`nav-brand`}
           onClick={() => playWordle && togglePlayWordle()}
         >
           Wordle
@@ -30,29 +29,11 @@ function Navigation({
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavDropdown
-              title="Mode"
-              id="basic-nav-dropdown"
-              className={darkMode}
-            >
-              <NavDropdown.Item onClick={() => setGameMode("Classic")}>
-                Classic
-              </NavDropdown.Item>
-              <NavDropdown.Item onClick={() => setGameMode("Royale")}>
-                Royale
-              </NavDropdown.Item>
-              <NavDropdown.Item onClick={() => setGameMode("Practice")}>
-                Practice
-              </NavDropdown.Item>
-            </NavDropdown>
             <Container className="stats flex-center">
-              <IoStatsChart size="50%" className={`stats-icon ${darkMode}`} />
+              <IoStatsChart size="50%" className={`stats-icon`} />
             </Container>
             <Container className="info flex-center">
-              <IoHelpCircleOutline
-                size="60%"
-                className={`info-icon ${darkMode}`}
-              />
+              <IoHelpCircleOutline size="60%" className={`info-icon`} />
             </Container>
             {userData ? (
               <Container className="button flex-center">
@@ -75,10 +56,7 @@ function Navigation({
                 </Button>
               </Container>
             )}
-            <DarkModeButton
-              darkMode={darkMode}
-              toggleDarkMode={toggleDarkMode}
-            />
+            <DarkModeButton toggleDarkMode={toggleDarkMode} />
           </Nav>
         </Navbar.Collapse>
       </Container>

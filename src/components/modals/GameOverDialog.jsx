@@ -1,21 +1,21 @@
-import { use, useState } from "react";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../Firebase.jsx";
-import { toast, Toaster } from "sonner";
-import { getDoc, doc } from "firebase/firestore";
 
 function GameOverDialog({
-  gameOverDialog,
+  gameOverOpen,
   toggleGameOverDialog,
   togglePlayWordle,
+  gameMode,
+  toggleRestart,
 }) {
   return (
     <>
-      <Modal show={gameOverDialog} onHide={toggleGameOverDialog}>
+      <Modal
+        show={gameOverOpen}
+        onHide={toggleGameOverDialog}
+        backdrop="static"
+      >
         <Modal.Header closeButton>
           <Container className="flex-center">
             <Modal.Title>Game over</Modal.Title>
@@ -36,6 +36,16 @@ function GameOverDialog({
             >
               Go home
             </Button>
+            {gameMode === "practice" && (
+              <Button
+                onClick={() => {
+                  toggleGameOverDialog();
+                  toggleRestart();
+                }}
+              >
+                Play again
+              </Button>
+            )}
           </Container>
         </Modal.Footer>
       </Modal>

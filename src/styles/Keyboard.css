@@ -4,15 +4,26 @@
 
 @media screen and (max-aspect-ratio: 400 / 559.33) {
   .keyboard {
-    max-width: 100%;
+    width: 100%;
+  }
+  .key-letter{
     font-size: 4vw;
+  }
+  .enter {
+    font-size: 3vw;
+
   }
 }
 
 @media screen and (min-aspect-ratio: 400 / 559.33) {
   .keyboard {
     height: 30%;
+  }
+  .key-letter{
     font-size: 3vh;
+  }
+  .enter {
+    font-size: 2.3vh;
   }
 }
 
@@ -33,7 +44,6 @@
   font-weight: 550;
   cursor: pointer;
   transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
-  font-size: inherit;
   margin-left: 0.5%;
   margin-right: 0.5%;
 }
@@ -88,17 +98,6 @@
   width: 42.86%;
   height: 50%;
   pointer-events: none;
-  transition: filter 0.5s ease-in-out;
-}
-
-.keyboard.light .backspace-img {
-  filter: invert(20%) sepia(6%) saturate(13%) hue-rotate(344deg)
-    brightness(102%) contrast(93%);
-}
-
-.keyboard.dark .backspace-img {
-  filter: invert(90%) sepia(9%) saturate(364%) hue-rotate(181deg)
-    brightness(103%) contrast(92%);
 }
 
 .keyboard-key.enter {

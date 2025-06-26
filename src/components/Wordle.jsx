@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from "react";
-import KeyBoard from "./components/KeyBoard";
-import KeyboardContext from "./contexts/KeyboardContext.js";
-import "./Wordle.css";
+import KeyBoard from "./Keyboard.jsx";
+import KeyboardContext from "../contexts/KeyboardContext.js";
+import "../styles/Wordle.css";
 import { toast, Toaster } from "sonner";
 import { Button } from "react-bootstrap";
+import WordleBoard from "./WordleBoard.jsx";
 
 const WORD_LENGTH = 5;
 const NUM_OF_GUESSES = 6;
@@ -40,7 +41,7 @@ export default function Wordle({
   };
 
   const checkGuess = () => {
-    const tileColors = new Array(5).fill(undefined);
+    const tileColors = new Array(WORD_LENGTH).fill(undefined);
     const keyboardColors = new Map();
     const furtherEval = [];
     let correct = 0;
@@ -153,11 +154,11 @@ export default function Wordle({
       {userData && <p className={`paragraph ${darkMode}`}>is playing</p>}
       <h3 className={`game-mode ${darkMode}`}>{gameMode}</h3>
       {isGameOver && <Message message={message} darkMode={darkMode} />}
-      <div className="wordle-board">
-        {guesses.map((guess, i) => {
-          return <Row guess={guess} darkMode={darkMode} key={i} />;
-        })}
-      </div>
+      <WordleBoard
+        guesses={guesses}
+        className={darkMode}
+        wordLength={WORD_LENGTH}
+      />
       {isGameOver ? (
         <Button
           variant="primary"
@@ -170,36 +171,11 @@ export default function Wordle({
         </Button>
       ) : (
         <KeyboardContext.Provider value={{ handleKeyClick }}>
-          <KeyBoard darkMode={darkMode} ref={keyboardRef} />
+          <KeyBoard className={darkMode} ref={keyboardRef} />
         </KeyboardContext.Provider>
       )}
     </>
   );
-}
-
-function Row({ guess, darkMode }) {
-  const tiles = [];
-
-  for (let i = 0; i < WORD_LENGTH; i++) {
-    let char = guess[0][i];
-    let tileClassName = `tile ${guess[1][i]}`;
-    let spanClassName = `letter ${guess[1][i]} ${darkMode}`;
-
-    tiles.push(
-      <div className={tileClassName} key={i} style={{ "--index": i }}>
-        <div className="tile-inner" style={{ "--index": i }}>
-          <div className={`letter black ${darkMode}`} style={{ "--index": i }}>
-            <span>{char}</span>
-          </div>
-          <div className={spanClassName} style={{ "--index": i }}>
-            <span>{char}</span>
-          </div>
-        </div>
-      </div>,
-    );
-  }
-
-  return <>{tiles}</>;
 }
 
 function Message({ message, darkMode }) {

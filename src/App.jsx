@@ -1,4 +1,4 @@
-import Wordle from "./Wordle";
+import Wordle from "./components/Wordle.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import useToggleDarkMode from "./hooks/useToggleDarkMode.js";
 import Homepage from "./components/Homepage";
@@ -11,6 +11,7 @@ import Navigation from "./components/Navigation";
 import Game from "./components/Game";
 
 import React from "react";
+import GameOverDialog from "./components/modals/GameOverDialog.jsx";
 
 function App() {
   const [darkMode, toggleDarkMode] = useToggleDarkMode(true);
@@ -31,7 +32,6 @@ function App() {
         toggleLogIn={toggleLogIn}
         userData={userData}
         setUserData={setUserData}
-        setGameMode={setGameMode}
         playWordle={playWordle}
         togglePlayWordle={togglePlayWordle}
       />
@@ -42,6 +42,7 @@ function App() {
             userData={userData}
             setUserData={setUserData}
             gameMode={gameMode}
+            togglePlayWordle={togglePlayWordle}
           />
         ) : (
           <Homepage

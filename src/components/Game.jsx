@@ -4,33 +4,12 @@ import PracticeGM from "./game_modes/PracticeGM";
 
 import React from "react";
 
-function Game({ darkMode, userData, setUserData, gameMode }) {
+function Game(props) {
   return (
     <>
-      {gameMode === "classic" && (
-        <ClassicGM
-          darkMode={darkMode}
-          userData={userData}
-          setUserData={setUserData}
-          gameMode={gameMode}
-        />
-      )}
-      {gameMode === "royale" && (
-        <RoyaleGM
-          darkMode={darkMode}
-          userData={userData}
-          setUserData={setUserData}
-          gameMode={gameMode}
-        />
-      )}
-      {gameMode === "practice" && (
-        <PracticeGM
-          darkMode={darkMode}
-          userData={userData}
-          setUserData={setUserData}
-          gameMode={gameMode}
-        />
-      )}
+      {props.gameMode === "classic" && <ClassicGM {...props} />}
+      {props.gameMode === "royale" && <RoyaleGM {...props} />}
+      {props.gameMode === "practice" && <PracticeGM {...props} />}
     </>
   );
 }

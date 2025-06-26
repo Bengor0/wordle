@@ -1,7 +1,7 @@
 import { useContext, useState, forwardRef, useImperativeHandle } from "react";
 import KeyboardContext from "../contexts/KeyboardContext.js";
 import ".././styles/Keyboard.css";
-import backspace from ".././assets/backspace.svg";
+import { IoBackspaceOutline } from "react-icons/io5";
 
 const KEYS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -9,7 +9,7 @@ const KEYS = [
   ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "BACKSPACE"],
 ];
 
-function KeyBoard(props, ref) {
+function KeyBoard({ className }, ref) {
   const { handleKeyClick } = useContext(KeyboardContext);
   const [keyColors, setKeyColor] = useState(new Map());
 
@@ -29,7 +29,7 @@ function KeyBoard(props, ref) {
   }));
 
   return (
-    <div className={`keyboard ${props.darkMode}`}>
+    <div className={`keyboard ${className}`}>
       {KEYS.map((keyboardRow, index) => (
         <KeyboardRow
           keyboardRow={keyboardRow}
@@ -71,11 +71,7 @@ function KeyboardKey({ keyboardKey, keyColors }) {
   return (
     <button className={className} onClick={handleKeyClick} id={keyboardKey}>
       {keyboardKey === "BACKSPACE" && (
-        <img
-          className="backspace-img"
-          src={backspace}
-          alt="backspace.svg"
-        ></img>
+        <IoBackspaceOutline className={"backspace-img"} />
       )}
       {keyboardKeyText}
     </button>

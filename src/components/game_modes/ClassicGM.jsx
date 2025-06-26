@@ -1,4 +1,4 @@
-import Wordle from "../../Wordle";
+import Wordle from "../Wordle.jsx";
 import { useEffect, useRef, useState } from "react";
 import useToggleState from "../../hooks/useToggleState.js";
 
@@ -6,8 +6,15 @@ const API_URL =
   "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
 
 import React from "react";
+import GameOverDialog from "../modals/GameOverDialog.jsx";
 
-function ClassicGM({ darkMode, userData, setUserData, gameMode }) {
+function ClassicGM({
+  darkMode,
+  userData,
+  setUserData,
+  gameMode,
+  togglePlayWordle,
+}) {
   const [solution, setSolution] = useState([]);
   const solutionRef = useRef([]);
   const [isGameOver, toggleIsGameOver] = useToggleState(false);
@@ -35,18 +42,27 @@ function ClassicGM({ darkMode, userData, setUserData, gameMode }) {
   }, [restart]);
 
   return (
-    <Wordle
-      darkMode={darkMode}
-      userData={userData}
-      setUserData={setUserData}
-      gameMode={gameMode}
-      solution={solution}
-      wordSet={wordSet}
-      isGameOver={isGameOver}
-      toggleIsGameOver={toggleIsGameOver}
-      toggleRestart={toggleRestart}
-      key={restart}
-    />
+    <>
+      <Wordle
+        darkMode={darkMode}
+        userData={userData}
+        setUserData={setUserData}
+        gameMode={gameMode}
+        solution={solution}
+        wordSet={wordSet}
+        isGameOver={isGameOver}
+        toggleIsGameOver={toggleIsGameOver}
+        toggleRestart={toggleRestart}
+        key={restart}
+      />
+      <GameOverDialog
+        gameMode={gameMode}
+        gameOverOpen={isGameOver}
+        toggleGameOverDialog={toggleIsGameOver}
+        toggleRestart={toggleRestart}
+        togglePlayWordle={togglePlayWordle}
+      />
+    </>
   );
 }
 

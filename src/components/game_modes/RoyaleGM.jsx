@@ -1,4 +1,4 @@
-import Wordle from "../../Wordle";
+import Wordle from "../Wordle.jsx";
 import { useEffect, useRef, useState } from "react";
 import useToggleState from "../../hooks/useToggleState.js";
 
@@ -6,11 +6,19 @@ const API_URL =
   "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
 
 import React from "react";
+import GameOverDialog from "../modals/GameOverDialog.jsx";
 
-function RoyaleGM({ darkMode, userData, setUserData, gameMode }) {
+function RoyaleGM({
+  darkMode,
+  userData,
+  setUserData,
+  gameMode,
+  togglePlayWordle,
+}) {
   const solutionsRef = useRef([]);
+  const [solutions, setSolutions] = useState([]);
   const [solution, setSolution] = useState([]);
-  const solutionIndexRef = useRef(0);
+  const [gameRound, setGameRound] = useState(0);
   const [isGameOver, toggleIsGameOver] = useToggleState(false);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
@@ -31,7 +39,7 @@ function RoyaleGM({ darkMode, userData, setUserData, gameMode }) {
           ];
         }
         setSolution(solutionsRef.current[0]);
-        console.log("heloooo1: " + solutionsRef.current[0]);
+        setGameRound(1);
         solutionsRef.current.forEach((solution) =>
           console.log(solution.join("")),
         );
@@ -44,16 +52,17 @@ function RoyaleGM({ darkMode, userData, setUserData, gameMode }) {
   }, []);
 
   useEffect(() => {
-    console.log("index: " + solutionIndexRef.current);
-    if (solutionsRef.current[solutionIndexRef.current]) {
-      solutionIndexRef.current++;
-      setSolution(solutionsRef.current[solutionIndexRef.current]);
+    if (solutionsRef.current[gameRound]) {
+      setSolution(solutionsRef.current[gameRound]);
+      setGameRound(gameRound + 1);
     }
   }, [restart]);
 
   return (
     <>
-      <div style={{ color: "white" }}>{solution}</div>
+      <div style={{ color: "white" }}>
+        {"Round: " + gameRound + " " + solution}
+      </div>
       <Wordle
         darkMode={darkMode}
         userData={userData}
@@ -65,6 +74,14 @@ function RoyaleGM({ darkMode, userData, setUserData, gameMode }) {
         toggleIsGameOver={toggleIsGameOver}
         toggleRestart={toggleRestart}
         key={restart}
+        togglePlayWordle={togglePlayWordle}
+      />
+      <GameOverDialog
+        gameMode={gameMode}
+        gameOverOpen={gameRound === 6}
+        toggleGameOverDialog={toggleIsGameOver}
+        toggleRestart={toggleRestart}
+        togglePlayWordle={togglePlayWordle}
       />
     </>
   );
