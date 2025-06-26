@@ -20,12 +20,12 @@ export default function Wordle({
   isGameOver,
   toggleIsGameOver,
   toggleRestart,
+  rowIndex,
 }) {
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
     new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS]),
   );
-  const rowIndex = useRef(0);
   const [message, setMessage] = useState(null);
   const isEnterEnabled = useRef(true);
   const keyboardRef = useRef(null);

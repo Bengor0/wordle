@@ -22,6 +22,7 @@ function RoyaleGM({
   const [isGameOver, toggleIsGameOver] = useToggleState(false);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
+  const rowIndex = useRef(0);
 
   useEffect(() => {
     const fetchWords = async () => {
@@ -55,6 +56,7 @@ function RoyaleGM({
     if (solutionsRef.current[gameRound]) {
       setSolution(solutionsRef.current[gameRound]);
       setGameRound(gameRound + 1);
+      rowIndex.current = 0;
     }
   }, [restart]);
 
@@ -75,6 +77,7 @@ function RoyaleGM({
         toggleRestart={toggleRestart}
         key={restart}
         togglePlayWordle={togglePlayWordle}
+        rowIndex={rowIndex}
       />
       <GameOverDialog
         gameMode={gameMode}
