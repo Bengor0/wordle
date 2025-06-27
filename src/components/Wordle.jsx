@@ -5,6 +5,7 @@ import "../styles/Wordle.css";
 import { toast, Toaster } from "sonner";
 import { Button } from "react-bootstrap";
 import WordleBoard from "./WordleBoard.jsx";
+import useToggleState from "../hooks/useToggleState.js";
 
 const WORD_LENGTH = 5;
 const NUM_OF_GUESSES = 6;
@@ -17,8 +18,8 @@ export default function Wordle({
   gameMode,
   solution,
   wordSet,
-  isGameOver,
-  toggleIsGameOver,
+  gameResult,
+  setGameResult,
   toggleRestart,
   rowIndex,
 }) {
@@ -85,7 +86,7 @@ export default function Wordle({
       rowIndex.current === 3 && setMessage("Crocodilo bombardiro approves!");
       rowIndex.current === 4 && setMessage("You understood the assignment!");
       rowIndex.current === 5 && setMessage(`Last brain cell activated!?%`);
-      toggleIsGameOver();
+      setGameResult("guessed");
     }
 
     guess.current = [guess.current[0], tileColors];
@@ -97,7 +98,7 @@ export default function Wordle({
   };
 
   const handleKey = async (key) => {
-    if (!isGameOver && isEnterEnabled.current) {
+    if (!gameResult && isEnterEnabled.current) {
       if (key === "ENTER" && guess.current[0].length === WORD_LENGTH) {
         if (wordSet.current.has(guess.current[0])) {
           isEnterEnabled.current = false;
@@ -106,8 +107,8 @@ export default function Wordle({
           rowIndex.current++;
           guess.current = ["", BASE_COLORS];
           isEnterEnabled.current = true;
-          if (!isGameOver && rowIndex.current >= NUM_OF_GUESSES) {
-            toggleIsGameOver();
+          if (!gameResult && rowIndex.current >= NUM_OF_GUESSES) {
+            setGameResult("failed");
             rowIndex.current++;
             setMessage(
               <Message message={`Did you even try? (${solution.join("")})`} />,
@@ -153,18 +154,18 @@ export default function Wordle({
       )}
       {userData && <p className={`paragraph ${darkMode}`}>is playing</p>}
       <h3 className={`game-mode ${darkMode}`}>{gameMode}</h3>
-      {isGameOver && <Message message={message} darkMode={darkMode} />}
+      {gameResult && <Message message={message} darkMode={darkMode} />}
       <WordleBoard
         guesses={guesses}
         className={darkMode}
         wordLength={WORD_LENGTH}
       />
-      {isGameOver ? (
+      {gameResult ? (
         <Button
           variant="primary"
           onClick={() => {
             toggleRestart();
-            toggleIsGameOver();
+            setGameResult("");
           }}
         >
           Play again

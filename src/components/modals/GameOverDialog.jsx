@@ -3,17 +3,17 @@ import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
 
 function GameOverDialog({
-  gameOverOpen,
-  toggleGameOverDialog,
-  togglePlayWordle,
   gameMode,
+  gameResult,
+  setGameResult,
   toggleRestart,
+  togglePlayWordle,
 }) {
   return (
     <>
       <Modal
-        show={gameOverOpen}
-        onHide={toggleGameOverDialog}
+        show={gameResult}
+        onHide={() => setGameResult("")}
         backdrop="static"
       >
         <Modal.Header closeButton>
@@ -30,7 +30,7 @@ function GameOverDialog({
           <Container>
             <Button
               onClick={() => {
-                toggleGameOverDialog();
+                setGameResult("");
                 togglePlayWordle();
               }}
             >
@@ -39,7 +39,7 @@ function GameOverDialog({
             {gameMode === "practice" && (
               <Button
                 onClick={() => {
-                  toggleGameOverDialog();
+                  setGameResult("");
                   toggleRestart();
                 }}
               >

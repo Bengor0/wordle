@@ -20,10 +20,13 @@ function PracticeGM({
   const [isGameOver, toggleIsGameOver] = useToggleState(false);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
+  const rowIndex = useRef(0);
+  const [gameResult, setGameResult] = useState("");
 
   useEffect(() => {
     const fetchWords = async () => {
       try {
+        rowIndex.current = 0;
         const response = await fetch(API_URL);
         const data = await response.json();
         const wordArray = [...data.words];
@@ -54,11 +57,14 @@ function PracticeGM({
         toggleIsGameOver={toggleIsGameOver}
         toggleRestart={toggleRestart}
         key={restart}
+        rowIndex={rowIndex}
+        gameResult={gameResult}
+        setGameResult={setGameResult}
       />
       <GameOverDialog
         gameMode={gameMode}
-        gameOverOpen={isGameOver}
-        toggleGameOverDialog={toggleIsGameOver}
+        gameResult={gameResult}
+        setGameResult={setGameResult}
         toggleRestart={toggleRestart}
         togglePlayWordle={togglePlayWordle}
       />
