@@ -33,10 +33,7 @@ function RoyaleGM({
         while (solutionsRef.current.length < 5) {
           const randomWord =
             wordArray[Math.floor(Math.random() * (wordArray.length - 1))];
-          solutionsRef.current = [
-            ...solutionsRef.current,
-            randomWord.toUpperCase().split(""),
-          ];
+          solutionsRef.current.push(randomWord.toUpperCase().split(""));
         }
         setSolution(solutionsRef.current[0]);
         setGameRound(1);
@@ -52,17 +49,19 @@ function RoyaleGM({
   }, []);
 
   useEffect(() => {
-    if (solutionsRef.current[gameRound]) {
+    if (solutionsRef.current[gameRound] && gameResult) {
       setSolution(solutionsRef.current[gameRound]);
       setGameRound(gameRound + 1);
       rowIndex.current = 0;
+      toggleRestart();
+      setGameResult("");
     }
-  }, [restart]);
+  }, [gameResult]);
 
   return (
     <>
       <div style={{ color: "white" }}>
-        {"Round: " + gameRound + " " + solution}
+        {"Round: " + gameRound + " " + solution + gameResult}
       </div>
       <Wordle
         darkMode={darkMode}
@@ -71,7 +70,6 @@ function RoyaleGM({
         gameMode={gameMode}
         solution={solution}
         wordSet={wordSet}
-        toggleRestart={toggleRestart}
         key={restart}
         rowIndex={rowIndex}
         gameResult={gameResult}
@@ -79,7 +77,7 @@ function RoyaleGM({
       />
       <GameOverDialog
         gameMode={gameMode}
-        gameResut={gameResult}
+        showDialog={gameRound === 5 && gameResult}
         setGameResult={setGameResult}
         toggleRestart={toggleRestart}
         togglePlayWordle={togglePlayWordle}

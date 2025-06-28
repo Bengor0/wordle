@@ -20,14 +20,12 @@ export default function Wordle({
   wordSet,
   gameResult,
   setGameResult,
-  toggleRestart,
   rowIndex,
 }) {
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
     new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS]),
   );
-  const [message, setMessage] = useState(null);
   const isEnterEnabled = useRef(true);
   const keyboardRef = useRef(null);
 
@@ -41,7 +39,7 @@ export default function Wordle({
     setGuesses(shallowGuesses);
   };
 
-  const checkGuess = () => {
+  const checkGuess = async () => {
     const tileColors = new Array(WORD_LENGTH).fill(undefined);
     const keyboardColors = new Map();
     const furtherEval = [];
@@ -79,18 +77,14 @@ export default function Wordle({
       keyboardRef.current?.udpateKeyColor(key, value);
     });
 
-    if (correct === WORD_LENGTH) {
-      rowIndex.current === 0 && setMessage("Sigma Guess!");
-      rowIndex.current === 1 && setMessage("Giga Chad!");
-      rowIndex.current === 2 && setMessage("You got that Worlde rizz!");
-      rowIndex.current === 3 && setMessage("Crocodilo bombardiro approves!");
-      rowIndex.current === 4 && setMessage("You understood the assignment!");
-      rowIndex.current === 5 && setMessage(`Last brain cell activated!?%`);
-      setGameResult("guessed");
-    }
-
     guess.current = [guess.current[0], tileColors];
     updateGuesses(guess.current);
+    await guessRevealAnimation(1700);
+
+    if (correct === WORD_LENGTH) {
+      await guessRevealAnimation(1000);
+      setGameResult("guessed");
+    }
   };
 
   const handleKeyClick = (event) => {
@@ -102,8 +96,7 @@ export default function Wordle({
       if (key === "ENTER" && guess.current[0].length === WORD_LENGTH) {
         if (wordSet.current.has(guess.current[0])) {
           isEnterEnabled.current = false;
-          checkGuess();
-          await guessRevealAnimation(1700);
+          await checkGuess();
           rowIndex.current++;
           guess.current = ["", BASE_COLORS];
           isEnterEnabled.current = true;
@@ -154,31 +147,15 @@ export default function Wordle({
       )}
       {userData && <p className={`paragraph ${darkMode}`}>is playing</p>}
       <h3 className={`game-mode ${darkMode}`}>{gameMode}</h3>
-      {gameResult && <Message message={message} darkMode={darkMode} />}
       <WordleBoard
         guesses={guesses}
         className={darkMode}
         wordLength={WORD_LENGTH}
       />
-      {gameResult ? (
-        <Button
-          variant="primary"
-          onClick={() => {
-            toggleRestart();
-            setGameResult("");
-          }}
-        >
-          Play again
-        </Button>
-      ) : (
-        <KeyboardContext.Provider value={{ handleKeyClick }}>
-          <KeyBoard className={darkMode} ref={keyboardRef} />
-        </KeyboardContext.Provider>
-      )}
+
+      <KeyboardContext.Provider value={{ handleKeyClick }}>
+        <KeyBoard className={darkMode} ref={keyboardRef} />
+      </KeyboardContext.Provider>
     </>
   );
-}
-
-function Message({ message, darkMode }) {
-  return <div className={`message ${darkMode}`}>{message}</div>;
 }

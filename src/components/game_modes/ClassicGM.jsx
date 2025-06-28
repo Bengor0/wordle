@@ -55,7 +55,6 @@ function ClassicGM({
         wordSet={wordSet}
         isGameOver={isGameOver}
         toggleIsGameOver={toggleIsGameOver}
-        toggleRestart={toggleRestart}
         key={restart}
         rowIndex={rowIndex}
         gameResult={gameResult}

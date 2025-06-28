@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 
 function GameOverDialog({
   gameMode,
-  gameResult,
+  showDialog,
   setGameResult,
   toggleRestart,
   togglePlayWordle,
@@ -12,7 +12,7 @@ function GameOverDialog({
   return (
     <>
       <Modal
-        show={gameResult}
+        show={showDialog}
         onHide={() => setGameResult("")}
         backdrop="static"
       >
