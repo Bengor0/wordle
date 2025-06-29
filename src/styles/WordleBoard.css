@@ -33,6 +33,17 @@
     user-select: none;
 }
 
+.tile.highlight {
+    transition: box-shadow 0.5s ease-in-out;
+}
+
+.wordle-board.dark .tile.highlight {
+    box-shadow: 0 0 10px 0 #e0eaf5;
+}
+.wordle-board.light .tile.highlight {
+    box-shadow: 0 0 10px 0 #5c4c34;
+}
+
 .tile-inner {
     font-size: inherit;
     position: relative;

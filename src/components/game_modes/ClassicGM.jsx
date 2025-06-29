@@ -14,6 +14,8 @@ function ClassicGM({
   setUserData,
   gameMode,
   togglePlayWordle,
+  wordLength,
+  numOfGuesses,
 }) {
   const [solution, setSolution] = useState([]);
   const solutionRef = useRef([]);
@@ -56,6 +58,8 @@ function ClassicGM({
         rowIndex={rowIndex}
         gameResult={gameResult}
         setGameResult={setGameResult}
+        wordLength={wordLength}
+        numOfGuesses={numOfGuesses}
       />
       <GameOverDialog
         gameMode={gameMode}

@@ -21,6 +21,7 @@ export default function Wordle({
   rowIndex,
   numOfGuesses,
   wordLength,
+  highLight,
 }) {
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
@@ -147,6 +148,7 @@ export default function Wordle({
         guesses={guesses}
         className={darkMode}
         wordLength={wordLength}
+        highLight={highLight}
       />
 
       <KeyboardContext.Provider value={{ handleKeyClick }}>
