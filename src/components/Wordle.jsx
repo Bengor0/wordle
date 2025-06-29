@@ -7,8 +7,6 @@ import { Button } from "react-bootstrap";
 import WordleBoard from "./WordleBoard.jsx";
 import useToggleState from "../hooks/useToggleState.js";
 
-const WORD_LENGTH = 5;
-const NUM_OF_GUESSES = 6;
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 
 export default function Wordle({
@@ -21,10 +19,12 @@ export default function Wordle({
   gameResult,
   setGameResult,
   rowIndex,
+  numOfGuesses,
+  wordLength,
 }) {
   const guess = useRef(["", BASE_COLORS]);
   const [guesses, setGuesses] = useState(
-    new Array(NUM_OF_GUESSES).fill(["", BASE_COLORS]),
+    new Array(numOfGuesses).fill(["", BASE_COLORS]),
   );
   const isEnterEnabled = useRef(true);
   const keyboardRef = useRef(null);
@@ -40,7 +40,7 @@ export default function Wordle({
   };
 
   const checkGuess = async () => {
-    const tileColors = new Array(WORD_LENGTH).fill(undefined);
+    const tileColors = new Array(wordLength).fill(undefined);
     const keyboardColors = new Map();
     const furtherEval = [];
     let correct = 0;
@@ -81,7 +81,7 @@ export default function Wordle({
     updateGuesses(guess.current);
     await guessRevealAnimation(1700);
 
-    if (correct === WORD_LENGTH) {
+    if (correct === wordLength) {
       await guessRevealAnimation(1000);
       setGameResult("guessed");
     }
@@ -93,32 +93,28 @@ export default function Wordle({
 
   const handleKey = async (key) => {
     if (!gameResult && isEnterEnabled.current) {
-      if (key === "ENTER" && guess.current[0].length === WORD_LENGTH) {
+      if (key === "ENTER" && guess.current[0].length === wordLength) {
         if (wordSet.current.has(guess.current[0])) {
           isEnterEnabled.current = false;
           await checkGuess();
           rowIndex.current++;
           guess.current = ["", BASE_COLORS];
           isEnterEnabled.current = true;
-          if (!gameResult && rowIndex.current >= NUM_OF_GUESSES) {
+          if (!gameResult && rowIndex.current >= numOfGuesses) {
             setGameResult("failed");
             rowIndex.current++;
-            setMessage(
-              <Message message={`Did you even try? (${solution.join("")})`} />,
-            );
           }
-          console.log(rowIndex.current);
         } else {
           toast.warning("Not in the word bank.");
         }
-      } else if (rowIndex.current < NUM_OF_GUESSES) {
+      } else if (rowIndex.current < numOfGuesses) {
         if (key === "BACKSPACE" && guess.current[0].length > 0) {
           guess.current[0] = guess.current[0].slice(0, -1);
           updateGuesses(guess.current);
         } else if (
           /[A-Z]/.test(key) &&
           key.length === 1 &&
-          guess.current[0].length < WORD_LENGTH
+          guess.current[0].length < wordLength
         ) {
           guess.current[0] = guess.current[0] + key;
           updateGuesses(guess.current);
@@ -150,7 +146,7 @@ export default function Wordle({
       <WordleBoard
         guesses={guesses}
         className={darkMode}
-        wordLength={WORD_LENGTH}
+        wordLength={wordLength}
       />
 
       <KeyboardContext.Provider value={{ handleKeyClick }}>

@@ -17,7 +17,6 @@ function ClassicGM({
 }) {
   const [solution, setSolution] = useState([]);
   const solutionRef = useRef([]);
-  const [isGameOver, toggleIsGameOver] = useToggleState(false);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
   const rowIndex = useRef(0);
@@ -53,8 +52,6 @@ function ClassicGM({
         gameMode={gameMode}
         solution={solution}
         wordSet={wordSet}
-        isGameOver={isGameOver}
-        toggleIsGameOver={toggleIsGameOver}
         key={restart}
         rowIndex={rowIndex}
         gameResult={gameResult}
@@ -62,7 +59,7 @@ function ClassicGM({
       />
       <GameOverDialog
         gameMode={gameMode}
-        gameResult={gameResult}
+        showDialog={gameResult}
         setGameResult={setGameResult}
         toggleRestart={toggleRestart}
         togglePlayWordle={togglePlayWordle}

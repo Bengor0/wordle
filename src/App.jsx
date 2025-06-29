@@ -43,6 +43,8 @@ function App() {
             setUserData={setUserData}
             gameMode={gameMode}
             togglePlayWordle={togglePlayWordle}
+            wordLength={5}
+            numOfGuesses={6}
           />
         ) : (
           <Homepage

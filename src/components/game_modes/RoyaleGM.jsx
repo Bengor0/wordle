@@ -14,14 +14,18 @@ function RoyaleGM({
   setUserData,
   gameMode,
   togglePlayWordle,
+  wordLength,
+  numOfGuesses,
 }) {
   const solutionsRef = useRef([]);
   const [solution, setSolution] = useState([]);
   const [gameRound, setGameRound] = useState(0);
+  const gameRoundRef = useRef(1);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
   const rowIndex = useRef(0);
-  const [gameResult, setGameResult] = useState("");
+  const [roundResult, setRoundResult] = useState("");
+  const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
     const fetchWords = async () => {
@@ -49,19 +53,40 @@ function RoyaleGM({
   }, []);
 
   useEffect(() => {
-    if (solutionsRef.current[gameRound] && gameResult) {
-      setSolution(solutionsRef.current[gameRound]);
-      setGameRound(gameRound + 1);
-      rowIndex.current = 0;
-      toggleRestart();
-      setGameResult("");
+    if (roundResult) {
+      if (roundResult !== "failed" && gameRound < numOfGuesses - 1) {
+        setGameRound(gameRound + 1);
+        if (checkResult()) {
+          setIsGameOver(true);
+        } else {
+          gameRoundRef.current++;
+          setSolution(solutionsRef.current[gameRound]);
+          setRoundResult("");
+          rowIndex.current = 0;
+          toggleRestart();
+        }
+      } else {
+        setIsGameOver(true);
+      }
     }
-  }, [gameResult]);
+  }, [roundResult]);
+
+  const checkResult = () => {
+    if (gameRound === 1 && rowIndex.current > 5) {
+      return true;
+    } else if (gameRound === 2 && rowIndex.current > 4) {
+      return true;
+    } else if (gameRound === 3 && rowIndex.current > 3) {
+      return true;
+    } else if (gameRound === 4 && rowIndex.current > 2) {
+      return true;
+    } else return gameRound === 5;
+  };
 
   return (
     <>
       <div style={{ color: "white" }}>
-        {"Round: " + gameRound + " " + solution + gameResult}
+        {"Round: " + gameRound + " " + solution}
       </div>
       <Wordle
         darkMode={darkMode}
@@ -72,13 +97,15 @@ function RoyaleGM({
         wordSet={wordSet}
         key={restart}
         rowIndex={rowIndex}
-        gameResult={gameResult}
-        setGameResult={setGameResult}
+        gameResult={roundResult}
+        setGameResult={setRoundResult}
+        wordLength={wordLength}
+        numOfGuesses={numOfGuesses}
       />
       <GameOverDialog
         gameMode={gameMode}
-        showDialog={gameRound === 5 && gameResult}
-        setGameResult={setGameResult}
+        showDialog={isGameOver}
+        setGameResult={setRoundResult}
         toggleRestart={toggleRestart}
         togglePlayWordle={togglePlayWordle}
       />
