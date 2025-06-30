@@ -11,17 +11,15 @@ import Navigation from "./components/Navigation";
 import Game from "./components/Game";
 
 import React from "react";
-import GameOverDialog from "./components/modals/GameOverDialog.jsx";
+import { useAuth } from "./hooks/useAuth.js";
 
 function App() {
   const [darkMode, toggleDarkMode] = useToggleDarkMode(true);
   const [playWordle, togglePlayWordle] = useToggleState(false);
   const [logInOpen, toggleLogIn] = useToggleState(false);
   const [signUpOpen, toggleSignUp] = useToggleState(false);
-  const [gameOverDialog, toggleGameOverDialog] = useToggleState(false);
-  const [userData, setUserData] = useState(null);
   const [gameMode, setGameMode] = useState("practice");
-
+  const { currentUser, loading } = useAuth();
   document.querySelector("body").classList = `${darkMode}`;
 
   return (
@@ -30,8 +28,7 @@ function App() {
         darkMode={darkMode}
         toggleDarkMode={toggleDarkMode}
         toggleLogIn={toggleLogIn}
-        userData={userData}
-        setUserData={setUserData}
+        currentUser={currentUser}
         playWordle={playWordle}
         togglePlayWordle={togglePlayWordle}
       />
@@ -39,33 +36,31 @@ function App() {
         {playWordle ? (
           <Game
             darkMode={darkMode}
-            userData={userData}
-            setUserData={setUserData}
+            currentUser={currentUser}
             gameMode={gameMode}
             togglePlayWordle={togglePlayWordle}
             wordLength={5}
             numOfGuesses={6}
           />
         ) : (
-          <Homepage
-            togglePlayWordle={togglePlayWordle}
-            gameMode={gameMode}
-            setGameMode={setGameMode}
-            darkMode={darkMode}
-          />
+          <>
+            <div>{currentUser?.uid}</div>
+            <Homepage
+              togglePlayWordle={togglePlayWordle}
+              gameMode={gameMode}
+              setGameMode={setGameMode}
+              darkMode={darkMode}
+              currentUser={currentUser}
+            />
+          </>
         )}
       </main>
       <LogInDialog
         logInOpen={logInOpen}
         toggleLogIn={toggleLogIn}
         toggleSignUp={toggleSignUp}
-        setUserData={setUserData}
       />
-      <SignUpDialog
-        signUpOpen={signUpOpen}
-        toggleSignUp={toggleSignUp}
-        setUserData={setUserData}
-      />
+      <SignUpDialog signUpOpen={signUpOpen} toggleSignUp={toggleSignUp} />
     </>
   );
 }

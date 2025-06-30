@@ -6,13 +6,12 @@ import { toast, Toaster } from "sonner";
 import { Button } from "react-bootstrap";
 import WordleBoard from "./WordleBoard.jsx";
 import useToggleState from "../hooks/useToggleState.js";
+import { auth } from "./Firebase.jsx";
 
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 
 export default function Wordle({
   darkMode,
-  userData,
-  setUserData,
   gameMode,
   solution,
   wordSet,
@@ -29,6 +28,7 @@ export default function Wordle({
   );
   const isEnterEnabled = useRef(true);
   const keyboardRef = useRef(null);
+  console.log(auth.currentUser);
 
   const guessRevealAnimation = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -137,12 +137,6 @@ export default function Wordle({
   return (
     <>
       <Toaster richColors position="top-center" />
-      {userData && (
-        <h1 className={`nickname-paragraph ${darkMode}`}>
-          {userData.get("nickname")}
-        </h1>
-      )}
-      {userData && <p className={`paragraph ${darkMode}`}>is playing</p>}
       <h3 className={`game-mode ${darkMode}`}>{gameMode}</h3>
       <WordleBoard
         guesses={guesses}

@@ -10,8 +10,7 @@ import GameOverDialog from "../modals/GameOverDialog.jsx";
 
 function ClassicGM({
   darkMode,
-  userData,
-  setUserData,
+  currentUser,
   gameMode,
   togglePlayWordle,
   wordLength,
@@ -49,8 +48,6 @@ function ClassicGM({
     <>
       <Wordle
         darkMode={darkMode}
-        userData={userData}
-        setUserData={setUserData}
         gameMode={gameMode}
         solution={solution}
         wordSet={wordSet}

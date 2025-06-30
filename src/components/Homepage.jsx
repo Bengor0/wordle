@@ -2,7 +2,13 @@ import ".././styles/Homepage.css";
 import React from "react";
 import GameModeSelector from "./GameModeSelector.jsx";
 
-function Homepage({ togglePlayWordle, gameMode, setGameMode, darkMode }) {
+function Homepage({
+  togglePlayWordle,
+  gameMode,
+  setGameMode,
+  darkMode,
+  currentUser,
+}) {
   return (
     <div className="homepage flex-center">
       <GameModeSelector
@@ -10,6 +16,7 @@ function Homepage({ togglePlayWordle, gameMode, setGameMode, darkMode }) {
         gameMode={gameMode}
         setGameMode={setGameMode}
         className={darkMode}
+        currentUser={currentUser}
       />
     </div>
   );

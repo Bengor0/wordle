@@ -8,7 +8,7 @@ import { auth, db } from "../Firebase.jsx";
 import { toast, Toaster } from "sonner";
 import { getDoc, doc } from "firebase/firestore";
 
-function LogInDialog({ logInOpen, toggleLogIn, toggleSignUp, setUserData }) {
+function LogInDialog({ logInOpen, toggleLogIn, toggleSignUp }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,15 +16,12 @@ function LogInDialog({ logInOpen, toggleLogIn, toggleSignUp, setUserData }) {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      const user = auth.currentUser;
-      const userData = await getDoc(doc(db, "Users", user.uid));
-      setUserData(userData);
       console.log("User logged in.");
       toast.success("Logged in.");
       toggleLogIn();
     } catch (error) {
       console.log(error.message);
-      toast.warning(error.message);
+      toast.error(error.message);
     }
   };
 

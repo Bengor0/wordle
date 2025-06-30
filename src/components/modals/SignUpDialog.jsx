@@ -19,35 +19,54 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
     if (password !== rePassword) {
       console.log("Passwords dont match!");
       toast.warning("Passwords don't match!");
-      return;
     } else if (password.length < 6) {
       console.log("Password needs to be at least 6 characters long!");
       toast.warning("Password is too short - at least 6 characters.");
-      return;
     } else {
       try {
         await createUserWithEmailAndPassword(auth, email, password);
         const user = auth.currentUser;
-        console.log(user);
-        if (user) {
-          await setDoc(doc(db, "Users", user.uid), {
-            email: user.email,
-            nickname: nickname,
-            practicePlayed: 0,
-            pracitceGuessed: 0,
-            classicPlayed: 0,
-            classicGuessed: 0,
-            royalePlayed: 0,
-            royaleScore: 0,
-            achievements: [],
-          });
-        }
+        await setDoc(doc(db, "Users", user.uid), {
+          email: user.email,
+          nickname: nickname,
+          statistics: {
+            dailyStreak: 0,
+            classicGM: {
+              played: 0,
+              guessed: {
+                guess1: 0,
+                guess2: 0,
+                guess3: 0,
+                guess4: 0,
+                guess5: 0,
+                guess6: 0,
+              },
+              playedToday: false,
+              currentBoardState: [],
+              currentRowIndex: 0,
+            },
+            royaleGM: {
+              played: 0,
+              guessed: {
+                guesses1: 0,
+                guesses2: 0,
+                guesses3: 0,
+                guesses4: 0,
+                guesses5: 0,
+              },
+              playedToday: false,
+              currentBoardState: [],
+              currentRowIndex: 0,
+            },
+          },
+          achievements: [],
+        });
         toast.success("Signed up.");
         console.log("User registered successfully.");
         toggleSignUp();
       } catch (error) {
         console.log(error.message);
-        toast(error.message);
+        toast.error(error.message);
       }
     }
   };

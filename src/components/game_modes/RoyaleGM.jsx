@@ -10,8 +10,7 @@ import GameOverDialog from "../modals/GameOverDialog.jsx";
 
 function RoyaleGM({
   darkMode,
-  userData,
-  setUserData,
+  currentUser,
   gameMode,
   togglePlayWordle,
   wordLength,
@@ -81,13 +80,9 @@ function RoyaleGM({
 
   return (
     <>
-      <div style={{ color: "white" }}>
-        {"Round: " + gameRound + " " + solution}
-      </div>
+      <div style={{ color: "white" }}>{"Round: " + gameRound}</div>
       <Wordle
         darkMode={darkMode}
-        userData={userData}
-        setUserData={setUserData}
         gameMode={gameMode}
         solution={solution}
         wordSet={wordSet}
