@@ -19,7 +19,7 @@ export default function Wordle({
   guesses,
   setGuesses,
   keyColors,
-  setKeyColor,
+  setKeyColors,
   baseColors,
 }) {
   const guess = useRef({
@@ -35,7 +35,7 @@ export default function Wordle({
   const updateKeyboard = (guessChar, color) => {
     setTimeout(() => {
       keyColors.get(guessChar) !== "green" &&
-        setKeyColor((prev) => {
+        setKeyColors((prev) => {
           const shallowKeyColors = new Map(prev);
           shallowKeyColors.set(guessChar, color);
           return shallowKeyColors;

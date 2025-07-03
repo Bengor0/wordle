@@ -10,17 +10,21 @@ import GameOverDialog from "../modals/GameOverDialog.jsx";
 
 function PracticeGM({
   darkMode,
-  currentUser,
   gameMode,
   togglePlayWordle,
   wordLength,
   numOfGuesses,
+  guesses,
+  setGuesses,
+  keyColors,
+  setKeyColors,
+  rowIndex,
+  baseColors,
 }) {
   const [solution, setSolution] = useState([]);
   const solutionRef = useRef([]);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
-  const rowIndex = useRef(0);
   const [gameResult, setGameResult] = useState("");
 
   useEffect(() => {
@@ -57,6 +61,11 @@ function PracticeGM({
         setGameResult={setGameResult}
         wordLength={wordLength}
         numOfGuesses={numOfGuesses}
+        guesses={guesses}
+        setGuesses={setGuesses}
+        keyColors={keyColors}
+        setKeyColors={setKeyColors}
+        baseColors={baseColors}
       />
       <GameOverDialog
         gameMode={gameMode}
