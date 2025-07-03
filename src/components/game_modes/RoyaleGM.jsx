@@ -10,19 +10,23 @@ import GameOverDialog from "../modals/GameOverDialog.jsx";
 
 function RoyaleGM({
   darkMode,
-  currentUser,
   gameMode,
   togglePlayWordle,
   wordLength,
   numOfGuesses,
+  guesses,
+  setGuesses,
+  keyColors,
+  setKeyColor,
+  rowIndex,
+  baseColors,
 }) {
   const solutionsRef = useRef([]);
   const [solution, setSolution] = useState([]);
-  const [gameRound, setGameRound] = useState(0);
+  const [gameRound, setGameRound] = useState(1);
   const gameRoundRef = useRef(1);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
-  const rowIndex = useRef(0);
   const [roundResult, setRoundResult] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
   const [greenHints, setGreenHints] = useState([]);
@@ -41,7 +45,6 @@ function RoyaleGM({
           solutionsRef.current.push(randomWord.toUpperCase().split(""));
         }
         setSolution(solutionsRef.current[0]);
-        setGameRound(1);
         solutionsRef.current.forEach((solution) =>
           console.log(solution.join("")),
         );
@@ -64,6 +67,12 @@ function RoyaleGM({
           setSolution(solutionsRef.current[gameRound]);
           setRoundResult("");
           rowIndex.current = 0;
+          setGuesses(
+            new Array(6).fill({
+              word: "",
+              colors: baseColors,
+            }),
+          );
           toggleRestart();
         }
       } else {
@@ -80,7 +89,7 @@ function RoyaleGM({
 
   return (
     <>
-      <div style={{ color: "white" }}>{"Round: " + gameRound}</div>
+      <div style={{ color: "white" }}>{"Round: " + gameRoundRef.current}</div>
       <Wordle
         darkMode={darkMode}
         gameMode={gameMode}
@@ -88,11 +97,16 @@ function RoyaleGM({
         wordSet={wordSet}
         key={restart}
         rowIndex={rowIndex}
+        guesses={guesses}
+        setGuesses={setGuesses}
+        keyColors={keyColors}
+        setKeyColor={setKeyColor}
         gameResult={roundResult}
         setGameResult={setRoundResult}
         wordLength={wordLength}
         numOfGuesses={numOfGuesses}
         highLight={numOfGuesses - gameRoundRef.current}
+        baseColors={baseColors}
       />
       <GameOverDialog
         gameMode={gameMode}

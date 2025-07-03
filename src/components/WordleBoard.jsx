@@ -24,9 +24,9 @@ function Row({ guess, wordLength, highLight }) {
   const tiles = [];
 
   for (let i = 0; i < wordLength; i++) {
-    let char = guess[0][i];
-    let tileClassName = `tile ${guess[1][i]}`;
-    let spanClassName = `letter ${guess[1][i]}`;
+    let char = guess.word[i];
+    let tileClassName = `tile ${guess.colors[i]}`;
+    let spanClassName = `letter ${guess.colors[i]}`;
 
     tiles.push(
       <div

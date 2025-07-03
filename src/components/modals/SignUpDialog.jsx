@@ -31,32 +31,49 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
           nickname: nickname,
           statistics: {
             dailyStreak: 0,
-            classicGM: {
-              played: 0,
-              guessed: {
-                guess1: 0,
-                guess2: 0,
-                guess3: 0,
-                guess4: 0,
-                guess5: 0,
-                guess6: 0,
+            gameModes: {
+              classicGM: {
+                gamesPlayed: 0,
+                gamesGuessed: {
+                  guess1: 0,
+                  guess2: 0,
+                  guess3: 0,
+                  guess4: 0,
+                  guess5: 0,
+                  guess6: 0,
+                },
+                playedToday: false,
+                finishedToday: false,
+                currentState: {
+                  guesses: new Array(6).fill({
+                    word: "",
+                    colors: ["black", "black", "black", "black", "black"],
+                  }),
+                  keyColors: {},
+                  rowIndex: 0,
+                },
               },
-              playedToday: false,
-              currentBoardState: [],
-              currentRowIndex: 0,
-            },
-            royaleGM: {
-              played: 0,
-              guessed: {
-                guesses1: 0,
-                guesses2: 0,
-                guesses3: 0,
-                guesses4: 0,
-                guesses5: 0,
+              royaleGM: {
+                gamesPlayed: 0,
+                gamesGuessed: {
+                  guesses1: 0,
+                  guesses2: 0,
+                  guesses3: 0,
+                  guesses4: 0,
+                  guesses5: 0,
+                },
+                playedToday: false,
+                finishedToday: false,
+                currentState: {
+                  guesses: new Array(6).fill({
+                    word: "",
+                    colors: ["black", "black", "black", "black", "black"],
+                  }),
+                  keyColors: {},
+                  rowIndex: 0,
+                  gameRound: 0,
+                },
               },
-              playedToday: false,
-              currentBoardState: [],
-              currentRowIndex: 0,
             },
           },
           achievements: [],

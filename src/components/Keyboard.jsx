@@ -1,4 +1,4 @@
-import { useContext, useState, forwardRef, useImperativeHandle } from "react";
+import { useContext } from "react";
 import KeyboardContext from "../contexts/KeyboardContext.js";
 import ".././styles/Keyboard.css";
 import { IoBackspaceOutline } from "react-icons/io5";
@@ -9,25 +9,8 @@ const KEYS = [
   ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "BACKSPACE"],
 ];
 
-function KeyBoard({ className }, ref) {
+function KeyBoard({ className, keyColors }) {
   const { handleKeyClick } = useContext(KeyboardContext);
-  const [keyColors, setKeyColor] = useState(new Map());
-
-  const udpateKeyColor = (guessChar, color) => {
-    setTimeout(() => {
-      keyColors.get(guessChar) !== "green" &&
-        setKeyColor((prev) => {
-          const shallowKeyColors = new Map(prev);
-          shallowKeyColors.set(guessChar, color);
-          return shallowKeyColors;
-        });
-    }, 1700);
-  };
-
-  useImperativeHandle(ref, () => ({
-    udpateKeyColor,
-  }));
-
   return (
     <div className={`keyboard ${className}`}>
       {KEYS.map((keyboardRow, index) => (
@@ -42,10 +25,9 @@ function KeyBoard({ className }, ref) {
     </div>
   );
 }
-export default forwardRef(KeyBoard);
+export default KeyBoard;
 
 function KeyboardRow({ keyboardRow, index, keyColors }) {
-  const { handleKeyClick } = useContext(KeyboardContext);
   const className = `keyboard-row ${index + 1}`;
   return (
     <div className={className}>

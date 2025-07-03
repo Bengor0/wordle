@@ -3,12 +3,7 @@ import KeyBoard from "./Keyboard.jsx";
 import KeyboardContext from "../contexts/KeyboardContext.js";
 import "../styles/Wordle.css";
 import { toast, Toaster } from "sonner";
-import { Button } from "react-bootstrap";
 import WordleBoard from "./WordleBoard.jsx";
-import useToggleState from "../hooks/useToggleState.js";
-import { auth } from "./Firebase.jsx";
-
-const BASE_COLORS = ["black", "black", "black", "black", "black"];
 
 export default function Wordle({
   darkMode,
@@ -21,22 +16,36 @@ export default function Wordle({
   numOfGuesses,
   wordLength,
   highLight,
+  guesses,
+  setGuesses,
+  keyColors,
+  setKeyColor,
+  baseColors,
 }) {
-  const guess = useRef(["", BASE_COLORS]);
-  const [guesses, setGuesses] = useState(
-    new Array(numOfGuesses).fill(["", BASE_COLORS]),
-  );
+  const guess = useRef({
+    word: "",
+    colors: baseColors,
+  });
   const isEnterEnabled = useRef(true);
-  const keyboardRef = useRef(null);
-  console.log(auth.currentUser);
 
   const guessRevealAnimation = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
+  const updateKeyboard = (guessChar, color) => {
+    setTimeout(() => {
+      keyColors.get(guessChar) !== "green" &&
+        setKeyColor((prev) => {
+          const shallowKeyColors = new Map(prev);
+          shallowKeyColors.set(guessChar, color);
+          return shallowKeyColors;
+        });
+    }, 1700);
+  };
+
   const updateGuesses = (guess) => {
     const shallowGuesses = [...guesses];
-    shallowGuesses[rowIndex.current] = guess;
+    shallowGuesses[rowIndex.current] = { ...guess };
     setGuesses(shallowGuesses);
   };
 
@@ -52,7 +61,7 @@ export default function Wordle({
         : guessCharsMap.set(char, 1),
     );
 
-    guess.current[0].split("").forEach((guessChar, i) => {
+    guess.current.word.split("").forEach((guessChar, i) => {
       if (guessChar === solution[i]) {
         tileColors[i] = "green";
         keyboardColors.set(guessChar, "green");
@@ -62,7 +71,7 @@ export default function Wordle({
     });
 
     furtherEval.forEach((index) => {
-      const guessChar = guess.current[0][index];
+      const guessChar = guess.current.word[index];
       if (guessCharsMap.get(guessChar) && solution.includes(guessChar)) {
         tileColors[index] = "orange";
         guessCharsMap.set(guessChar, guessCharsMap.get(guessChar) - 1);
@@ -75,10 +84,13 @@ export default function Wordle({
     });
 
     keyboardColors.forEach((value, key) => {
-      keyboardRef.current?.udpateKeyColor(key, value);
+      updateKeyboard(key, value);
     });
 
-    guess.current = [guess.current[0], tileColors];
+    guess.current = {
+      word: guess.current.word,
+      colors: tileColors,
+    };
     updateGuesses(guess.current);
     await guessRevealAnimation(1700);
 
@@ -94,12 +106,12 @@ export default function Wordle({
 
   const handleKey = async (key) => {
     if (!gameResult && isEnterEnabled.current) {
-      if (key === "ENTER" && guess.current[0].length === wordLength) {
-        if (wordSet.current.has(guess.current[0])) {
+      if (key === "ENTER" && guess.current.word.length === wordLength) {
+        if (wordSet.current.has(guess.current.word)) {
           isEnterEnabled.current = false;
           await checkGuess();
           rowIndex.current++;
-          guess.current = ["", BASE_COLORS];
+          guess.current = { word: "", colors: baseColors };
           isEnterEnabled.current = true;
           if (!gameResult && rowIndex.current >= numOfGuesses) {
             setGameResult("failed");
@@ -109,15 +121,15 @@ export default function Wordle({
           toast.warning("Not in the word bank.");
         }
       } else if (rowIndex.current < numOfGuesses) {
-        if (key === "BACKSPACE" && guess.current[0].length > 0) {
-          guess.current[0] = guess.current[0].slice(0, -1);
+        if (key === "BACKSPACE" && guess.current.word.length > 0) {
+          guess.current.word = guess.current.word.slice(0, -1);
           updateGuesses(guess.current);
         } else if (
           /[A-Z]/.test(key) &&
           key.length === 1 &&
-          guess.current[0].length < wordLength
+          guess.current.word.length < wordLength
         ) {
-          guess.current[0] = guess.current[0] + key;
+          guess.current.word = guess.current.word + key;
           updateGuesses(guess.current);
         }
       }
@@ -146,7 +158,7 @@ export default function Wordle({
       />
 
       <KeyboardContext.Provider value={{ handleKeyClick }}>
-        <KeyBoard className={darkMode} ref={keyboardRef} />
+        <KeyBoard className={darkMode} keyColors={keyColors} />
       </KeyboardContext.Provider>
     </>
   );
