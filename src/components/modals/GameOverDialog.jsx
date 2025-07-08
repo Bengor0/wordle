@@ -8,6 +8,7 @@ function GameOverDialog({
   setGameResult,
   toggleRestart,
   togglePlayWordle,
+  solution,
 }) {
   return (
     <>
@@ -23,7 +24,7 @@ function GameOverDialog({
         </Modal.Header>
         <Modal.Body>
           <Container>
-            <h1>Hello</h1>
+            <h1>{solution}</h1>
           </Container>
         </Modal.Body>
         <Modal.Footer className="flex-center">

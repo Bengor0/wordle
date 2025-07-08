@@ -34,7 +34,7 @@ function PracticeGM({
         const response = await fetch(API_URL);
         const data = await response.json();
         const wordArray = [...data.words];
-        wordArray.forEach((word) => wordSet.current.add(word.toUpperCase()));
+        wordArray.forEach((word) => wordSet.current.add(word));
         const randomWord =
           wordArray[Math.floor(Math.random() * (wordArray.length - 1))];
         setSolution(randomWord.toUpperCase().split(""));

@@ -107,7 +107,7 @@ export default function Wordle({
   const handleKey = async (key) => {
     if (!gameResult && isEnterEnabled.current) {
       if (key === "ENTER" && guess.current.word.length === wordLength) {
-        if (wordSet.current.has(guess.current.word)) {
+        if (wordSet.current.has(guess.current.word.toLowerCase())) {
           isEnterEnabled.current = false;
           await checkGuess();
           rowIndex.current++;

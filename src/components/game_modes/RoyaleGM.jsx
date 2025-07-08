@@ -7,6 +7,8 @@ const API_URL =
 
 import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../Firebase.jsx";
 
 function RoyaleGM({
   darkMode,
@@ -34,19 +36,14 @@ function RoyaleGM({
   useEffect(() => {
     const fetchWords = async () => {
       try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        const wordArray = [...data.words];
-        wordArray.forEach((word) => wordSet.current.add(word.toUpperCase()));
-        while (solutionsRef.current.length < 5) {
-          const randomWord =
-            wordArray[Math.floor(Math.random() * (wordArray.length - 1))];
-          solutionsRef.current.push(randomWord.toUpperCase().split(""));
-        }
-        setSolution(solutionsRef.current[0]);
-        solutionsRef.current.forEach((solution) =>
-          console.log(solution.join("")),
-        );
+        let docSnap = await getDoc(doc(db, "wordleWords", "wordBank"));
+        let docData = docSnap.data();
+        wordSet.current = new Set(docData.allWords);
+        docSnap = await getDoc(doc(db, "wordleWords", "dailyWords"));
+        docData = docSnap.data();
+        solutionsRef.current = docData.royaleWords;
+        setSolution(solutionsRef.current[0].toUpperCase().split(""));
+        solutionsRef.current.forEach((solution) => console.log(solution));
       } catch (error) {
         console.error(error);
       }
@@ -115,6 +112,7 @@ function RoyaleGM({
         setGameResult={setRoundResult}
         toggleRestart={toggleRestart}
         togglePlayWordle={togglePlayWordle}
+        solution={solution}
       />
     </>
   );

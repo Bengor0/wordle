@@ -82,6 +82,7 @@ function Game(props) {
   }, []);
 
   useEffect(() => {
+    console.log(guesses);
     const updateUserData = async () => {
       const docRef = doc(db, "Users", props.currentUser.uid);
       switch (props.gameMode) {

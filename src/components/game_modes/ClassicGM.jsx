@@ -7,6 +7,8 @@ const API_URL =
 
 import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../Firebase.jsx";
 
 function ClassicGM({
   darkMode,
@@ -31,14 +33,14 @@ function ClassicGM({
     const fetchWords = async () => {
       try {
         rowIndex.current = 0;
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        const wordArray = [...data.words];
-        wordArray.forEach((word) => wordSet.current.add(word.toUpperCase()));
-        const randomWord =
-          wordArray[Math.floor(Math.random() * (wordArray.length - 1))];
-        setSolution(randomWord.toUpperCase().split(""));
-        solutionRef.current = randomWord.toUpperCase().split("");
+        let docSnap = await getDoc(doc(db, "wordleWords", "wordBank"));
+        let docData = docSnap.data();
+        wordSet.current = new Set(docData.allWords);
+        docSnap = await getDoc(doc(db, "wordleWords", "dailyWords"));
+        docData = docSnap.data();
+        const classicWord = docData.classicWord;
+        setSolution(classicWord.toUpperCase().split(""));
+        solutionRef.current = classicWord.toUpperCase().split("");
         console.log(solutionRef.current.join(""));
       } catch (error) {
         console.error(error);
@@ -73,6 +75,7 @@ function ClassicGM({
         setGameResult={setGameResult}
         toggleRestart={toggleRestart}
         togglePlayWordle={togglePlayWordle}
+        solution={solution}
       />
     </>
   );
