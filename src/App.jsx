@@ -20,6 +20,7 @@ function App() {
   const [signUpOpen, toggleSignUp] = useToggleState(false);
   const [gameMode, setGameMode] = useState("practice");
   const { currentUser, loading } = useAuth();
+  const [restart, toggleRestart] = useToggleState(false);
   document.querySelector("body").classList = `${darkMode}`;
 
   return (
@@ -41,10 +42,11 @@ function App() {
             togglePlayWordle={togglePlayWordle}
             wordLength={5}
             numOfGuesses={6}
+            key={restart}
+            toggleRestart={toggleRestart}
           />
         ) : (
           <>
-            <div>{currentUser?.uid}</div>
             <Homepage
               togglePlayWordle={togglePlayWordle}
               gameMode={gameMode}

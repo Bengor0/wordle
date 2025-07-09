@@ -107,20 +107,22 @@ export default function Wordle({
 
   const handleKey = async (key) => {
     if (!gameResult && isEnterEnabled.current) {
-      if (key === "ENTER" && guess.current.word.length === wordLength) {
-        if (wordSet.current.has(guess.current.word.toLowerCase())) {
-          isEnterEnabled.current = false;
-          await checkGuess();
-          rowIndex.current++;
-          guess.current = { word: "", colors: baseColors };
-          isEnterEnabled.current = true;
-          if (!gameResult && rowIndex.current >= numOfGuesses) {
-            setGameResult("failed");
+      if (key === "ENTER") {
+        if (guess.current.word.length === wordLength) {
+          if (wordSet.current.has(guess.current.word.toLowerCase())) {
+            isEnterEnabled.current = false;
+            await checkGuess();
             rowIndex.current++;
+            guess.current = { word: "", colors: baseColors };
+            isEnterEnabled.current = true;
+            if (!gameResult && rowIndex.current >= numOfGuesses) {
+              setGameResult("failed");
+              rowIndex.current++;
+            }
+          } else {
+            toast.warning("Not in the word bank.");
           }
-        } else {
-          toast.warning("Not in the word bank.");
-        }
+        } else toast.warning("Too short.");
       } else if (rowIndex.current < numOfGuesses) {
         if (key === "BACKSPACE" && guess.current.word.length > 0) {
           guess.current.word = guess.current.word.slice(0, -1);
@@ -139,8 +141,9 @@ export default function Wordle({
 
   useEffect(() => {
     if (
-      gameMode !== "practice" &&
-      !userData.current?.statistics.gameModes[`${gameMode}GM`].finishedToday
+      gameMode === "practice" ||
+      (gameMode !== "practice" &&
+        !userData.current?.statistics.gameModes[`${gameMode}GM`].finishedToday)
     ) {
       const handleKeyDown = (event) => {
         handleKey(event.key.toUpperCase());

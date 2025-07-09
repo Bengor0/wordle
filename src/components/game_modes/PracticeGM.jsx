@@ -20,10 +20,10 @@ function PracticeGM({
   setKeyColors,
   rowIndex,
   baseColors,
+  toggleRestart,
 }) {
   const [solution, setSolution] = useState([]);
   const solutionRef = useRef([]);
-  const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
   const [gameResult, setGameResult] = useState("");
 
@@ -46,7 +46,7 @@ function PracticeGM({
     };
 
     fetchWords();
-  }, [restart]);
+  }, []);
 
   return (
     <>
@@ -55,7 +55,6 @@ function PracticeGM({
         gameMode={gameMode}
         solution={solution}
         wordSet={wordSet}
-        key={restart}
         rowIndex={rowIndex}
         gameResult={gameResult}
         setGameResult={setGameResult}
