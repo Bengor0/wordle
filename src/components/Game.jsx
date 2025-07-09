@@ -20,6 +20,7 @@ function Game(props) {
   const gameRound = useRef(1);
   const userData = useRef(null);
   const gameModes = useRef(null);
+  const dailyStreak = useRef(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -36,41 +37,17 @@ function Game(props) {
     const loadGameState = async () => {
       try {
         userData.current = await fetchUserData();
-        gameModes.current = userData.current.statistics.gameModes;
-        switch (props.gameMode) {
-          case "royale":
-            if (
-              gameModes.current.royaleGM.playedToday &&
-              !gameModes.current.royaleGM.finishedToday
-            ) {
-              setGuesses([...gameModes.current.royaleGM.currentState.guesses]);
-              setKeyColors(
-                new Map(
-                  Object.entries(
-                    gameModes.current.royaleGM.currentState.keyColors,
-                  ),
-                ),
-              );
-              rowIndex.current =
-                gameModes.current.royaleGM.currentState.rowIndex;
-            }
-            break;
-          case "classic":
-            if (
-              gameModes.current.classicGM.playedToday &&
-              !gameModes.current.classicGM.finishedToday
-            ) {
-              setGuesses([...gameModes.current.classicGM.currentState.guesses]);
-              setKeyColors(
-                new Map(
-                  Object.entries(
-                    gameModes.current.classicGM.currentState.keyColors,
-                  ),
-                ),
-              );
-              rowIndex.current =
-                gameModes.current.classicGM.currentState.rowIndex;
-            }
+        const currentGM =
+          userData.current.statistics.gameModes[`${props.gameMode}GM`];
+        if (currentGM.playedToday) {
+          setGuesses([...currentGM.currentState.guesses]);
+          setKeyColors(
+            new Map(Object.entries(currentGM.currentState.keyColors)),
+          );
+          rowIndex.current = currentGM.currentState.rowIndex;
+          if (props.gameMode === "royale") {
+            gameRound.current = currentGM.currentState.gameRound;
+          }
         }
         console.log("Game state loaded.");
       } catch (e) {
@@ -82,48 +59,40 @@ function Game(props) {
   }, []);
 
   useEffect(() => {
-    console.log(guesses);
     const updateUserData = async () => {
+      console.log(gameRound.current);
       const docRef = doc(db, "Users", props.currentUser.uid);
-      switch (props.gameMode) {
-        case "royale":
-          try {
-            await updateDoc(docRef, {
-              "statistics.gameModes.royaleGM.playedToday": true,
-              "statistics.gameModes.royaleGM.currentState.guesses": guesses,
-              "statistics.gameModes.royaleGM.currentState.keyColors":
-                Object.fromEntries(keyColors),
-              "statistics.gameModes.royaleGM.currentState.rowIndex":
-                rowIndex.current,
-              "statistics.gameModes.royaleGM.currentState.gameRound":
-                gameRound.current,
-            });
-            console.log("User data updated.");
-          } catch (e) {
-            console.log(e.message);
-          }
-          break;
-        case "classic":
-          try {
-            await updateDoc(docRef, {
-              "statistics.gameModes.classicGM.playedToday": true,
-              "statistics.gameModes.classicGM.currentState.guesses": guesses,
-              "statistics.gameModes.classicGM.currentState.keyColors":
-                Object.fromEntries(keyColors),
-              "statistics.gameModes.classicGM.currentState.rowIndex":
-                rowIndex.current,
-            });
-            console.log("User data updated.");
-          } catch (e) {
-            console.log(e.message);
-          }
+      userData.current.statistics.gameModes[`${props.gameMode}GM`].playedToday =
+        true;
+      userData.current.statistics.gameModes[
+        `${props.gameMode}GM`
+      ].currentState.guesses = guesses;
+      userData.current.statistics.gameModes[
+        `${props.gameMode}GM`
+      ].currentState.keyColors = Object.fromEntries(keyColors);
+      userData.current.statistics.gameModes[
+        `${props.gameMode}GM`
+      ].currentState.rowIndex = rowIndex.current;
+      if (props.gameMode === "royale") {
+        userData.current.statistics.gameModes[
+          `${props.gameMode}GM`
+        ].currentState.gameRound = gameRound.current;
+      }
+      try {
+        await updateDoc(docRef, userData.current);
+        console.log("User data updated.");
+      } catch (e) {
+        console.log(e.message);
       }
     };
 
-    if (rowIndex.current !== 0 && props.gameMode !== "practice") {
+    if (
+      props.gameMode !== "practice" &&
+      (rowIndex.current !== 0 || gameRound.current !== 1)
+    ) {
       updateUserData();
     }
-  }, [rowIndex.current]);
+  }, [keyColors, gameRound.current]);
 
   return (
     <>
@@ -136,6 +105,8 @@ function Game(props) {
           setKeyColors={setKeyColors}
           rowIndex={rowIndex}
           baseColors={BASE_COLORS}
+          userData={userData}
+          dailyStreak={dailyStreak}
         />
       )}
       {props.gameMode === "royale" && (
@@ -148,6 +119,7 @@ function Game(props) {
           rowIndex={rowIndex}
           gameRound={gameRound}
           baseColors={BASE_COLORS}
+          userData={userData}
         />
       )}
       {props.gameMode === "practice" && (

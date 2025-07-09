@@ -7,7 +7,7 @@ const API_URL =
 
 import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../Firebase.jsx";
 
 function ClassicGM({
@@ -22,6 +22,9 @@ function ClassicGM({
   setKeyColors,
   rowIndex,
   baseColors,
+  currentUser,
+  userData,
+  dailyStreak,
 }) {
   const [solution, setSolution] = useState([]);
   const solutionRef = useRef([]);
@@ -50,6 +53,25 @@ function ClassicGM({
     fetchWords();
   }, [restart]);
 
+  useEffect(() => {
+    const updateUserData = async () => {
+      try {
+        userData.current.statistics.gameModes.classicGM.finishedToday = true;
+        userData.current.statistics.gameModes.classicGM.gamesPlayed++;
+        if (gameResult === "guessed") {
+          userData.current.statistics.gameModes.classicGM.gamesGuessed[
+            rowIndex.current - 1
+          ]++;
+        }
+        await updateDoc(doc(db, "Users", currentUser.uid), userData.current);
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
+
+    gameResult && updateUserData();
+  }, [gameResult]);
+
   return (
     <>
       <Wordle
@@ -68,6 +90,7 @@ function ClassicGM({
         setGameResult={setGameResult}
         wordLength={wordLength}
         numOfGuesses={numOfGuesses}
+        userData={userData}
       />
       <GameOverDialog
         gameMode={gameMode}

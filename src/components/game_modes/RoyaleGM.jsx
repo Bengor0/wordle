@@ -7,7 +7,7 @@ const API_URL =
 
 import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../Firebase.jsx";
 
 function RoyaleGM({
@@ -22,7 +22,9 @@ function RoyaleGM({
   setKeyColors,
   rowIndex,
   baseColors,
+  currentUser,
   gameRound,
+  userData,
 }) {
   const solutionsRef = useRef([]);
   const [solution, setSolution] = useState([]);
@@ -58,7 +60,9 @@ function RoyaleGM({
         if (crossedLine()) {
           setIsGameOver(true);
         } else {
-          setSolution(solutionsRef.current[gameRound.current]);
+          setSolution(
+            solutionsRef.current[gameRound.current].toUpperCase().split(""),
+          );
           gameRound.current++;
           setRoundResult("");
           rowIndex.current = 0;
@@ -76,6 +80,26 @@ function RoyaleGM({
       }
     }
   }, [roundResult]);
+
+  useEffect(() => {
+    const updateUserData = async () => {
+      try {
+        userData.current.statistics.gameModes.royaleGM.finishedToday = true;
+        userData.current.statistics.gameModes.royaleGM.gamesPlayed++;
+        if (roundResult === "guessed") {
+          userData.current.statistics.gameModes.royaleGM.gamesGuessed[
+            gameRound.current - 1
+          ]++;
+        }
+        await updateDoc(doc(db, "Users", currentUser.uid), userData.current);
+        console.log("Endgame data updated.");
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
+
+    isGameOver && updateUserData();
+  }, [isGameOver]);
 
   const crossedLine = () => {
     return gameRound.current + rowIndex.current > numOfGuesses;
@@ -105,6 +129,7 @@ function RoyaleGM({
         numOfGuesses={numOfGuesses}
         highLight={numOfGuesses - gameRound.current}
         baseColors={baseColors}
+        userData={userData}
       />
       <GameOverDialog
         gameMode={gameMode}

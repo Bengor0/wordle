@@ -34,14 +34,7 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
             gameModes: {
               classicGM: {
                 gamesPlayed: 0,
-                gamesGuessed: {
-                  guess1: 0,
-                  guess2: 0,
-                  guess3: 0,
-                  guess4: 0,
-                  guess5: 0,
-                  guess6: 0,
-                },
+                gamesGuessed: new Array(6).fill(0),
                 playedToday: false,
                 finishedToday: false,
                 currentState: {
@@ -55,13 +48,7 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
               },
               royaleGM: {
                 gamesPlayed: 0,
-                gamesGuessed: {
-                  guesses1: 0,
-                  guesses2: 0,
-                  guesses3: 0,
-                  guesses4: 0,
-                  guesses5: 0,
-                },
+                gamesGuessed: new Array(6).fill(0),
                 playedToday: false,
                 finishedToday: false,
                 currentState: {

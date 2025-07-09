@@ -21,6 +21,7 @@ export default function Wordle({
   keyColors,
   setKeyColors,
   baseColors,
+  userData,
 }) {
   const guess = useRef({
     word: "",
@@ -137,13 +138,18 @@ export default function Wordle({
   };
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      handleKey(event.key.toUpperCase());
-    };
+    if (
+      gameMode !== "practice" &&
+      !userData.current?.statistics.gameModes[`${gameMode}GM`].finishedToday
+    ) {
+      const handleKeyDown = (event) => {
+        handleKey(event.key.toUpperCase());
+      };
 
-    window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }
   }, [guesses]);
 
   return (
