@@ -5,6 +5,7 @@ import PracticeGM from "./game_modes/PracticeGM";
 import React, { useEffect, useRef, useState } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./Firebase.jsx";
+import keyboard from "./Keyboard.jsx";
 
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 
@@ -18,6 +19,7 @@ function Game(props) {
   const [keyColors, setKeyColors] = useState(new Map());
   const rowIndex = useRef(0);
   const gameRound = useRef(1);
+  const [gameResult, setGameResult] = useState("");
   const userData = useRef(null);
   const gameModes = useRef(null);
   const dailyStreak = useRef(false);
@@ -88,11 +90,12 @@ function Game(props) {
 
     if (
       props.gameMode !== "practice" &&
-      (rowIndex.current !== 0 || gameRound.current !== 1)
+      guesses[0] !== "" &&
+      userData.current
     ) {
       updateUserData();
     }
-  }, [keyColors, gameRound.current]);
+  }, [keyColors]);
 
   return (
     <>
@@ -107,6 +110,8 @@ function Game(props) {
           baseColors={BASE_COLORS}
           userData={userData}
           dailyStreak={dailyStreak}
+          gameResult={gameResult}
+          setGameResult={setGameResult}
         />
       )}
       {props.gameMode === "royale" && (
@@ -120,6 +125,8 @@ function Game(props) {
           gameRound={gameRound}
           baseColors={BASE_COLORS}
           userData={userData}
+          gameResult={gameResult}
+          setGameResult={setGameResult}
         />
       )}
       {props.gameMode === "practice" && (

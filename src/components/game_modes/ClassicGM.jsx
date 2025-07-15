@@ -24,13 +24,13 @@ function ClassicGM({
   baseColors,
   currentUser,
   userData,
-  dailyStreak,
+  gameResult,
+  setGameResult,
 }) {
   const [solution, setSolution] = useState([]);
   const solutionRef = useRef([]);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
-  const [gameResult, setGameResult] = useState("");
 
   useEffect(() => {
     const fetchWords = async () => {

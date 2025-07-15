@@ -17,6 +17,7 @@ function Navigation({
   currentUser,
   playWordle,
   togglePlayWordle,
+  toggleStats,
 }) {
   const handleLogout = async () => {
     try {
@@ -43,7 +44,11 @@ function Navigation({
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Container className="stats flex-center">
-                <IoStatsChart size="50%" className={`stats-icon`} />
+                <IoStatsChart
+                  size="50%"
+                  className={`stats-icon`}
+                  onClick={toggleStats}
+                />
               </Container>
               <Container className="info flex-center">
                 <IoHelpCircleOutline size="60%" className={`info-icon`} />

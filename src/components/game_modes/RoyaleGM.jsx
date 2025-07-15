@@ -25,12 +25,13 @@ function RoyaleGM({
   currentUser,
   gameRound,
   userData,
+  gameResult,
+  setGameResult,
 }) {
   const solutionsRef = useRef([]);
   const [solution, setSolution] = useState([]);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
-  const [roundResult, setRoundResult] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
   const [greenHints, setGreenHints] = useState([]);
   const [orangeHints, setOrangeHints] = useState([]);
@@ -44,7 +45,10 @@ function RoyaleGM({
         docSnap = await getDoc(doc(db, "wordleWords", "dailyWords"));
         docData = docSnap.data();
         solutionsRef.current = docData.royaleWords;
-        setSolution(solutionsRef.current[0].toUpperCase().split(""));
+        console.log(gameRound);
+        setSolution(
+          solutionsRef.current[gameRound.current - 1].toUpperCase().split(""),
+        );
         solutionsRef.current.forEach((solution) => console.log(solution));
       } catch (error) {
         console.error(error);
@@ -55,8 +59,8 @@ function RoyaleGM({
   }, []);
 
   useEffect(() => {
-    if (roundResult) {
-      if (roundResult !== "failed" && gameRound.current < numOfGuesses - 1) {
+    if (gameResult) {
+      if (gameResult !== "failed" && gameRound.current < numOfGuesses - 1) {
         if (crossedLine()) {
           setIsGameOver(true);
         } else {
@@ -64,7 +68,7 @@ function RoyaleGM({
             solutionsRef.current[gameRound.current].toUpperCase().split(""),
           );
           gameRound.current++;
-          setRoundResult("");
+          setGameResult("");
           rowIndex.current = 0;
           setKeyColors(new Map());
           setGuesses(
@@ -79,14 +83,14 @@ function RoyaleGM({
         setIsGameOver(true);
       }
     }
-  }, [roundResult]);
+  }, [gameResult]);
 
   useEffect(() => {
     const updateUserData = async () => {
       try {
         userData.current.statistics.gameModes.royaleGM.finishedToday = true;
         userData.current.statistics.gameModes.royaleGM.gamesPlayed++;
-        if (roundResult === "guessed") {
+        if (gameResult === "guessed") {
           userData.current.statistics.gameModes.royaleGM.gamesGuessed[
             gameRound.current - 1
           ]++;
@@ -123,8 +127,8 @@ function RoyaleGM({
         setGuesses={setGuesses}
         keyColors={keyColors}
         setKeyColors={setKeyColors}
-        gameResult={roundResult}
-        setGameResult={setRoundResult}
+        gameResult={gameResult}
+        setGameResult={setGameResult}
         wordLength={wordLength}
         numOfGuesses={numOfGuesses}
         highLight={numOfGuesses - gameRound.current}
@@ -134,7 +138,7 @@ function RoyaleGM({
       <GameOverDialog
         gameMode={gameMode}
         showDialog={isGameOver}
-        setGameResult={setRoundResult}
+        setGameResult={setGameResult}
         toggleRestart={toggleRestart}
         togglePlayWordle={togglePlayWordle}
         solution={solution}

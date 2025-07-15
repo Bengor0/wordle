@@ -12,12 +12,14 @@ import Game from "./components/Game";
 
 import React from "react";
 import { useAuth } from "./hooks/useAuth.js";
+import StatisticsDialog from "./components/modals/StatisticsDialog.jsx";
 
 function App() {
   const [darkMode, toggleDarkMode] = useToggleDarkMode(true);
   const [playWordle, togglePlayWordle] = useToggleState(false);
   const [logInOpen, toggleLogIn] = useToggleState(false);
   const [signUpOpen, toggleSignUp] = useToggleState(false);
+  const [statsOpen, toggleStats] = useToggleState(false);
   const [gameMode, setGameMode] = useState("practice");
   const { currentUser, loading } = useAuth();
   const [restart, toggleRestart] = useToggleState(false);
@@ -32,6 +34,7 @@ function App() {
         currentUser={currentUser}
         playWordle={playWordle}
         togglePlayWordle={togglePlayWordle}
+        toggleStats={toggleStats}
       />
       <main className={`flex-center ${darkMode}`}>
         {playWordle ? (
@@ -63,6 +66,12 @@ function App() {
         toggleSignUp={toggleSignUp}
       />
       <SignUpDialog signUpOpen={signUpOpen} toggleSignUp={toggleSignUp} />
+      <StatisticsDialog
+        statsOpen={statsOpen}
+        toggleStats={toggleStats}
+        gameMode={gameMode}
+        setGameMode={setGameMode}
+      />
     </>
   );
 }

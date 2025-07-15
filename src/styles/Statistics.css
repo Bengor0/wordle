@@ -1,0 +1,36 @@
+.modal-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.stats-lock {
+    flex-direction: column;
+    width: 100%;
+    height: 46.4vh;
+}
+
+.lock-svg {
+    font-size: 5vh;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    gap: 2px;
+}
+
+.c-2 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.c-3 {
+    aspect-ratio: 1/1;
+}
+
+.c-6 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    height: 25vh;
+}
+

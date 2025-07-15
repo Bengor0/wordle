@@ -30,9 +30,9 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
           email: user.email,
           nickname: nickname,
           statistics: {
-            dailyStreak: 0,
             gameModes: {
               classicGM: {
+                dailyStreak: 0,
                 gamesPlayed: 0,
                 gamesGuessed: new Array(6).fill(0),
                 playedToday: false,
@@ -47,8 +47,9 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
                 },
               },
               royaleGM: {
+                dailyStreak: 0,
                 gamesPlayed: 0,
-                gamesGuessed: new Array(6).fill(0),
+                gamesGuessed: new Array(5).fill(0),
                 playedToday: false,
                 finishedToday: false,
                 currentState: {

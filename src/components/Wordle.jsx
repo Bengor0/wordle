@@ -106,53 +106,53 @@ export default function Wordle({
   };
 
   const handleKey = async (key) => {
-    if (!gameResult && isEnterEnabled.current) {
-      if (key === "ENTER") {
-        if (guess.current.word.length === wordLength) {
-          if (wordSet.current.has(guess.current.word.toLowerCase())) {
-            isEnterEnabled.current = false;
-            await checkGuess();
-            rowIndex.current++;
-            guess.current = { word: "", colors: baseColors };
-            isEnterEnabled.current = true;
-            if (!gameResult && rowIndex.current >= numOfGuesses) {
-              setGameResult("failed");
+    if (
+      gameMode === "practice" ||
+      (gameMode !== "practice" &&
+        !userData.current?.statistics.gameModes[`${gameMode}GM`].finishedToday)
+    ) {
+      if (!gameResult && isEnterEnabled.current) {
+        if (key === "ENTER") {
+          if (guess.current.word.length === wordLength) {
+            if (wordSet.current.has(guess.current.word.toLowerCase())) {
+              isEnterEnabled.current = false;
+              await checkGuess();
               rowIndex.current++;
+              guess.current = { word: "", colors: baseColors };
+              isEnterEnabled.current = true;
+              if (!gameResult && rowIndex.current >= numOfGuesses) {
+                setGameResult("failed");
+                rowIndex.current++;
+              }
+            } else {
+              toast.warning("Not in the word bank.");
             }
-          } else {
-            toast.warning("Not in the word bank.");
+          } else toast.warning("Too short.");
+        } else if (rowIndex.current < numOfGuesses) {
+          if (key === "BACKSPACE" && guess.current.word.length > 0) {
+            guess.current.word = guess.current.word.slice(0, -1);
+            updateGuesses(guess.current);
+          } else if (
+            /[A-Z]/.test(key) &&
+            key.length === 1 &&
+            guess.current.word.length < wordLength
+          ) {
+            guess.current.word = guess.current.word + key;
+            updateGuesses(guess.current);
           }
-        } else toast.warning("Too short.");
-      } else if (rowIndex.current < numOfGuesses) {
-        if (key === "BACKSPACE" && guess.current.word.length > 0) {
-          guess.current.word = guess.current.word.slice(0, -1);
-          updateGuesses(guess.current);
-        } else if (
-          /[A-Z]/.test(key) &&
-          key.length === 1 &&
-          guess.current.word.length < wordLength
-        ) {
-          guess.current.word = guess.current.word + key;
-          updateGuesses(guess.current);
         }
       }
     }
   };
 
   useEffect(() => {
-    if (
-      gameMode === "practice" ||
-      (gameMode !== "practice" &&
-        !userData.current?.statistics.gameModes[`${gameMode}GM`].finishedToday)
-    ) {
-      const handleKeyDown = (event) => {
-        handleKey(event.key.toUpperCase());
-      };
+    const handleKeyDown = (event) => {
+      handleKey(event.key.toUpperCase());
+    };
 
-      window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
 
-      return () => window.removeEventListener("keydown", handleKeyDown);
-    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [guesses]);
 
   return (
