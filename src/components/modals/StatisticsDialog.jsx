@@ -12,37 +12,27 @@ import "../../styles/Statistics.css";
 import useToggleGameMode from "../../hooks/useToggleGameMode.js";
 import { FaLock } from "react-icons/fa";
 
-function StatisticsDialog({ statsOpen, toggleStats }) {
-  const [userData, setUserData] = useState(null);
-  const [gameState, setGameState] = useState(null);
+function StatisticsDialog({ statsOpen, toggleStats, userData }) {
   const [gameMode, toggleGameMode] = useToggleGameMode(true);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const docSnap = await getDoc(doc(db, "Users", auth.currentUser.uid));
-      setUserData(docSnap.data());
-      setGameState(docSnap.data().statistics.gameModes);
-    };
-
-    fetchUserData();
-  }, [statsOpen]);
-
   const getIndex = () => {
-    const sum = gameState?.[`${gameMode}GM`].gamesGuessed.reduce(
+    const sum = userData?.statistics.gameModes[gameMode].gamesGuessed.reduce(
       (total, value, index) => total + value * (index + 1),
     );
 
     return (
-      Math.round((sum / gameState?.[`${gameMode}GM`].gamesPlayed) * 10) / 10
+      Math.round(
+        (sum / userData?.statistics.gameModes[gameMode].gamesPlayed) * 10,
+      ) / 10
     );
   };
 
   const getWinRate = () => {
     return Math.round(
-      (gameState?.[`${gameMode}GM`].gamesGuessed.reduce(
+      (userData?.statistics.gameModes[gameMode].gamesGuessed.reduce(
         (total, value) => total + value,
       ) /
-        gameState?.[`${gameMode}GM`].gamesPlayed) *
+        userData?.statistics.gameModes[gameMode].gamesPlayed) *
         100,
     );
   };
@@ -78,14 +68,14 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
               </Button>
             </ButtonGroup>
           </div>
-          {gameState?.[`${gameMode}GM`].gamesPlayed >= 5 ? (
+          {userData?.statistics.gameModes[gameMode].gamesPlayed >= 5 ? (
             <div className="stats-grid">
               <div className="c-2">
                 <IndexWindow value={getIndex()} label={"index"} />
               </div>
               <div className="c-3">
                 <StatWindow
-                  value={gameState?.[`${gameMode}GM`].gamesPlayed}
+                  value={userData?.statistics.gameModes[gameMode].gamesPlayed}
                   category={"Games played"}
                 />
               </div>
@@ -99,8 +89,10 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
                 <BarChart
                   data={
                     gameMode === "classic"
-                      ? gameState?.[`${gameMode}GM`].gamesGuessed
-                      : gameState?.[`${gameMode}GM`].gamesGuessed.toReversed()
+                      ? userData?.statistics.gameModes[gameMode].gamesGuessed
+                      : userData?.statistics.gameModes[
+                          gameMode
+                        ].gamesGuessed.toReversed()
                   }
                   categories={
                     gameMode === "classic"
@@ -122,8 +114,9 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
             <div className="stats-lock flex-center">
               <FaLock className="lock-svg" />
               <div className="lock-message">
-                Play {5 - gameState?.[`${gameMode}GM`].gamesPlayed} more{" "}
-                {5 - gameState?.[`${gameMode}GM`].gamesPlayed === 1
+                Play {5 - userData?.statistics.gameModes[gameMode].gamesPlayed}{" "}
+                more{" "}
+                {5 - userData?.statistics.gameModes[gameMode].gamesPlayed === 1
                   ? "game."
                   : "games."}
               </div>

@@ -8,7 +8,7 @@ const API_URL =
 import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
 
-function PracticeGM({
+function Practice({
   darkMode,
   gameMode,
   togglePlayWordle,
@@ -77,4 +77,4 @@ function PracticeGM({
   );
 }
 
-export default PracticeGM;
+export default Practice;

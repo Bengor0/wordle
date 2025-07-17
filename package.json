@@ -13,6 +13,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.83.0",
     "bootstrap": "^5.3.7",
     "firebase": "^11.9.1",
     "react": "^19.1.0",

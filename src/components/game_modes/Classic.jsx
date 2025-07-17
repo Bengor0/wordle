@@ -1,16 +1,12 @@
 import Wordle from "../Wordle.jsx";
 import { useEffect, useRef, useState } from "react";
 import useToggleState from "../../hooks/useToggleState.js";
-
-const API_URL =
-  "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
-
 import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../Firebase.jsx";
 
-function ClassicGM({
+function Classic({
   darkMode,
   gameMode,
   togglePlayWordle,
@@ -22,10 +18,10 @@ function ClassicGM({
   setKeyColors,
   rowIndex,
   baseColors,
-  currentUser,
   userData,
   gameResult,
   setGameResult,
+  mutateUserData,
 }) {
   const [solution, setSolution] = useState([]);
   const solutionRef = useRef([]);
@@ -55,17 +51,18 @@ function ClassicGM({
 
   useEffect(() => {
     const updateUserData = async () => {
+      const updatedUserData = { ...userData };
+      updatedUserData.statistics.gameModes.classic.finishedToday = true;
+      updatedUserData.statistics.gameModes.classic.gamesPlayed++;
+      if (gameResult === "guessed") {
+        updatedUserData.statistics.gameModes.classic.gamesGuessed[
+          rowIndex.current - 1
+        ]++;
+      }
       try {
-        userData.current.statistics.gameModes.classicGM.finishedToday = true;
-        userData.current.statistics.gameModes.classicGM.gamesPlayed++;
-        if (gameResult === "guessed") {
-          userData.current.statistics.gameModes.classicGM.gamesGuessed[
-            rowIndex.current - 1
-          ]++;
-        }
-        await updateDoc(doc(db, "Users", currentUser.uid), userData.current);
+        await mutateUserData(updatedUserData);
       } catch (e) {
-        console.log(e.message);
+        console.error(e);
       }
     };
 
@@ -104,4 +101,4 @@ function ClassicGM({
   );
 }
 
-export default ClassicGM;
+export default Classic;

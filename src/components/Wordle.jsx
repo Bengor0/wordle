@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import KeyBoard from "./Keyboard.jsx";
 import KeyboardContext from "../contexts/KeyboardContext.js";
 import "../styles/Wordle.css";
@@ -109,7 +109,7 @@ export default function Wordle({
     if (
       gameMode === "practice" ||
       (gameMode !== "practice" &&
-        !userData.current?.statistics.gameModes[`${gameMode}GM`].finishedToday)
+        !userData?.statistics.gameModes[gameMode].finishedToday)
     ) {
       if (!gameResult && isEnterEnabled.current) {
         if (key === "ENTER") {

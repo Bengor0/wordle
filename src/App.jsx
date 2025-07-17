@@ -13,6 +13,8 @@ import Game from "./components/Game";
 import React from "react";
 import { useAuth } from "./hooks/useAuth.js";
 import StatisticsDialog from "./components/modals/StatisticsDialog.jsx";
+import { useQuery } from "@tanstack/react-query";
+import { fetchUserData } from "./utils/userDataUtils.js";
 
 function App() {
   const [darkMode, toggleDarkMode] = useToggleDarkMode(true);
@@ -22,6 +24,14 @@ function App() {
   const [statsOpen, toggleStats] = useToggleState(false);
   const [gameMode, setGameMode] = useState("practice");
   const { currentUser, loading } = useAuth();
+  const { data: userData, isLoading } = useQuery({
+    queryKey: ["user", currentUser?.uid],
+    queryFn: ({ queryKey }) => {
+      const [, uid] = queryKey;
+      return fetchUserData(uid);
+    },
+    enabled: !!currentUser && !loading,
+  });
   const [restart, toggleRestart] = useToggleState(false);
   document.querySelector("body").classList = `${darkMode}`;
 
@@ -41,6 +51,7 @@ function App() {
           <Game
             darkMode={darkMode}
             currentUser={currentUser}
+            userData={userData}
             gameMode={gameMode}
             togglePlayWordle={togglePlayWordle}
             wordLength={5}
@@ -71,6 +82,7 @@ function App() {
         toggleStats={toggleStats}
         gameMode={gameMode}
         setGameMode={setGameMode}
+        userData={userData}
       />
     </>
   );

@@ -31,7 +31,7 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
           nickname: nickname,
           statistics: {
             gameModes: {
-              classicGM: {
+              classic: {
                 dailyStreak: 0,
                 gamesPlayed: 0,
                 gamesGuessed: new Array(6).fill(0),
@@ -46,7 +46,7 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
                   rowIndex: 0,
                 },
               },
-              royaleGM: {
+              royale: {
                 dailyStreak: 0,
                 gamesPlayed: 0,
                 gamesGuessed: new Array(5).fill(0),

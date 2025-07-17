@@ -1,7 +1,7 @@
 import ".././styles/Homepage.css";
 import React from "react";
 import GameModeSelector from "./GameModeSelector.jsx";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./Firebase.jsx";
 import { words } from "./words.js";
 

@@ -2,15 +2,12 @@ import Wordle from "../Wordle.jsx";
 import { useEffect, useRef, useState } from "react";
 import useToggleState from "../../hooks/useToggleState.js";
 
-const API_URL =
-  "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
-
 import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../Firebase.jsx";
 
-function RoyaleGM({
+function Royale({
   darkMode,
   gameMode,
   togglePlayWordle,
@@ -22,11 +19,11 @@ function RoyaleGM({
   setKeyColors,
   rowIndex,
   baseColors,
-  currentUser,
   gameRound,
   userData,
   gameResult,
   setGameResult,
+  mutateUserData,
 }) {
   const solutionsRef = useRef([]);
   const [solution, setSolution] = useState([]);
@@ -87,18 +84,18 @@ function RoyaleGM({
 
   useEffect(() => {
     const updateUserData = async () => {
+      const updatedUserData = { ...userData };
+      updatedUserData.statistics.gameModes.royale.finishedToday = true;
+      updatedUserData.statistics.gameModes.royale.gamesPlayed++;
+      if (gameResult === "guessed") {
+        updatedUserData.statistics.gameModes.royale.gamesGuessed[
+          gameRound.current - 1
+        ]++;
+      }
       try {
-        userData.current.statistics.gameModes.royaleGM.finishedToday = true;
-        userData.current.statistics.gameModes.royaleGM.gamesPlayed++;
-        if (gameResult === "guessed") {
-          userData.current.statistics.gameModes.royaleGM.gamesGuessed[
-            gameRound.current - 1
-          ]++;
-        }
-        await updateDoc(doc(db, "Users", currentUser.uid), userData.current);
-        console.log("Endgame data updated.");
+        mutateUserData();
       } catch (e) {
-        console.log(e.message);
+        console.error(e);
       }
     };
 
@@ -147,4 +144,4 @@ function RoyaleGM({
   );
 }
 
-export default RoyaleGM;
+export default Royale;
