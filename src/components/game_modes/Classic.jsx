@@ -1,6 +1,5 @@
 import Wordle from "../Wordle.jsx";
 import { useEffect, useRef, useState } from "react";
-import useToggleState from "../../hooks/useToggleState.js";
 import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
 import { doc, getDoc } from "firebase/firestore";
@@ -25,7 +24,6 @@ function Classic({
 }) {
   const [solution, setSolution] = useState([]);
   const solutionRef = useRef([]);
-  const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
 
   useEffect(() => {
@@ -47,13 +45,14 @@ function Classic({
     };
 
     fetchWords();
-  }, [restart]);
+  }, []);
 
   useEffect(() => {
     const updateUserData = async () => {
       const updatedUserData = { ...userData };
       updatedUserData.statistics.gameModes.classic.finishedToday = true;
       updatedUserData.statistics.gameModes.classic.gamesPlayed++;
+      updatedUserData.statistics.gameModes.classic.dailyStreak++;
       if (gameResult === "guessed") {
         updatedUserData.statistics.gameModes.classic.gamesGuessed[
           rowIndex.current - 1
@@ -76,7 +75,6 @@ function Classic({
         gameMode={gameMode}
         solution={solution}
         wordSet={wordSet}
-        key={restart}
         rowIndex={rowIndex}
         guesses={guesses}
         setGuesses={setGuesses}
@@ -93,7 +91,6 @@ function Classic({
         gameMode={gameMode}
         showDialog={gameResult}
         setGameResult={setGameResult}
-        toggleRestart={toggleRestart}
         togglePlayWordle={togglePlayWordle}
         solution={solution}
       />

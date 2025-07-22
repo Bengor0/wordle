@@ -14,7 +14,7 @@ import React from "react";
 import { useAuth } from "./hooks/useAuth.js";
 import StatisticsDialog from "./components/modals/StatisticsDialog.jsx";
 import { useQuery } from "@tanstack/react-query";
-import { fetchUserData } from "./utils/userDataUtils.js";
+import { fetchUserData } from "./utils/firestoreUtils.js";
 
 function App() {
   const [darkMode, toggleDarkMode] = useToggleDarkMode(true);

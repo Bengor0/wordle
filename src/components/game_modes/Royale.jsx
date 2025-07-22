@@ -42,7 +42,6 @@ function Royale({
         docSnap = await getDoc(doc(db, "wordleWords", "dailyWords"));
         docData = docSnap.data();
         solutionsRef.current = docData.royaleWords;
-        console.log(gameRound);
         setSolution(
           solutionsRef.current[gameRound.current - 1].toUpperCase().split(""),
         );
@@ -87,6 +86,7 @@ function Royale({
       const updatedUserData = { ...userData };
       updatedUserData.statistics.gameModes.royale.finishedToday = true;
       updatedUserData.statistics.gameModes.royale.gamesPlayed++;
+      updatedUserData.statistics.gameModes.royale.dailyStreak++;
       if (gameResult === "guessed") {
         updatedUserData.statistics.gameModes.royale.gamesGuessed[
           gameRound.current - 1
@@ -106,13 +106,8 @@ function Royale({
     return gameRound.current + rowIndex.current > numOfGuesses;
   };
 
-  const hint = () => {};
-
   return (
     <>
-      <div style={{ color: "white" }}>
-        {"Round: " + gameRound.current + " " + solution}
-      </div>
       <Wordle
         darkMode={darkMode}
         gameMode={gameMode}

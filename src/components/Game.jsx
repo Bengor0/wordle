@@ -4,7 +4,7 @@ import Practice from "./game_modes/Practice.jsx";
 
 import React, { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateUserData } from "../utils/userDataUtils.js";
+import { updateUserData } from "../utils/firestoreUtils.js";
 
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 
@@ -15,6 +15,7 @@ function Game(props) {
       colors: BASE_COLORS,
     }),
   );
+  const [roundGuesses, setRoundGuesses] = useState(null);
   const [keyColors, setKeyColors] = useState(new Map());
   const rowIndex = useRef(0);
   const gameRound = useRef(1);
@@ -35,15 +36,32 @@ function Game(props) {
   useEffect(() => {
     const loadGameState = () => {
       const currentMode = props.userData?.statistics.gameModes[props.gameMode];
-      if (currentMode.playedToday) {
+      if (props.gameMode === "royale") {
+        setGuesses([
+          ...currentMode.currentState.roundStates[
+            currentMode.currentState.gameRound - 1
+          ].guesses,
+        ]);
+        setKeyColors(
+          new Map(
+            Object.entries(
+              currentMode.currentState.roundStates[
+                currentMode.currentState.gameRound - 1
+              ].keyColors,
+            ),
+          ),
+        );
+        rowIndex.current =
+          currentMode.currentState.roundStates[
+            currentMode.currentState.gameRound - 1
+          ].rowIndex;
+        gameRound.current = currentMode.currentState.gameRound;
+      } else {
         setGuesses([...currentMode.currentState.guesses]);
         setKeyColors(
           new Map(Object.entries(currentMode.currentState.keyColors)),
         );
         rowIndex.current = currentMode.currentState.rowIndex;
-        if (props.gameMode === "royale") {
-          gameRound.current = currentMode.currentState.gameRound;
-        }
       }
       console.log("Game state loaded.");
     };
@@ -52,22 +70,49 @@ function Game(props) {
   }, []);
 
   useEffect(() => {
+    const loadData = () => {
+      setGuesses(
+        props.userData?.statistics.gameModes.royale.currentState.roundStates[
+          gameRound.current - 1
+        ].guesses,
+      );
+      setKeyColors(
+        new Map(
+          Object.entries(
+            props.userData?.statistics.gameModes.royale.currentState
+              .roundStates[gameRound.current - 1].keyColors,
+          ),
+        ),
+      );
+    };
+
+    props.gameMode === "royale" && loadData();
+  }, [gameRound.current]);
+
+  useEffect(() => {
     const updateUserData = async () => {
       const updatedUserData = { ...props.userData };
-      updatedUserData.statistics.gameModes[props.gameMode].playedToday = true;
-      updatedUserData.statistics.gameModes[
-        props.gameMode
-      ].currentState.guesses = guesses;
-      updatedUserData.statistics.gameModes[
-        props.gameMode
-      ].currentState.keyColors = Object.fromEntries(keyColors);
-      updatedUserData.statistics.gameModes[
-        props.gameMode
-      ].currentState.rowIndex = rowIndex.current;
-      if (props.gameMode === "royale") {
-        updatedUserData.statistics.gameModes[
-          props.gameMode
-        ].currentState.gameRound = gameRound.current;
+      if (props.gameMode === "classic") {
+        updatedUserData.statistics.gameModes.classic.playedToday = true;
+        updatedUserData.statistics.gameModes.classic.currentState.guesses =
+          guesses;
+        updatedUserData.statistics.gameModes.classic.currentState.keyColors =
+          Object.fromEntries(keyColors);
+        updatedUserData.statistics.gameModes.classic.currentState.rowIndex =
+          rowIndex.current;
+      } else {
+        updatedUserData.statistics.gameModes.royale.playedToday = true;
+        updatedUserData.statistics.gameModes.royale.currentState.roundStates[
+          gameRound.current - 1
+        ].guesses = guesses;
+        updatedUserData.statistics.gameModes.royale.currentState.roundStates[
+          gameRound.current - 1
+        ].keyColors = Object.fromEntries(keyColors);
+        updatedUserData.statistics.gameModes.royale.currentState.roundStates[
+          gameRound.current - 1
+        ].rowIndex = rowIndex.current;
+        updatedUserData.statistics.gameModes.royale.currentState.gameRound =
+          gameRound.current;
       }
       try {
         await mutateUserData(updatedUserData);

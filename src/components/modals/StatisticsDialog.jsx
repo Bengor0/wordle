@@ -114,11 +114,15 @@ function StatisticsDialog({ statsOpen, toggleStats, userData }) {
             <div className="stats-lock flex-center">
               <FaLock className="lock-svg" />
               <div className="lock-message">
-                Play {5 - userData?.statistics.gameModes[gameMode].gamesPlayed}{" "}
-                more{" "}
-                {5 - userData?.statistics.gameModes[gameMode].gamesPlayed === 1
-                  ? "game."
-                  : "games."}
+                {userData
+                  ? `Play ${5 - userData?.statistics.gameModes[gameMode].gamesPlayed} more ${
+                      5 -
+                        userData?.statistics.gameModes[gameMode].gamesPlayed ===
+                      1
+                        ? "game."
+                        : "games."
+                    }`
+                  : "Log in to see your stats."}
               </div>
             </div>
           )}

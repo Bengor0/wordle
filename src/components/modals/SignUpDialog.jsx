@@ -38,10 +38,10 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
                 playedToday: false,
                 finishedToday: false,
                 currentState: {
-                  guesses: new Array(6).fill({
+                  guesses: new Array(6).fill(null).map(() => ({
                     word: "",
                     colors: ["black", "black", "black", "black", "black"],
-                  }),
+                  })),
                   keyColors: {},
                   rowIndex: 0,
                 },
@@ -53,12 +53,14 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
                 playedToday: false,
                 finishedToday: false,
                 currentState: {
-                  guesses: new Array(6).fill({
-                    word: "",
-                    colors: ["black", "black", "black", "black", "black"],
-                  }),
-                  keyColors: {},
-                  rowIndex: 0,
+                  roundStates: new Array(5).fill(null).map(() => ({
+                    guesses: new Array(6).fill(null).map(() => ({
+                      word: "",
+                      colors: ["black", "black", "black", "black", "black"],
+                    })),
+                    keyColors: {},
+                    rowIndex: 0,
+                  })),
                   gameRound: 0,
                 },
               },
