@@ -83,7 +83,10 @@ function StatisticsDialog({ statsOpen, toggleStats, userData }) {
                 <StatWindow value={getWinRate() + "%"} category={"Win rate"} />
               </div>
               <div className="c-5">
-                <StatWindow value={5} category={"Daily streak"} />
+                <StatWindow
+                  value={userData?.statistics.gameModes[gameMode].dailyStreak}
+                  category={"Daily streak"}
+                />
               </div>
               <div className="c-6">
                 <BarChart
