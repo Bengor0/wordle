@@ -5,7 +5,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import "./BarChart.css";
+import "./Statistics.css";
+import StatisticsContext from "../../contexts/StatisticsContext.js";
 
 const BarChartContext = createContext({
   data: [10, 2, 5, 13, 5],
@@ -13,9 +14,23 @@ const BarChartContext = createContext({
 });
 
 function BarChart({ children, data, categories }) {
+  const { setContainerAspRat } = useContext(StatisticsContext);
+  const aspectRatio = 2;
+
+  useEffect(() => {
+    setContainerAspRat((prev) => prev + aspectRatio);
+
+    return () => setContainerAspRat((prev) => prev - aspectRatio);
+  }, []);
+
   return (
     <BarChartContext value={{ data, categories }}>
-      <div className="bar-chart flex-center">
+      <div
+        className="bar-chart flex-center"
+        style={{
+          aspectRatio: aspectRatio,
+        }}
+      >
         <div className="chart">{children}</div>
       </div>
     </BarChartContext>

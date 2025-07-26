@@ -5,12 +5,13 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../Firebase.jsx";
-import IndexWindow from "../statistics/IndexWindow.jsx";
-import StatWindow from "../statistics/StatWindow.jsx";
-import BarChart from "../statistics/BarChart.jsx";
+import StatIndex from "../statistics/StatIndex.jsx";
+import StatUnit from "../statistics/StatUnit.jsx";
 import "../../styles/Statistics.css";
 import useToggleGameMode from "../../hooks/useToggleGameMode.js";
 import { FaLock } from "react-icons/fa";
+import Statistics from "../statistics/Statistics.jsx";
+import BarChart from "../statistics/BarChart.jsx";
 
 function StatisticsDialog({ statsOpen, toggleStats, userData }) {
   const [gameMode, toggleGameMode] = useToggleGameMode(true);
@@ -69,26 +70,25 @@ function StatisticsDialog({ statsOpen, toggleStats, userData }) {
             </ButtonGroup>
           </div>
           {userData?.statistics.gameModes[gameMode].gamesPlayed >= 5 ? (
-            <div className="stats-grid">
-              <div className="c-2">
-                <IndexWindow value={getIndex()} label={"index"} />
-              </div>
-              <div className="c-3">
-                <StatWindow
+            <Statistics>
+              <Statistics.Container>
+                <Statistics.Index value={getIndex()} label={"index"} />
+              </Statistics.Container>
+              <Statistics.Container>
+                <Statistics.Unit
                   value={userData?.statistics.gameModes[gameMode].gamesPlayed}
                   category={"Games played"}
                 />
-              </div>
-              <div className="c-4">
-                <StatWindow value={getWinRate() + "%"} category={"Win rate"} />
-              </div>
-              <div className="c-5">
-                <StatWindow
+                <Statistics.Unit
+                  value={getWinRate() + "%"}
+                  category={"Win rate"}
+                />
+                <Statistics.Unit
                   value={userData?.statistics.gameModes[gameMode].dailyStreak}
                   category={"Daily streak"}
                 />
-              </div>
-              <div className="c-6">
+              </Statistics.Container>
+              <Statistics.Container>
                 <BarChart
                   data={
                     gameMode === "classic"
@@ -110,9 +110,8 @@ function StatisticsDialog({ statsOpen, toggleStats, userData }) {
                   </BarChart.Header>
                   <BarChart.Graph axis={"show"} layout={"vertical"} />
                 </BarChart>
-              </div>
-              <div className="leader-board"></div>
-            </div>
+              </Statistics.Container>
+            </Statistics>
           ) : (
             <div className="stats-lock flex-center">
               <FaLock className="lock-svg" />

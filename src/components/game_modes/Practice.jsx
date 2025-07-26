@@ -72,6 +72,7 @@ function Practice({
         setGameResult={setGameResult}
         toggleRestart={toggleRestart}
         togglePlayWordle={togglePlayWordle}
+        solution={solution}
       />
     </>
   );

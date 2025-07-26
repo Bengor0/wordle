@@ -93,7 +93,7 @@ function Royale({
         ]++;
       }
       try {
-        mutateUserData();
+        mutateUserData(updatedUserData);
       } catch (e) {
         console.error(e);
       }

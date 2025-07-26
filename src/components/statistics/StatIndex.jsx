@@ -1,7 +1,8 @@
 import React from "react";
-import "./IndexWindow.css";
+import "./StatIndex.css";
 
-function IndexWindow({ value, label }) {
+function StatIndex({ value, label }) {
+  const aspectRatio = 3;
   return (
     <div className="index-window flex-center">
       <div>
@@ -12,4 +13,4 @@ function IndexWindow({ value, label }) {
   );
 }
 
-export default IndexWindow;
+export default StatIndex;

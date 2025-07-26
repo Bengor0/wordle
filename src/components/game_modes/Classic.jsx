@@ -92,7 +92,6 @@ function Classic({
         showDialog={gameResult}
         setGameResult={setGameResult}
         togglePlayWordle={togglePlayWordle}
-        solution={solution}
       />
     </>
   );

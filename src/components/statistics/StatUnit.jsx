@@ -1,7 +1,8 @@
 import React from "react";
-import "./StatWindow.css";
+import "./StatUnit.css";
 
-function StatWindow({ value, category }) {
+function StatUnit({ value, category }) {
+  const aspectRatio = 1;
   return (
     <div className="stat-window flex-center">
       <span className="stat-value">{value}</span>
@@ -10,4 +11,4 @@ function StatWindow({ value, category }) {
   );
 }
 
-export default StatWindow;
+export default StatUnit;
