@@ -3,7 +3,6 @@ import Accordion from "react-bootstrap/Accordion";
 import "../styles/GameModeSelector.css";
 import { FaPlay } from "react-icons/fa";
 import { toast, Toaster } from "sonner";
-import { auth } from "./Firebase.jsx";
 
 const GAME_MODES = ["practice", "classic", "royale"];
 

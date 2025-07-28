@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import GameModeContext from "../contexts/GameModeContext.js";
-import { GameMode } from "./enums/GameMode.js";
+import { GameModes } from "./enums/GameModes.js";
 
 function GameModeProvider({ children }) {
-  const [gameMode, setGameMode] = useState(GameMode.PRACTICE);
+  const [gameMode, setGameMode] = useState(GameModes.PRACTICE);
   const value = {
     gameMode,
     setGameMode,

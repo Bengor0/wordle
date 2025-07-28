@@ -1,4 +1,4 @@
-export const GameMode = Object.freeze({
+export const GameModes = Object.freeze({
   PRACTICE: "practice",
   CLASSIC: "classic",
   ROYALE: "royale",

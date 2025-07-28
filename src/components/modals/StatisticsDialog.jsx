@@ -8,14 +8,14 @@ import Statistics from "../statistics/Statistics.jsx";
 import BarChart from "../statistics/BarChart.jsx";
 import { useUserData } from "../../hooks/useUserData.js";
 import { useGameMode } from "../../hooks/useGameMode.js";
-import { GameMode } from "../enums/GameMode.js";
+import { GameModes } from "../enums/GameModes.js";
 
 function StatisticsDialog({ statsOpen, toggleStats }) {
   const { gameMode, setGameMode } = useGameMode();
   const { userData, isLoading } = useUserData();
 
   useEffect(() => {
-    setGameMode(GameMode.CLASSIC);
+    setGameMode(GameModes.CLASSIC);
   }, []);
 
   const getIndex = () => {
@@ -53,14 +53,14 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
             <ButtonGroup className="me-2" aria-label="First group">
               <Button
                 onClick={() => {
-                  setGameMode(GameMode.CLASSIC);
+                  setGameMode(GameModes.CLASSIC);
                 }}
               >
                 Classic
               </Button>
               <Button
                 onClick={() => {
-                  setGameMode(GameMode.ROYALE);
+                  setGameMode(GameModes.ROYALE);
                 }}
               >
                 Royale
@@ -95,13 +95,13 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
                       ].gamesGuessed.toReversed()
                 }
                 categories={
-                  gameMode === GameMode.CLASSIC
+                  gameMode === GameModes.CLASSIC
                     ? [1, 2, 3, 4, 5, 6]
                     : [5, 4, 3, 2, 1]
                 }
               >
                 <BarChart.Header>
-                  {gameMode === GameMode.CLASSIC
+                  {gameMode === GameModes.CLASSIC
                     ? "GUESS DISTRIBUTION"
                     : "ROUND DISTRIBUTION"}
                 </BarChart.Header>
