@@ -1,6 +1,6 @@
-# React + Vite
+# Wordle game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a clone of popular New York Times game - Wordle. This single page app was developed using React framework and takes the advantage of client-side rendering. For authentication, user data storage and generating daily words/user data updating Firebase products like Firebase Auth, Cloud Firestore and Firebase Functions were used.
 
 Currently, two official plugins are available:
 
