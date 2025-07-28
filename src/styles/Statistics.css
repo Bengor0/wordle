@@ -3,34 +3,58 @@
     flex-direction: column;
 }
 
+.stats-window {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.stats-container {
+    display: flex;
+    width: 100%;
+}
+
+.stat-unit {
+    aspect-ratio: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.unit-value {
+    font-size: 3vh;
+    font-weight: 500;
+}
+.unit-category {
+    font-size: 1.6vh;
+}
+
+.stat-index {
+    aspect-ratio: 5;
+    flex: 5;
+}
+.index-value {
+    font-size: 5vh;
+    font-weight: 500;
+}
+.index-label {
+
+}
+
 .stats-lock {
+    background-color: white;
     flex-direction: column;
     width: 100%;
-    height: 46.4vh;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
 }
-
 .lock-svg {
     font-size: 5vh;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: 33% 33% 33%;
-    gap: 2px;
-}
-
-.c-2 {
-    grid-column-start: 1;
-    grid-column-end: 4;
-}
-
-.c-3 {
-    aspect-ratio: 1/1;
-}
-
-.c-6 {
-    grid-column-start: 1;
-    grid-column-end: 4;
-    height: 25vh;
 }
 

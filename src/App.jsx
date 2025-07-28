@@ -77,13 +77,7 @@ function App() {
         toggleSignUp={toggleSignUp}
       />
       <SignUpDialog signUpOpen={signUpOpen} toggleSignUp={toggleSignUp} />
-      <StatisticsDialog
-        statsOpen={statsOpen}
-        toggleStats={toggleStats}
-        gameMode={gameMode}
-        setGameMode={setGameMode}
-        userData={userData}
-      />
+      <StatisticsDialog statsOpen={statsOpen} toggleStats={toggleStats} />
     </>
   );
 }

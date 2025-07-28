@@ -1,93 +1,29 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-
-import "./Statistics.css";
-import StatisticsContext from "../../contexts/StatisticsContext.js";
+import React from "react";
 import { FaLock } from "react-icons/fa";
+import "../../styles/Statistics.css";
 
-function Statistics({ children }) {
+function Statistics({ children, gameModeData }) {
   return <div className="stats-window">{children}</div>;
 }
 
 function StatsContainer({ children }) {
-  const [containerAspRat, setContainerAspRat] = useState(0);
-  return (
-    <StatisticsContext.Provider value={{ setContainerAspRat }}>
-      <div
-        className="stats-container"
-        style={{
-          display: "flex",
-          width: "100%",
-          aspectRatio: containerAspRat,
-        }}
-      >
-        {children}
-      </div>
-    </StatisticsContext.Provider>
-  );
+  return <div className="stats-container">{children}</div>;
 }
 
 function StatUnit({ value, category }) {
-  const { setContainerAspRat } = useContext(StatisticsContext);
-  const aspectRatio = 1;
-
-  useEffect(() => {
-    setContainerAspRat((prev) => prev + aspectRatio);
-
-    return () => setContainerAspRat((prev) => prev - aspectRatio);
-  }, []);
-
   return (
-    <div
-      className="stat-unit flex-center"
-      style={{
-        aspectRatio: aspectRatio,
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <span
-        className="unit-value"
-        style={{ fontSize: "3vh", fontWeight: "500" }}
-      >
-        {value}
-      </span>
-      <span className="unit-category" style={{ fontSize: "1.6vh" }}>
-        {category}
-      </span>
+    <div className="stat-unit flex-center">
+      <span className="unit-value">{value}</span>
+      <span className="unit-category">{category}</span>
     </div>
   );
 }
 
 function StatIndex({ value, label }) {
-  const { setContainerAspRat } = useContext(StatisticsContext);
-  const aspectRatio = 5;
-
-  useEffect(() => {
-    setContainerAspRat((prev) => prev + aspectRatio);
-
-    return () => setContainerAspRat((prev) => prev - aspectRatio);
-  }, []);
-
   return (
-    <div
-      className="stat-index flex-center"
-      style={{
-        aspectRatio: aspectRatio,
-      }}
-    >
+    <div className="stat-index flex-center">
       <div>
-        <span
-          className="index-value"
-          style={{ fontSize: "5vh", fontWeight: "500" }}
-        >
-          {value}
-        </span>
+        <span className="index-value">{value}</span>
         <span className="index-label">{label}</span>
       </div>
     </div>
@@ -96,6 +32,7 @@ function StatIndex({ value, label }) {
 
 function StatLock({ gamesPlayed }) {
   const LOCK_NUMBER = 5;
+
   return (
     <div className="stats-lock flex-center">
       <FaLock className="lock-svg" />
