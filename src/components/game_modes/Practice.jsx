@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import Wordle from "../Wordle.jsx";
-import useToggleState from "../../hooks/useToggleState.js";
 
 const API_URL =
   "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
@@ -10,7 +9,6 @@ import GameOverDialog from "../modals/GameOverDialog.jsx";
 
 function Practice({
   darkMode,
-  gameMode,
   togglePlayWordle,
   wordLength,
   numOfGuesses,
@@ -52,7 +50,6 @@ function Practice({
     <>
       <Wordle
         darkMode={darkMode}
-        gameMode={gameMode}
         solution={solution}
         wordSet={wordSet}
         rowIndex={rowIndex}
@@ -67,7 +64,6 @@ function Practice({
         baseColors={baseColors}
       />
       <GameOverDialog
-        gameMode={gameMode}
         showDialog={gameResult}
         setGameResult={setGameResult}
         toggleRestart={toggleRestart}

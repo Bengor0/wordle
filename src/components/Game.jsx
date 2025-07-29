@@ -5,17 +5,23 @@ import Practice from "./game_modes/Practice.jsx";
 import React, { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateUserData } from "../utils/firestoreUtils.js";
+import { useAuth } from "../hooks/useAuth.js";
+import { useGameMode } from "../hooks/useGameMode.js";
+import { useUserData } from "../hooks/useUserData.js";
+import { GameModes } from "../enums/GameModes.js";
 
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 
 function Game(props) {
+  const { currentUser } = useAuth();
+  const { userData } = useUserData();
+  const { gameMode } = useGameMode();
   const [guesses, setGuesses] = useState(
     new Array(6).fill({
       word: "",
       colors: BASE_COLORS,
     }),
   );
-  const [roundGuesses, setRoundGuesses] = useState(null);
   const [keyColors, setKeyColors] = useState(new Map());
   const rowIndex = useRef(0);
   const gameRound = useRef(1);
@@ -24,19 +30,19 @@ function Game(props) {
   const queryClient = useQueryClient();
   const { mutateAsync: mutateUserData } = useMutation({
     mutationFn: async (newData) => {
-      return updateUserData(props.currentUser.uid, newData);
+      return updateUserData(currentUser.uid, newData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["user", props.currentUser?.uid],
+        queryKey: ["user", currentUser?.uid],
       });
     },
   });
 
   useEffect(() => {
     const loadGameState = () => {
-      const currentMode = props.userData?.statistics.gameModes[props.gameMode];
-      if (props.gameMode === "royale") {
+      const currentMode = userData?.statistics.gameModes[gameMode];
+      if (gameMode === GameModes.ROYALE) {
         setGuesses([
           ...currentMode.currentState.roundStates[
             currentMode.currentState.gameRound - 1
@@ -66,33 +72,34 @@ function Game(props) {
       console.log("Game state loaded.");
     };
 
-    props.gameMode !== "practice" && loadGameState();
+    gameMode !== GameModes.PRACTICE && loadGameState();
   }, []);
 
   useEffect(() => {
     const loadData = () => {
       setGuesses(
-        props.userData?.statistics.gameModes.royale.currentState.roundStates[
+        userData?.statistics.gameModes.royale.currentState.roundStates[
           gameRound.current - 1
         ].guesses,
       );
       setKeyColors(
         new Map(
           Object.entries(
-            props.userData?.statistics.gameModes.royale.currentState
-              .roundStates[gameRound.current - 1].keyColors,
+            userData?.statistics.gameModes.royale.currentState.roundStates[
+              gameRound.current - 1
+            ].keyColors,
           ),
         ),
       );
     };
 
-    props.gameMode === "royale" && loadData();
+    gameMode === "royale" && loadData();
   }, [gameRound.current]);
 
   useEffect(() => {
     const updateUserData = async () => {
-      const updatedUserData = { ...props.userData };
-      if (props.gameMode === "classic") {
+      const updatedUserData = { ...userData };
+      if (gameMode === GameModes.CLASSIC) {
         updatedUserData.statistics.gameModes.classic.playedToday = true;
         updatedUserData.statistics.gameModes.classic.currentState.guesses =
           guesses;
@@ -122,10 +129,10 @@ function Game(props) {
     };
 
     if (
-      props.gameMode !== "practice" &&
+      gameMode !== "practice" &&
       guesses[0].word !== "" &&
-      !!props.userData &&
-      !props.userData?.statistics.gameModes[props.gameMode].finishedToday
+      !!userData &&
+      !userData?.statistics.gameModes[gameMode].finishedToday
     ) {
       updateUserData();
     }
@@ -133,7 +140,7 @@ function Game(props) {
 
   return (
     <>
-      {props.gameMode === "classic" && (
+      {gameMode === GameModes.CLASSIC && (
         <Classic
           {...props}
           guesses={guesses}
@@ -148,7 +155,7 @@ function Game(props) {
           mutateUserData={mutateUserData}
         />
       )}
-      {props.gameMode === "royale" && (
+      {gameMode === GameModes.ROYALE && (
         <Royale
           {...props}
           guesses={guesses}
@@ -163,7 +170,7 @@ function Game(props) {
           mutateUserData={mutateUserData}
         />
       )}
-      {props.gameMode === "practice" && (
+      {gameMode === GameModes.PRACTICE && (
         <Practice
           {...props}
           guesses={guesses}

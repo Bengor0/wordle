@@ -3,20 +3,20 @@ import Accordion from "react-bootstrap/Accordion";
 import "../styles/GameModeSelector.css";
 import { FaPlay } from "react-icons/fa";
 import { toast, Toaster } from "sonner";
+import { useGameMode } from "../hooks/useGameMode.js";
+import { useAuth } from "../hooks/useAuth.js";
+import { GameModes } from "../enums/GameModes.js";
 
-const GAME_MODES = ["practice", "classic", "royale"];
-
-function GameModeSelector({
-  togglePlayWordle,
-  gameMode,
-  setGameMode,
-  className = "",
-  currentUser,
-}) {
-  const [gameModes, setGameModes] = useState(GAME_MODES);
+function GameModeSelector({ togglePlayWordle, className = "" }) {
+  const { gameMode, setGameMode } = useGameMode();
+  const { currentUser } = useAuth();
   const [changedMode, setChangedMode] = useState(gameMode);
   const accordionRef = useRef(null);
   const [collapse, setCollapse] = useState(false);
+
+  useEffect(() => {
+    gameMode !== changedMode && setChangedMode(gameMode);
+  }, [gameMode]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -54,21 +54,30 @@ function GameModeSelector({
             >
               <span className="current-mode">{changedMode.toUpperCase()}</span>
             </Accordion.Header>
-            <Accordion.Body onExited={() => setGameMode(changedMode)}>
+            <Accordion.Body
+              onExited={() => {
+                setGameMode(changedMode);
+              }}
+            >
               <ol>
-                {gameModes.map((mode, index) =>
-                  mode === gameMode ? null : (
+                {Object.keys(GameModes).map((key, index) =>
+                  GameModes[key] === gameMode ? null : (
                     <li
-                      className={`selector-list ${index + 1 === gameModes.length && "last"}`}
+                      className={`selector-list ${index + 1 === Object.keys(GameModes).length && "last"}`}
                       key={index}
                       onClick={() => {
-                        if (currentUser || mode === "practice") {
+                        if (
+                          currentUser ||
+                          GameModes[key] === GameModes.PRACTICE
+                        ) {
                           setCollapse(false);
-                          setChangedMode(mode);
+                          setChangedMode(GameModes[key]);
                         } else toast.warning("Log in to play.");
                       }}
                     >
-                      <span className="mode">{mode.toUpperCase()}</span>
+                      <span className="mode">
+                        {GameModes[key].toUpperCase()}
+                      </span>
                     </li>
                   ),
                 )}

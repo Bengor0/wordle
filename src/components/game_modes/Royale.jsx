@@ -6,10 +6,10 @@ import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../Firebase.jsx";
+import { useUserData } from "../../hooks/useUserData.js";
 
 function Royale({
   darkMode,
-  gameMode,
   togglePlayWordle,
   wordLength,
   numOfGuesses,
@@ -20,18 +20,16 @@ function Royale({
   rowIndex,
   baseColors,
   gameRound,
-  userData,
   gameResult,
   setGameResult,
   mutateUserData,
 }) {
+  const { userData } = useUserData();
   const solutionsRef = useRef([]);
   const [solution, setSolution] = useState([]);
   const [restart, toggleRestart] = useToggleState(false);
   const wordSet = useRef(new Set());
   const [isGameOver, setIsGameOver] = useState(false);
-  const [greenHints, setGreenHints] = useState([]);
-  const [orangeHints, setOrangeHints] = useState([]);
 
   useEffect(() => {
     const fetchWords = async () => {
@@ -110,7 +108,6 @@ function Royale({
     <>
       <Wordle
         darkMode={darkMode}
-        gameMode={gameMode}
         solution={solution}
         wordSet={wordSet}
         key={restart}
@@ -125,10 +122,8 @@ function Royale({
         numOfGuesses={numOfGuesses}
         highLight={numOfGuesses - gameRound.current}
         baseColors={baseColors}
-        userData={userData}
       />
       <GameOverDialog
-        gameMode={gameMode}
         showDialog={isGameOver}
         setGameResult={setGameResult}
         toggleRestart={toggleRestart}

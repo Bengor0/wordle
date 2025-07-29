@@ -4,10 +4,10 @@ import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../Firebase.jsx";
+import { useUserData } from "../../hooks/useUserData.js";
 
 function Classic({
   darkMode,
-  gameMode,
   togglePlayWordle,
   wordLength,
   numOfGuesses,
@@ -17,11 +17,11 @@ function Classic({
   setKeyColors,
   rowIndex,
   baseColors,
-  userData,
   gameResult,
   setGameResult,
   mutateUserData,
 }) {
+  const { userData } = useUserData();
   const [solution, setSolution] = useState([]);
   const solutionRef = useRef([]);
   const wordSet = useRef(new Set());
@@ -72,7 +72,6 @@ function Classic({
     <>
       <Wordle
         darkMode={darkMode}
-        gameMode={gameMode}
         solution={solution}
         wordSet={wordSet}
         rowIndex={rowIndex}
@@ -85,10 +84,8 @@ function Classic({
         setGameResult={setGameResult}
         wordLength={wordLength}
         numOfGuesses={numOfGuesses}
-        userData={userData}
       />
       <GameOverDialog
-        gameMode={gameMode}
         showDialog={gameResult}
         setGameResult={setGameResult}
         togglePlayWordle={togglePlayWordle}

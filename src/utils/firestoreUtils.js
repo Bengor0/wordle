@@ -16,22 +16,3 @@ export async function updateUserData(uid, newData) {
   await updateDoc(docRef, newData);
   console.log("User data updated.");
 }
-
-export function getGameState(userData, gameMode) {
-  return userData.statistics.gameModes[gameMode].currentState;
-}
-export function getDailyStreak(userData, gameMode) {
-  return userData.statistics.gameModes[gameMode].dailyStreak;
-}
-export function getFinishedToday(userData, gameMode) {
-  return userData.statistics.gameModes[gameMode].finishedToday;
-}
-export function getPlayedToday(userData, gameMode) {
-  return userData.statistics.gameModes[gameMode].playedToday;
-}
-export function getGamesGuessed(userData, gameMode) {
-  return userData.statistics.gameModes[gameMode].gamesGuessed;
-}
-export function getGamesPlayed(userData, gameMode) {
-  return userData.statistics.gameModes[gameMode].gamesPlayed;
-}

@@ -1,8 +1,8 @@
 import React from "react";
-import UserDataContext from "../contexts/UserDataContext.js";
+import UserDataContext from "../../contexts/UserDataContext.js";
 import { useQuery } from "@tanstack/react-query";
-import { fetchUserData } from "../utils/firestoreUtils.js";
-import { useAuth } from "../hooks/useAuth.js";
+import { fetchUserData } from "../../utils/firestoreUtils.js";
+import { useAuth } from "../../hooks/useAuth.js";
 
 function UserDataProvider({ children }) {
   const { currentUser, loading } = useAuth();

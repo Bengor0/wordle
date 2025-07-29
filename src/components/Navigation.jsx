@@ -9,16 +9,20 @@ import ".././styles/Navigation.css";
 import { auth } from "./Firebase.jsx";
 import { signOut } from "firebase/auth";
 import { toast, Toaster } from "sonner";
+import { useAuth } from "../hooks/useAuth.js";
+import { useGameMode } from "../hooks/useGameMode.js";
+import { GameModes } from "../enums/GameModes.js";
 
 function Navigation({
   darkMode,
   toggleDarkMode,
   toggleLogIn,
-  currentUser,
   playWordle,
   togglePlayWordle,
   toggleStats,
 }) {
+  const { currentUser } = useAuth();
+  const { setGameMode } = useGameMode();
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -47,7 +51,10 @@ function Navigation({
                 <IoStatsChart
                   size="50%"
                   className={`stats-icon`}
-                  onClick={toggleStats}
+                  onClick={() => {
+                    setGameMode(GameModes.CLASSIC);
+                    toggleStats();
+                  }}
                 />
               </Container>
               <Container className="info flex-center">

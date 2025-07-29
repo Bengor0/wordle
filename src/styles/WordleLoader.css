@@ -1,0 +1,27 @@
+.wordle-loader {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.wordle-loader .tile {
+    width: 50px;
+    height: 50px;
+    background-color: #d3d6da;
+    border: 2px solid #d3d6da;
+    border-radius: 4px;
+    animation: bounce 1.2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(1);
+        background-color: #d3d6da;
+    }
+    50% {
+        transform: scale(1.2);
+        background-color: #a4aec4;
+    }
+}

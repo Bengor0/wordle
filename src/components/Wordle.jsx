@@ -4,10 +4,11 @@ import KeyboardContext from "../contexts/KeyboardContext.js";
 import "../styles/Wordle.css";
 import { toast, Toaster } from "sonner";
 import WordleBoard from "./WordleBoard.jsx";
+import { useUserData } from "../hooks/useUserData.js";
+import { useGameMode } from "../hooks/useGameMode.js";
 
 export default function Wordle({
   darkMode,
-  gameMode,
   solution,
   wordSet,
   gameResult,
@@ -21,8 +22,9 @@ export default function Wordle({
   keyColors,
   setKeyColors,
   baseColors,
-  userData,
 }) {
+  const { userData } = useUserData();
+  const { gameMode } = useGameMode();
   const guess = useRef({
     word: "",
     colors: baseColors,

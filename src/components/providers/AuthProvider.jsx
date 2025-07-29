@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { auth } from "./Firebase.jsx";
+import { auth } from "../Firebase.jsx";
 import { onAuthStateChanged } from "firebase/auth";
-import AuthContext from ".././contexts/AuthContext.js";
+import AuthContext from "../../contexts/AuthContext.js";
+import WordleLoader from "../WordleLoader.jsx";
 
 function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
@@ -23,7 +24,14 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {!loading ? (
+        children
+      ) : (
+        <div>
+          <h1>Loading Wordle...</h1>
+          <WordleLoader />
+        </div>
+      )}
     </AuthContext.Provider>
   );
 }
