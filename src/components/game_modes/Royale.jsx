@@ -9,7 +9,6 @@ import { db } from "../Firebase.jsx";
 import { useUserData } from "../../hooks/useUserData.js";
 
 function Royale({
-  darkMode,
   togglePlayWordle,
   wordLength,
   numOfGuesses,
@@ -85,6 +84,13 @@ function Royale({
       updatedUserData.statistics.gameModes.royale.finishedToday = true;
       updatedUserData.statistics.gameModes.royale.gamesPlayed++;
       updatedUserData.statistics.gameModes.royale.dailyStreak++;
+      if (
+        updatedUserData.statistics.gameModes.royale.dailyStreak >
+        userData.statistics.gameModes.royale.dailyStreakMax
+      ) {
+        updatedUserData.statistics.gameModes.royale.dailyStreakMax =
+          updatedUserData.statistics.gameModes.royale.dailyStreak;
+      }
       if (gameResult === "guessed") {
         updatedUserData.statistics.gameModes.royale.gamesGuessed[
           gameRound.current - 1
@@ -107,7 +113,6 @@ function Royale({
   return (
     <>
       <Wordle
-        darkMode={darkMode}
         solution={solution}
         wordSet={wordSet}
         key={restart}

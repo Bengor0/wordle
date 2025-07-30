@@ -9,32 +9,12 @@ import BarChart from "../statistics/BarChart.jsx";
 import { useUserData } from "../../hooks/useUserData.js";
 import { useGameMode } from "../../hooks/useGameMode.js";
 import { GameModes } from "../../enums/GameModes.js";
+import { getIndex, getWinRate } from "../../utils/userDataUtils.js";
+import LeaderBoard from "../statistics/LeaderBoard.jsx";
 
 function StatisticsDialog({ statsOpen, toggleStats }) {
   const { gameMode, setGameMode } = useGameMode();
   const { userData, isLoading } = useUserData();
-
-  const getIndex = () => {
-    const sum = userData?.statistics.gameModes[gameMode].gamesGuessed.reduce(
-      (total, value, index) => total + value * (index + 1),
-    );
-
-    return (
-      Math.round(
-        (sum / userData?.statistics.gameModes[gameMode].gamesPlayed) * 10,
-      ) / 10
-    );
-  };
-
-  const getWinRate = () => {
-    return Math.round(
-      (userData?.statistics.gameModes[gameMode].gamesGuessed.reduce(
-        (total, value) => total + value,
-      ) /
-        userData?.statistics.gameModes[gameMode].gamesPlayed) *
-        100,
-    );
-  };
 
   return (
     <>
@@ -66,7 +46,10 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
             </div>
             <Statistics gameModeData={userData?.statistics.gameModes[gameMode]}>
               <Statistics.Container>
-                <Statistics.Index value={getIndex()} label={"index"} />
+                <Statistics.Index
+                  value={getIndex(userData, gameMode)}
+                  label={"index"}
+                />
               </Statistics.Container>
               <Statistics.Container>
                 <Statistics.Unit
@@ -74,7 +57,7 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
                   category={"Games played"}
                 />
                 <Statistics.Unit
-                  value={getWinRate() + "%"}
+                  value={getWinRate(userData, gameMode) + "%"}
                   category={"Win rate"}
                 />
                 <Statistics.Unit
@@ -104,6 +87,9 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
                   </BarChart.Header>
                   <BarChart.Graph axis={"show"} layout={"vertical"} />
                 </BarChart>
+              </Statistics.Container>
+              <Statistics.Container>
+                <LeaderBoard />
               </Statistics.Container>
               {userData?.statistics.gameModes[gameMode].gamesPlayed < 5 && (
                 <Statistics.StatLock

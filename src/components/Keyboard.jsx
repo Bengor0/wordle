@@ -2,6 +2,7 @@ import { useContext } from "react";
 import KeyboardContext from "../contexts/KeyboardContext.js";
 import ".././styles/Keyboard.css";
 import { IoBackspaceOutline } from "react-icons/io5";
+import { useDarkMode } from "../hooks/useDarkMode.js";
 
 const KEYS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -9,10 +10,11 @@ const KEYS = [
   ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "BACKSPACE"],
 ];
 
-function KeyBoard({ className, keyColors }) {
+function KeyBoard({ keyColors }) {
   const { handleKeyClick } = useContext(KeyboardContext);
+  const { darkMode } = useDarkMode();
   return (
-    <div className={`keyboard ${className}`}>
+    <div className={`keyboard ${darkMode}`}>
       {KEYS.map((keyboardRow, index) => (
         <KeyboardRow
           keyboardRow={keyboardRow}

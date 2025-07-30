@@ -9,34 +9,21 @@ import Navigation from "./components/Navigation";
 import Game from "./components/Game";
 
 import React from "react";
-import { useAuth } from "./hooks/useAuth.js";
 import StatisticsDialog from "./components/modals/StatisticsDialog.jsx";
-import { useQuery } from "@tanstack/react-query";
-import { fetchUserData } from "./utils/firestoreUtils.js";
+import { useDarkMode } from "./hooks/useDarkMode.js";
 
 function App() {
-  const [darkMode, toggleDarkMode] = useToggleDarkMode(true);
   const [playWordle, togglePlayWordle] = useToggleState(false);
   const [logInOpen, toggleLogIn] = useToggleState(false);
   const [signUpOpen, toggleSignUp] = useToggleState(false);
   const [statsOpen, toggleStats] = useToggleState(false);
-  const { currentUser, loading } = useAuth();
-  const { data: userData, isLoading } = useQuery({
-    queryKey: ["user", currentUser?.uid],
-    queryFn: ({ queryKey }) => {
-      const [, uid] = queryKey;
-      return fetchUserData(uid);
-    },
-    enabled: !!currentUser && !loading,
-  });
   const [restart, toggleRestart] = useToggleState(false);
-  document.querySelector("body").classList = `${darkMode}`;
+  const { darkMode } = useDarkMode();
+  document.querySelector("body").classList.value = `${darkMode}`;
 
   return (
     <>
       <Navigation
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
         toggleLogIn={toggleLogIn}
         playWordle={playWordle}
         togglePlayWordle={togglePlayWordle}
@@ -45,7 +32,6 @@ function App() {
       <main className={`flex-center ${darkMode}`}>
         {playWordle ? (
           <Game
-            darkMode={darkMode}
             togglePlayWordle={togglePlayWordle}
             wordLength={5}
             numOfGuesses={6}
@@ -54,7 +40,7 @@ function App() {
           />
         ) : (
           <>
-            <Homepage togglePlayWordle={togglePlayWordle} darkMode={darkMode} />
+            <Homepage togglePlayWordle={togglePlayWordle} />
           </>
         )}
       </main>

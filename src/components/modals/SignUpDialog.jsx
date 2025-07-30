@@ -33,6 +33,7 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
             gameModes: {
               classic: {
                 dailyStreak: 0,
+                dailyStreakMax: 0,
                 gamesPlayed: 0,
                 gamesGuessed: new Array(6).fill(0),
                 playedToday: false,
@@ -48,6 +49,7 @@ function SignUpDialog({ signUpOpen, toggleSignUp }) {
               },
               royale: {
                 dailyStreak: 0,
+                dailyStreakMax: 0,
                 gamesPlayed: 0,
                 gamesGuessed: new Array(5).fill(0),
                 playedToday: false,

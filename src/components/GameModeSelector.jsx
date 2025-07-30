@@ -6,10 +6,12 @@ import { toast, Toaster } from "sonner";
 import { useGameMode } from "../hooks/useGameMode.js";
 import { useAuth } from "../hooks/useAuth.js";
 import { GameModes } from "../enums/GameModes.js";
+import { useDarkMode } from "../hooks/useDarkMode.js";
 
-function GameModeSelector({ togglePlayWordle, className = "" }) {
+function GameModeSelector({ togglePlayWordle }) {
   const { gameMode, setGameMode } = useGameMode();
   const { currentUser } = useAuth();
+  const { darkMode } = useDarkMode();
   const [changedMode, setChangedMode] = useState(gameMode);
   const accordionRef = useRef(null);
   const [collapse, setCollapse] = useState(false);
@@ -34,7 +36,7 @@ function GameModeSelector({ togglePlayWordle, className = "" }) {
   return (
     <>
       <Toaster richColors position="top-center" />
-      <div className={`game-mode-selector ${className}`}>
+      <div className={`game-mode-selector ${darkMode}`}>
         <div className={"play-btn flex-center"} onClick={togglePlayWordle}>
           <FaPlay />
         </div>
@@ -43,10 +45,7 @@ function GameModeSelector({ togglePlayWordle, className = "" }) {
           className={`game-mode`}
           ref={accordionRef}
         >
-          <Accordion.Item
-            eventKey={String(collapse)}
-            style={{ borderTopLeftRadius: "0", borderBottomLeftRadius: "0" }}
-          >
+          <Accordion.Item eventKey={String(collapse)}>
             <Accordion.Header
               onClick={() => {
                 collapse ? setCollapse(false) : setCollapse(true);

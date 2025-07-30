@@ -1,9 +1,11 @@
 import React from "react";
 import ".././styles/WordleBoard.css";
+import { useDarkMode } from "../hooks/useDarkMode.js";
 
-function WordleBoard({ guesses, className, wordLength, highLight }) {
+function WordleBoard({ guesses, wordLength, highLight }) {
+  const { darkMode } = useDarkMode();
   return (
-    <div className={`wordle-board ${className}`}>
+    <div className={`wordle-board ${darkMode}`}>
       {guesses.map((guess, i) => {
         return (
           <Row

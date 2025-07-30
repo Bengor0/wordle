@@ -6,6 +6,7 @@ import AuthProvider from "./components/providers/AuthProvider.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserDataProvider from "./components/providers/UserDataProvider.jsx";
 import GameModeProvider from "./components/providers/GameModeProvider.jsx";
+import DarkModeProvider from "./components/providers/DarkModeProvider.jsx";
 
 const queryClient = new QueryClient();
 
@@ -15,7 +16,9 @@ createRoot(document.getElementById("root")).render(
       <QueryClientProvider client={queryClient}>
         <UserDataProvider>
           <GameModeProvider>
-            <App />
+            <DarkModeProvider>
+              <App />
+            </DarkModeProvider>
           </GameModeProvider>
         </UserDataProvider>
       </QueryClientProvider>

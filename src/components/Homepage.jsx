@@ -5,13 +5,10 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./Firebase.jsx";
 import { words } from "./words.js";
 
-function Homepage({ togglePlayWordle, darkMode }) {
+function Homepage({ togglePlayWordle }) {
   return (
     <div className="homepage flex-center">
-      <GameModeSelector
-        togglePlayWordle={togglePlayWordle}
-        className={darkMode}
-      />
+      <GameModeSelector togglePlayWordle={togglePlayWordle} />
     </div>
   );
 }

@@ -12,10 +12,9 @@ import { toast, Toaster } from "sonner";
 import { useAuth } from "../hooks/useAuth.js";
 import { useGameMode } from "../hooks/useGameMode.js";
 import { GameModes } from "../enums/GameModes.js";
+import { useDarkMode } from "../hooks/useDarkMode.js";
 
 function Navigation({
-  darkMode,
-  toggleDarkMode,
   toggleLogIn,
   playWordle,
   togglePlayWordle,
@@ -23,6 +22,7 @@ function Navigation({
 }) {
   const { currentUser } = useAuth();
   const { setGameMode } = useGameMode();
+  const { darkMode } = useDarkMode();
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -81,7 +81,7 @@ function Navigation({
                   </Button>
                 </Container>
               )}
-              <DarkModeButton toggleDarkMode={toggleDarkMode} />
+              <DarkModeButton />
             </Nav>
           </Navbar.Collapse>
         </Container>

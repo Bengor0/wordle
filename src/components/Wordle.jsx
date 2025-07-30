@@ -6,9 +6,9 @@ import { toast, Toaster } from "sonner";
 import WordleBoard from "./WordleBoard.jsx";
 import { useUserData } from "../hooks/useUserData.js";
 import { useGameMode } from "../hooks/useGameMode.js";
+import { useDarkMode } from "../hooks/useDarkMode.js";
 
 export default function Wordle({
-  darkMode,
   solution,
   wordSet,
   gameResult,
@@ -25,6 +25,7 @@ export default function Wordle({
 }) {
   const { userData } = useUserData();
   const { gameMode } = useGameMode();
+  const { darkMode } = useDarkMode();
   const guess = useRef({
     word: "",
     colors: baseColors,
@@ -163,13 +164,12 @@ export default function Wordle({
       <h3 className={`game-mode ${darkMode}`}>{gameMode}</h3>
       <WordleBoard
         guesses={guesses}
-        className={darkMode}
         wordLength={wordLength}
         highLight={highLight}
       />
 
       <KeyboardContext.Provider value={{ handleKeyClick }}>
-        <KeyBoard className={darkMode} keyColors={keyColors} />
+        <KeyBoard keyColors={keyColors} />
       </KeyboardContext.Provider>
     </>
   );

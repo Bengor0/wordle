@@ -7,7 +7,6 @@ import { db } from "../Firebase.jsx";
 import { useUserData } from "../../hooks/useUserData.js";
 
 function Classic({
-  darkMode,
   togglePlayWordle,
   wordLength,
   numOfGuesses,
@@ -53,6 +52,13 @@ function Classic({
       updatedUserData.statistics.gameModes.classic.finishedToday = true;
       updatedUserData.statistics.gameModes.classic.gamesPlayed++;
       updatedUserData.statistics.gameModes.classic.dailyStreak++;
+      if (
+        updatedUserData.statistics.gameModes.classic.dailyStreak >
+        userData.statistics.gameModes.classic.dailyStreakMax
+      ) {
+        updatedUserData.statistics.gameModes.classic.dailyStreakMax =
+          updatedUserData.statistics.gameModes.classic.dailyStreak;
+      }
       if (gameResult === "guessed") {
         updatedUserData.statistics.gameModes.classic.gamesGuessed[
           rowIndex.current - 1
@@ -71,7 +77,6 @@ function Classic({
   return (
     <>
       <Wordle
-        darkMode={darkMode}
         solution={solution}
         wordSet={wordSet}
         rowIndex={rowIndex}

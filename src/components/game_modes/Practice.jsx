@@ -8,7 +8,6 @@ import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";
 
 function Practice({
-  darkMode,
   togglePlayWordle,
   wordLength,
   numOfGuesses,
@@ -49,7 +48,6 @@ function Practice({
   return (
     <>
       <Wordle
-        darkMode={darkMode}
         solution={solution}
         wordSet={wordSet}
         rowIndex={rowIndex}

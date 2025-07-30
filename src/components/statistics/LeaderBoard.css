@@ -1,0 +1,60 @@
+.leader-board {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 2;
+    flex: 2;
+}
+
+.leader-board .list {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5%
+}
+
+.leader-board .lb-row {
+    position: relative;
+    display: flex;
+    height: 15%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+}
+
+.leader-board .lb-row.headline {
+    height: 20%;
+}
+
+.leader-board .lb-row.r1 {
+
+}
+
+.leader-board .lb-row.r2 {
+
+}
+
+.placement {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+}
+
+.nickname {
+
+}
+
+.sorted-by {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+}
+
+.sorted-by > span {
+    word-spacing: 0;
+}
