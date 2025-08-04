@@ -52,8 +52,12 @@ function Navigation({
                   size="50%"
                   className={`stats-icon`}
                   onClick={() => {
-                    setGameMode(GameModes.CLASSIC);
-                    toggleStats();
+                    if (currentUser) {
+                      setGameMode(GameModes.CLASSIC);
+                      toggleStats();
+                    } else {
+                      toast.error("Log in to see stats");
+                    }
                   }}
                 />
               </Container>

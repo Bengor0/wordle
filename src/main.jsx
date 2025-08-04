@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserDataProvider from "./components/providers/UserDataProvider.jsx";
 import GameModeProvider from "./components/providers/GameModeProvider.jsx";
 import DarkModeProvider from "./components/providers/DarkModeProvider.jsx";
+import { useDarkMode } from "./hooks/useDarkMode.js";
 
 const queryClient = new QueryClient();
 

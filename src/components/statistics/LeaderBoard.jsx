@@ -20,6 +20,7 @@ import {
 import "./LeaderBoard.css";
 import Accordion from "react-bootstrap/Accordion";
 import { GameModes } from "../../enums/GameModes.js";
+import { Badge, Dropdown, ListGroup, Table } from "react-bootstrap";
 
 function LeaderBoard() {
   const { gameMode } = useGameMode();
@@ -74,83 +75,101 @@ function LeaderBoard() {
 
   return (
     <div className="leader-board">
-      <div className="list">
-        <RowHeadline
-          placement={"No."}
-          nickname={"Nickname"}
-          sortedBy={sortedBy}
-          setSortedBy={setSortedBy}
-        />
-        {!isLoading ? (
-          sortedUsers.map((user, index) => {
-            switch (sortedBy) {
-              case SortingCategories.INDEX:
-                return (
-                  <Row
-                    placement={`${index + 1}.`}
-                    nickname={user.get("nickname")}
-                    sortedBy={getIndex(user.data(), gameMode)}
-                    key={index}
-                  />
-                );
-              case SortingCategories.WIN_RATE:
-                return (
-                  <Row
-                    placement={`${index + 1}.`}
-                    nickname={user.get("nickname")}
-                    sortedBy={getWinRate(user.data(), gameMode)}
-                    key={index}
-                  />
-                );
-              case SortingCategories.DAILY_STREAK:
-                return (
-                  <Row
-                    placement={`${index + 1}.`}
-                    nickname={user.get("nickname")}
-                    sortedBy={getDailyStreakMax(user.data(), gameMode)}
-                    key={index}
-                  />
-                );
-            }
-          })
-        ) : (
-          <div>kokot</div>
-        )}
-      </div>
+      <Table hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nickname</th>
+            <th>
+              <Dropdown align="end">
+                <Dropdown.Toggle>{sortedBy}</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {Object.keys(SortingCategories).map((key) =>
+                    SortingCategories[key] === sortedBy ? null : (
+                      <Dropdown.Item
+                        onClick={() => setSortedBy(SortingCategories[key])}
+                      >
+                        {SortingCategories[key]}
+                      </Dropdown.Item>
+                    ),
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {!isLoading ? (
+            sortedUsers.map((user, index) => {
+              let displayStat;
+              switch (sortedBy) {
+                case SortingCategories.INDEX:
+                  displayStat = getIndex(user.data(), gameMode);
+                  break;
+                case SortingCategories.WIN_RATE:
+                  displayStat = getWinRate(user.data(), gameMode);
+                  break;
+                case SortingCategories.DAILY_STREAK:
+                  displayStat = getDailyStreakMax(user.data(), gameMode);
+                  break;
+              }
+              return (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{user.get("nickname")}</td>
+                  <td>{displayStat}</td>
+                </tr>
+              );
+            })
+          ) : (
+            <div>kokot</div>
+          )}
+        </tbody>
+      </Table>
     </div>
   );
-}
 
-function Row({ placement, nickname, sortedBy }) {
-  return (
-    <div className={`lb-row r${placement}`}>
-      <div className="placement">
-        <span>{placement}</span>
-      </div>
-      <div className="nickname">
-        <span>{nickname}</span>
-      </div>
-      <div className="sorted-by">
-        <span>{sortedBy}</span>
-      </div>
-    </div>
-  );
-}
-
-function RowHeadline({ placement, nickname, sortedBy, setSortedBy }) {
-  return (
-    <div className={"lb-row headline"}>
-      <div className="placement">
-        <span>{placement}</span>
-      </div>
-      <div className="nickname">
-        <span>{nickname}</span>
-      </div>
-      <div className="sorted-by">
-        <CategorySelector sortedBy={sortedBy} setSortedBy={setSortedBy} />
-      </div>
-    </div>
-  );
+  // return (
+  //   <div className="leader-board">
+  //     <ListGroup variant="flush">
+  //       <ListGroup.Item variant="light">
+  //         <span>No.</span>
+  //         <span>Nickname</span>
+  //         <span>Sorted by</span>
+  //       </ListGroup.Item>
+  //     </ListGroup>
+  //     <ListGroup variant="flush" as="ol" numbered className="d-flex">
+  //       {!isLoading ? (
+  //         sortedUsers.map((user, index) => {
+  //           let displayStat;
+  //           switch (sortedBy) {
+  //             case SortingCategories.INDEX:
+  //               displayStat = getIndex(user.data(), gameMode);
+  //               break;
+  //             case SortingCategories.WIN_RATE:
+  //               displayStat = getWinRate(user.data(), gameMode);
+  //               break;
+  //             case SortingCategories.DAILY_STREAK:
+  //               displayStat = getDailyStreakMax(user.data(), gameMode);
+  //               break;
+  //           }
+  //           return (
+  //             <ListGroup.Item
+  //               as="li"
+  //               variant="dark"
+  //               className="d-flex justify-content-between align-items-start"
+  //             >
+  //               <span>{user.get("nickname")}</span>
+  //               <Badge>{displayStat}</Badge>
+  //             </ListGroup.Item>
+  //           );
+  //         })
+  //       ) : (
+  //         <div>kokot</div>
+  //       )}
+  //     </ListGroup>
+  //   </div>
+  // );
 }
 
 function CategorySelector({ sortedBy, setSortedBy }) {
@@ -178,7 +197,7 @@ function CategorySelector({ sortedBy, setSortedBy }) {
               setSortedBy(changedSortedBy);
             }}
           >
-            <ol>
+            <ul>
               {Object.keys(SortingCategories).map((key, index) =>
                 SortingCategories[key] === sortedBy ? null : (
                   <li
@@ -195,7 +214,7 @@ function CategorySelector({ sortedBy, setSortedBy }) {
                   </li>
                 ),
               )}
-            </ol>
+            </ul>
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>

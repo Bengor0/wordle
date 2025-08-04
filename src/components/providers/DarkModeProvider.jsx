@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import DarkModeContext from "../../contexts/DarkModeContext.js";
 import { DarkModes } from "../../enums/DarkModes.js";
 
@@ -8,6 +8,10 @@ function DarkModeProvider({ children }) {
   const toggleDarkMode = () => {
     setDarkMode(darkMode === DarkModes.DARK ? DarkModes.LIGHT : DarkModes.DARK);
   };
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-bs-theme", darkMode);
+  }, [darkMode]);
 
   const value = {
     darkMode,

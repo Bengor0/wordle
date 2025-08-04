@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
@@ -11,6 +11,7 @@ import { useGameMode } from "../../hooks/useGameMode.js";
 import { GameModes } from "../../enums/GameModes.js";
 import { getIndex, getWinRate } from "../../utils/userDataUtils.js";
 import LeaderBoard from "../statistics/LeaderBoard.jsx";
+import { Carousel } from "react-bootstrap";
 
 function StatisticsDialog({ statsOpen, toggleStats }) {
   const { gameMode, setGameMode } = useGameMode();
@@ -66,30 +67,39 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
                 />
               </Statistics.Container>
               <Statistics.Container>
-                <BarChart
-                  data={
-                    gameMode === "classic"
-                      ? userData?.statistics.gameModes[gameMode].gamesGuessed
-                      : userData?.statistics.gameModes[
-                          gameMode
-                        ].gamesGuessed.toReversed()
-                  }
-                  categories={
-                    gameMode === GameModes.CLASSIC
-                      ? [1, 2, 3, 4, 5, 6]
-                      : [5, 4, 3, 2, 1]
-                  }
+                <Carousel
+                  style={{ aspectRatio: "2", flex: 2 }}
+                  interval={null}
+                  touch={true}
                 >
-                  <BarChart.Header>
-                    {gameMode === GameModes.CLASSIC
-                      ? "GUESS DISTRIBUTION"
-                      : "ROUND DISTRIBUTION"}
-                  </BarChart.Header>
-                  <BarChart.Graph axis={"show"} layout={"vertical"} />
-                </BarChart>
-              </Statistics.Container>
-              <Statistics.Container>
-                <LeaderBoard />
+                  <Carousel.Item>
+                    <BarChart
+                      data={
+                        gameMode === "classic"
+                          ? userData?.statistics.gameModes[gameMode]
+                              .gamesGuessed
+                          : userData?.statistics.gameModes[
+                              gameMode
+                            ].gamesGuessed.toReversed()
+                      }
+                      categories={
+                        gameMode === GameModes.CLASSIC
+                          ? [1, 2, 3, 4, 5, 6]
+                          : [5, 4, 3, 2, 1]
+                      }
+                    >
+                      <BarChart.Header>
+                        {gameMode === GameModes.CLASSIC
+                          ? "GUESS DISTRIBUTION"
+                          : "ROUND DISTRIBUTION"}
+                      </BarChart.Header>
+                      <BarChart.Graph axis={"show"} layout={"vertical"} />
+                    </BarChart>
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <LeaderBoard />
+                  </Carousel.Item>
+                </Carousel>
               </Statistics.Container>
               {userData?.statistics.gameModes[gameMode].gamesPlayed < 5 && (
                 <Statistics.StatLock

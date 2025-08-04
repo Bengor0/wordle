@@ -1,5 +1,4 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import useToggleDarkMode from "./hooks/useToggleDarkMode.js";
 import Homepage from "./components/Homepage";
 import LogInDialog from "./components/modals/LogInDialog.jsx";
 import SignUpDialog from "./components/modals/SignUpDialog.jsx";
