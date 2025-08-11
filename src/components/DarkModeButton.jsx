@@ -1,4 +1,4 @@
-import ".././styles/DarkModeButton.css";
+import "./DarkModeButton.css";
 
 import React from "react";
 import { useDarkMode } from "../hooks/useDarkMode.js";

@@ -32,8 +32,8 @@ export function compareRoyaleWinRate(user1, user2) {
   const userData1 = user1.data();
   const userData2 = user2.data();
   return (
-    getWinRate(userData1, GameModes.ROYALE) -
-    getWinRate(userData2, GameModes.ROYALE)
+    getWinRate(userData2, GameModes.ROYALE) -
+    getWinRate(userData1, GameModes.ROYALE)
   );
 }
 

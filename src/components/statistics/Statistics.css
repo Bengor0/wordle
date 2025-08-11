@@ -16,6 +16,21 @@
     width: 100%;
 }
 
+.highlight-bar {
+    height: 2px;
+    background-color: white;
+}
+
+.highlight-bar.slide-1 {
+    width: 57.43%;
+}
+
+.highlight-bar.slide-0 {
+    width: 43.57%;
+    transition-duration: 1s;
+    transform: translateX(100px);
+}
+
 .stat-unit {
     aspect-ratio: 1;
     flex: 1;

@@ -1,6 +1,6 @@
 import React from "react";
-import ".././styles/WordleBoard.css";
-import { useDarkMode } from "../hooks/useDarkMode.js";
+import "./WordleBoard.css";
+import { useDarkMode } from "../../hooks/useDarkMode.js";
 
 function WordleBoard({ guesses, wordLength, highLight }) {
   const { darkMode } = useDarkMode();

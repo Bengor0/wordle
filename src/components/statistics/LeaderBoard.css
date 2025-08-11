@@ -7,135 +7,21 @@
     flex: 2;
 }
 
-.leader-board .list {
-    flex-grow: 1;
+.leader-board tr {
     display: flex;
-    flex-direction: column;
-    gap: 5%
+    justify-content: space-between;
 }
 
-.leader-board .lb-row {
-    position: relative;
+.leader-board th {
     display: flex;
-    height: 15%;
+    justify-content: center;
     align-items: center;
-    justify-content: center;
-    border: 1px solid black;
+    flex: 1;
 }
 
-.leader-board .lb-row.headline {
-    height: 20%;
-}
-
-.leader-board .lb-row.r1 {
-
-}
-
-.leader-board .lb-row.r2 {
-
-}
-
-.placement {
-    height: 100%;
-    width: 20%;
+.leader-board td {
+    flex: 1;
     display: flex;
     justify-content: center;
-    position: absolute;
-    left: 0;
-}
-
-.nickname {
-    height: 100%;
-}
-
-.sorted-by {
-    height: 100%;
-    width: 20%;
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    right: 0;
-}
-
-.sorted-by > span {
-    word-spacing: 0;
-}
-
-.category-selector{
-    height: 100%;
-    width: 100%;
-}
-
-.category-selector .accordion {
-    height: 100%;
-    width: 100%;
-}
-
-.category-selector .accordion-item {
-    height: 100%;
-    width: 100%;
-}
-
-.category-selector .accordion-header {
-    height: 100%;
-    width: 100%;
-}
-
-.category-selector .accordion-header > button {
-    height: 100%;
-    width: 100%;
-}
-
-.category-selector .accordion-collapse {
-    height: 200%;
-    width: 100%;
-    background-color: white;
-    z-index: 1;
-    border: 1px black solid;
-    padding: 0;
-    margin: 0;
-}
-
-.category-selector .accordion-body {
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    z-index: 1;
-    padding: 0;
-    margin: 0;
-}
-
-.category-selector ul {
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.category-selector li {
-    box-sizing: border-box;
-    position: relative;
-    background-color: white;
-    height: 50%;
-    z-index: 1;
-    padding: 0;
-    margin: 0;
-}
-
-.category-selector li:hover {
-    cursor: pointer;
-}
-
-.category-selector .category {
-    position: absolute;
-    padding: 2px;
-    left: 0;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    z-index: 1;
+    align-items: center;
 }

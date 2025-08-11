@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import KeyboardContext from "../contexts/KeyboardContext.js";
-import ".././styles/Keyboard.css";
+import KeyboardContext from "../../contexts/KeyboardContext.js";
+import "./Keyboard.css";
 import { IoBackspaceOutline } from "react-icons/io5";
-import { useDarkMode } from "../hooks/useDarkMode.js";
+import { useDarkMode } from "../../hooks/useDarkMode.js";
 
 const KEYS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],

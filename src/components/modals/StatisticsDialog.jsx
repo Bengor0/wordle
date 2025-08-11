@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import "../../styles/Statistics.css";
+import "../statistics/Statistics.css";
 import Statistics from "../statistics/Statistics.jsx";
 import BarChart from "../statistics/BarChart.jsx";
 import { useUserData } from "../../hooks/useUserData.js";
@@ -12,10 +12,12 @@ import { GameModes } from "../../enums/GameModes.js";
 import { getIndex, getWinRate } from "../../utils/userDataUtils.js";
 import LeaderBoard from "../statistics/LeaderBoard.jsx";
 import { Carousel } from "react-bootstrap";
+import "./StatisticsDialog.css";
 
 function StatisticsDialog({ statsOpen, toggleStats }) {
-  const { gameMode, setGameMode } = useGameMode();
+  const [gameMode, setGameMode] = useState(GameModes.CLASSIC);
   const { userData, isLoading } = useUserData();
+  const [currentSlide, setCurrentSlide] = useState(1);
 
   return (
     <>
@@ -66,12 +68,42 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
                   category={"Daily streak"}
                 />
               </Statistics.Container>
+              <Statistics.Container className={"flex-center"}>
+                <div>
+                  <ButtonGroup>
+                    <Button
+                      onClick={() =>
+                        currentSlide === 0 && setCurrentSlide(currentSlide + 1)
+                      }
+                      className={"distribution-btn"}
+                    >
+                      Guess distribution
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        currentSlide === 1 && setCurrentSlide(currentSlide - 1)
+                      }
+                      className={"leaderboard-btn"}
+                    >
+                      Leaderboard
+                    </Button>
+                  </ButtonGroup>
+                  <div className={`highlight-bar slide-${currentSlide}`}></div>
+                </div>
+              </Statistics.Container>
               <Statistics.Container>
                 <Carousel
                   style={{ aspectRatio: "2", flex: 2 }}
                   interval={null}
                   touch={true}
+                  indicatorLabels={["Guess distribution", "Leaderboard"]}
+                  controls={false}
+                  indicators={false}
+                  activeIndex={currentSlide}
                 >
+                  <Carousel.Item>
+                    <LeaderBoard gameMode={gameMode} />
+                  </Carousel.Item>
                   <Carousel.Item>
                     <BarChart
                       data={
@@ -88,16 +120,8 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
                           : [5, 4, 3, 2, 1]
                       }
                     >
-                      <BarChart.Header>
-                        {gameMode === GameModes.CLASSIC
-                          ? "GUESS DISTRIBUTION"
-                          : "ROUND DISTRIBUTION"}
-                      </BarChart.Header>
                       <BarChart.Graph axis={"show"} layout={"vertical"} />
                     </BarChart>
-                  </Carousel.Item>
-                  <Carousel.Item>
-                    <LeaderBoard />
                   </Carousel.Item>
                 </Carousel>
               </Statistics.Container>

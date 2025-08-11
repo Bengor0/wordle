@@ -18,12 +18,10 @@ import {
   getWinRate,
 } from "../../utils/userDataUtils.js";
 import "./LeaderBoard.css";
-import Accordion from "react-bootstrap/Accordion";
 import { GameModes } from "../../enums/GameModes.js";
 import { Badge, Dropdown, ListGroup, Table } from "react-bootstrap";
 
-function LeaderBoard() {
-  const { gameMode } = useGameMode();
+function LeaderBoard({ gameMode }) {
   const { data: users, isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: fetchAllUsers,
@@ -84,10 +82,11 @@ function LeaderBoard() {
               <Dropdown align="end">
                 <Dropdown.Toggle>{sortedBy}</Dropdown.Toggle>
                 <Dropdown.Menu>
-                  {Object.keys(SortingCategories).map((key) =>
+                  {Object.keys(SortingCategories).map((key, index) =>
                     SortingCategories[key] === sortedBy ? null : (
                       <Dropdown.Item
                         onClick={() => setSortedBy(SortingCategories[key])}
+                        key={index}
                       >
                         {SortingCategories[key]}
                       </Dropdown.Item>
@@ -99,125 +98,29 @@ function LeaderBoard() {
           </tr>
         </thead>
         <tbody>
-          {!isLoading ? (
-            sortedUsers.map((user, index) => {
-              let displayStat;
-              switch (sortedBy) {
-                case SortingCategories.INDEX:
-                  displayStat = getIndex(user.data(), gameMode);
-                  break;
-                case SortingCategories.WIN_RATE:
-                  displayStat = getWinRate(user.data(), gameMode);
-                  break;
-                case SortingCategories.DAILY_STREAK:
-                  displayStat = getDailyStreakMax(user.data(), gameMode);
-                  break;
-              }
-              return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{user.get("nickname")}</td>
-                  <td>{displayStat}</td>
-                </tr>
-              );
-            })
-          ) : (
-            <div>kokot</div>
-          )}
+          {sortedUsers.map((user, index) => {
+            let displayStat;
+            switch (sortedBy) {
+              case SortingCategories.INDEX:
+                displayStat = getIndex(user.data(), gameMode);
+                break;
+              case SortingCategories.WIN_RATE:
+                displayStat = getWinRate(user.data(), gameMode);
+                break;
+              case SortingCategories.DAILY_STREAK:
+                displayStat = getDailyStreakMax(user.data(), gameMode);
+                break;
+            }
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{user.get("nickname")}</td>
+                <td>{displayStat}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
-    </div>
-  );
-
-  // return (
-  //   <div className="leader-board">
-  //     <ListGroup variant="flush">
-  //       <ListGroup.Item variant="light">
-  //         <span>No.</span>
-  //         <span>Nickname</span>
-  //         <span>Sorted by</span>
-  //       </ListGroup.Item>
-  //     </ListGroup>
-  //     <ListGroup variant="flush" as="ol" numbered className="d-flex">
-  //       {!isLoading ? (
-  //         sortedUsers.map((user, index) => {
-  //           let displayStat;
-  //           switch (sortedBy) {
-  //             case SortingCategories.INDEX:
-  //               displayStat = getIndex(user.data(), gameMode);
-  //               break;
-  //             case SortingCategories.WIN_RATE:
-  //               displayStat = getWinRate(user.data(), gameMode);
-  //               break;
-  //             case SortingCategories.DAILY_STREAK:
-  //               displayStat = getDailyStreakMax(user.data(), gameMode);
-  //               break;
-  //           }
-  //           return (
-  //             <ListGroup.Item
-  //               as="li"
-  //               variant="dark"
-  //               className="d-flex justify-content-between align-items-start"
-  //             >
-  //               <span>{user.get("nickname")}</span>
-  //               <Badge>{displayStat}</Badge>
-  //             </ListGroup.Item>
-  //           );
-  //         })
-  //       ) : (
-  //         <div>kokot</div>
-  //       )}
-  //     </ListGroup>
-  //   </div>
-  // );
-}
-
-function CategorySelector({ sortedBy, setSortedBy }) {
-  const accordionRef = useRef(null);
-  const [collapse, setCollapse] = useState(false);
-  const [changedSortedBy, setChangedSortedBy] = useState(sortedBy);
-  return (
-    <div className="category-selector">
-      <Accordion activeKey={"true"} ref={accordionRef}>
-        <Accordion.Item
-          eventKey={String(collapse)}
-          style={{ borderTopLeftRadius: "0", borderBottomLeftRadius: "0" }}
-        >
-          <Accordion.Header
-            onClick={() => {
-              collapse ? setCollapse(false) : setCollapse(true);
-            }}
-          >
-            <span className="current-catgeory">
-              {changedSortedBy.toUpperCase()}
-            </span>
-          </Accordion.Header>
-          <Accordion.Body
-            onExited={() => {
-              setSortedBy(changedSortedBy);
-            }}
-          >
-            <ul>
-              {Object.keys(SortingCategories).map((key, index) =>
-                SortingCategories[key] === sortedBy ? null : (
-                  <li
-                    className={`selector-list ${index + 1 === Object.keys(SortingCategories).length && "last"}`}
-                    key={index}
-                    onClick={() => {
-                      setCollapse(false);
-                      setChangedSortedBy(SortingCategories[key]);
-                    }}
-                  >
-                    <span className="category">
-                      {SortingCategories[key].toUpperCase()}
-                    </span>
-                  </li>
-                ),
-              )}
-            </ul>
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
     </div>
   );
 }

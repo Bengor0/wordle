@@ -21,7 +21,7 @@ export function getGamesPlayed(userData, gameMode) {
 }
 
 export const getIndex = (userData, gameMode) => {
-  const sum = getGamesGuessed(userData, gameMode).reduce(
+  const sum = getGamesGuessed(userData, gameMode)?.reduce(
     (total, value, index) => total + value * (index + 1),
   );
 
@@ -30,7 +30,7 @@ export const getIndex = (userData, gameMode) => {
 
 export const getWinRate = (userData, gameMode) => {
   return Math.round(
-    (getGamesGuessed(userData, gameMode).reduce(
+    (getGamesGuessed(userData, gameMode)?.reduce(
       (total, value) => total + value,
     ) /
       getGamesPlayed(userData, gameMode)) *

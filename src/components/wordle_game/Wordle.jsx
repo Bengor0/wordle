@@ -1,12 +1,12 @@
 import { useRef, useEffect } from "react";
 import KeyBoard from "./Keyboard.jsx";
-import KeyboardContext from "../contexts/KeyboardContext.js";
-import "../styles/Wordle.css";
+import KeyboardContext from "../../contexts/KeyboardContext.js";
+import "./Wordle.css";
 import { toast, Toaster } from "sonner";
 import WordleBoard from "./WordleBoard.jsx";
-import { useUserData } from "../hooks/useUserData.js";
-import { useGameMode } from "../hooks/useGameMode.js";
-import { useDarkMode } from "../hooks/useDarkMode.js";
+import { useUserData } from "../../hooks/useUserData.js";
+import { useGameMode } from "../../hooks/useGameMode.js";
+import { useDarkMode } from "../../hooks/useDarkMode.js";
 
 export default function Wordle({
   solution,

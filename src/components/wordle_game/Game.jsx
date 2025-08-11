@@ -1,14 +1,14 @@
-import Classic from "./game_modes/Classic.jsx";
-import Royale from "./game_modes/Royale.jsx";
-import Practice from "./game_modes/Practice.jsx";
+import Classic from "../game_modes/Classic.jsx";
+import Royale from "../game_modes/Royale.jsx";
+import Practice from "../game_modes/Practice.jsx";
 
 import React, { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateUserData } from "../utils/firestoreUtils.js";
-import { useAuth } from "../hooks/useAuth.js";
-import { useGameMode } from "../hooks/useGameMode.js";
-import { useUserData } from "../hooks/useUserData.js";
-import { GameModes } from "../enums/GameModes.js";
+import { updateUserData } from "../../utils/firestoreUtils.js";
+import { useAuth } from "../../hooks/useAuth.js";
+import { useGameMode } from "../../hooks/useGameMode.js";
+import { useUserData } from "../../hooks/useUserData.js";
+import { GameModes } from "../../enums/GameModes.js";
 
 const BASE_COLORS = ["black", "black", "black", "black", "black"];
 

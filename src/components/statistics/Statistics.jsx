@@ -1,13 +1,17 @@
 import React from "react";
 import { FaLock } from "react-icons/fa";
-import "../../styles/Statistics.css";
+import "./Statistics.css";
 
-function Statistics({ children, gameModeData }) {
+function Statistics({ children }) {
   return <div className="stats-window">{children}</div>;
 }
 
-function StatsContainer({ children }) {
-  return <div className="stats-container">{children}</div>;
+function StatsContainer({ children, className }) {
+  return (
+    <div className={`stats-container${className ? " " + className : ""}`}>
+      {children}
+    </div>
+  );
 }
 
 function StatUnit({ value, category }) {

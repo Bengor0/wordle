@@ -1,4 +1,4 @@
-import Wordle from "../Wordle.jsx";
+import Wordle from "../wordle_game/Wordle.jsx";
 import { useEffect, useRef, useState } from "react";
 import React from "react";
 import GameOverDialog from "../modals/GameOverDialog.jsx";

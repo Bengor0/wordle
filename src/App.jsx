@@ -5,7 +5,7 @@ import SignUpDialog from "./components/modals/SignUpDialog.jsx";
 import "./App.css";
 import useToggleState from "./hooks/useToggleState.js";
 import Navigation from "./components/Navigation";
-import Game from "./components/Game";
+import Game from "./components/wordle_game/Game.jsx";
 
 import React from "react";
 import StatisticsDialog from "./components/modals/StatisticsDialog.jsx";

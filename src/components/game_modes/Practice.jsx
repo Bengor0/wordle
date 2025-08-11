@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import Wordle from "../Wordle.jsx";
+import Wordle from "../wordle_game/Wordle.jsx";
 
 const API_URL =
   "https://raw.githubusercontent.com/Bengor0/wordle-words-API/refs/heads/main/wordle-wordbank.json";
