@@ -69,25 +69,25 @@ function StatisticsDialog({ statsOpen, toggleStats }) {
                 />
               </Statistics.Container>
               <Statistics.Container className={"flex-center"}>
-                <div>
-                  <ButtonGroup>
-                    <Button
-                      onClick={() =>
-                        currentSlide === 0 && setCurrentSlide(currentSlide + 1)
-                      }
-                      className={"distribution-btn"}
-                    >
-                      Guess distribution
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        currentSlide === 1 && setCurrentSlide(currentSlide - 1)
-                      }
-                      className={"leaderboard-btn"}
-                    >
-                      Leaderboard
-                    </Button>
-                  </ButtonGroup>
+                <div className="btn-group-container">
+                  <button
+                    onClick={() =>
+                      currentSlide === 0 && setCurrentSlide(currentSlide + 1)
+                    }
+                    className={"distribution-btn"}
+                  >
+                    {gameMode === GameModes.CLASSIC
+                      ? "Guess distribution"
+                      : "Round distribution"}
+                  </button>
+                  <button
+                    onClick={() =>
+                      currentSlide === 1 && setCurrentSlide(currentSlide - 1)
+                    }
+                    className={"leaderboard-btn"}
+                  >
+                    Leaderboard
+                  </button>
                   <div className={`highlight-bar slide-${currentSlide}`}></div>
                 </div>
               </Statistics.Container>
